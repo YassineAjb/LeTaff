@@ -63,6 +63,7 @@ class ExamplePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedIntroduction(
       footerBgColor : const Color.fromARGB(255, 24, 24, 24),
+      doneText : 'Start Now',
       textColor : Colors.deepOrange,
       slides: pages,
       indicatorType: IndicatorType.circle,

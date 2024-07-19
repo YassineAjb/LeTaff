@@ -1,45 +1,29 @@
 import 'package:flutter/material.dart';
-
+import 'package:rive_animated_icon/rive_animated_icon.dart';
 
 class HomeView extends StatelessWidget {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 24, 24, 24),
-        title: const Center(
-          child: Text(
-            "LETAFF",
-            style: TextStyle(
-              color: Colors.deepOrange,
-              letterSpacing: 2.0,
-              fontSize: 30.0,
-              ),
-          ),
-        ),
-      ),
-      
       body: CustomScrollView(
         slivers: [
+          // Spacer
+          const SliverToBoxAdapter(child: SizedBox(height: 20)),
+          
           // Hero Section
           SliverToBoxAdapter(
-
             child: Container(
               height: 200,
-              color: Color.fromARGB(255, 0, 0, 0),
+              color: const Color.fromARGB(255, 0, 0, 0),
               child: Center(
-                child: 
-                Image.asset('assets/le-taff-logo-1.png'),
-                
-                // Text(
-                //   "Welcome to Our App",
-                //   style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.white),
-                // ),
+                child: Image.asset('assets/le-taff-logo-1.png'),
               ),
             ),
           ),
+          
           const SliverToBoxAdapter(child: SizedBox(height: 20)),
-
+          
           // Featured Sections
           SliverToBoxAdapter(
             child: Container(
@@ -47,11 +31,100 @@ class HomeView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Featured",
-                    style: Theme.of(context).textTheme.headlineSmall,
+                  // Title and subtitle
+                  const Text(
+                    "AGENCE DE SERVICES",
+                    style: TextStyle(
+                      color: Colors.deepOrange,
+                      fontSize: 30.0,
+                    ),
                   ),
                   const SizedBox(height: 10),
+                  const Text(
+                    "NUMÉR",
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 193, 193, 193),
+                      fontSize: 70.0,
+                      height: 0.9,
+                    ),
+                  ),
+                  // Description with a multiline text
+                  const Row(
+                    crossAxisAlignment: CrossAxisAlignment.start, // Aligns children to start vertically
+                    children: [
+                      Expanded(
+                        child: Text(
+                          "Nous sommes une Agence de services",
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 151, 151, 151),
+                            fontSize: 19.0,
+                            height: 1.5,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        "IQUES",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 193, 193, 193),
+                          fontSize: 70.0,
+                          height: 0.9,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Text(
+                    "numériques spécialisée dans la conception et le développement sur mesure de sites web, d'applications mobiles et logicielles. De plus, nos solutions sont adaptées aux besoins de toutes sortes d'entreprises.",
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 151, 151, 151),
+                      fontSize: 19.0,
+                      height: 1.5,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    children: [
+                      // const Expanded(
+                      //   child: Text(
+                      //     "text",
+                      //     style: TextStyle(
+                      //       color: Color.fromARGB(255, 193, 193, 193),
+                      //       fontSize: 19.0,
+                      //       height: 0.9,
+                      //     ),
+                      //   ),
+                      // ),
+                  RiveAnimatedIcon(
+                      riveIcon: RiveIcon.arrowDown,
+                      width: 58,
+                      height: 70,
+                      color: const Color.fromARGB(255, 255, 255, 255),
+                      strokeWidth: 3,
+                      loopAnimation: true,
+                      onTap: (){},
+                      onHover: (value){}                          
+                  ),
+                      const SizedBox(width: 10),
+                      Container(
+                        height: 175,
+                        color: const Color.fromARGB(255, 0, 0, 0),
+                        child: Center(
+                          child: Image.asset('assets/hom11.jpg'),
+                        ),
+                      ),
+                    ],
+                  ),
+
+
+
+          
+
+
+
+
+
+
+                  // Grid view of cards
                   GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -60,7 +133,7 @@ class HomeView extends StatelessWidget {
                       crossAxisSpacing: 16,
                       mainAxisSpacing: 16,
                     ),
-                    itemCount: 10, // Number of items
+                    itemCount: 26,
                     itemBuilder: (context, index) {
                       return Card(
                         elevation: 4,
@@ -85,6 +158,7 @@ class HomeView extends StatelessWidget {
               ),
             ),
           ),
+          
           const SliverToBoxAdapter(child: SizedBox(height: 20)),
         ],
       ),
