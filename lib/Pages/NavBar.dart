@@ -11,9 +11,9 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with TickerProviderStateMixin<Home> {
   static const List<Destination> allDestinations = <Destination>[
     Destination(0, 'Home', Icons.home, Colors.teal),
-    Destination(1, 'Services', Icons.assistant, Colors.cyan),   //Icon a changer
-    Destination(2, 'Portfolio', Icons.batch_prediction, Colors.orange),  //Icon a changer
-    Destination(3, 'About US', Icons.info, Colors.blue),       //Icon a changer
+    Destination(1, 'Services', Icons.assistant, Colors.cyan),   // Icon to change
+    Destination(2, 'Portfolio', Icons.batch_prediction, Colors.orange),  // Icon to change
+    Destination(3, 'About US', Icons.info, Colors.blue),       // Icon to change
   ];
 
   late final List<GlobalKey<NavigatorState>> navigatorKeys;
@@ -105,24 +105,34 @@ class _HomeState extends State<Home> with TickerProviderStateMixin<Home> {
             ).toList(),
           ),
         ),
-        bottomNavigationBar: NavigationBar(
-          selectedIndex: selectedIndex,
-          onDestinationSelected: (int index) {
-            setState(() {
-              selectedIndex = index;
-            });
-          },
-          destinations: allDestinations.map<NavigationDestination>(
-            (Destination destination) {
-              return NavigationDestination(
-                icon: Icon(destination.icon, color: destination.color),
-                label: destination.title,
-              );
+        bottomNavigationBar: NavigationBarTheme(
+          data: NavigationBarThemeData(
+            labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>((Set<WidgetState> states) {
+              if (states.contains(WidgetState.selected)) {
+                return TextStyle(color: Colors.deepOrange); // Color for selected label
+              }
+              return TextStyle(color: const Color.fromARGB(255, 255, 255, 255)); // Color for unselected label
+            }),
+          ),
+          child: NavigationBar(
+            backgroundColor: const Color.fromARGB(255, 24, 24, 24),
+            selectedIndex: selectedIndex,
+            onDestinationSelected: (int index) {
+              setState(() {
+                selectedIndex = index;
+              });
             },
-          ).toList(),
+            destinations: allDestinations.map<NavigationDestination>(
+              (Destination destination) {
+                return NavigationDestination(
+                  icon: Icon(destination.icon, color: destination.color),
+                  label: destination.title,
+                );
+              },
+            ).toList(),
+          ),
         ),
       ),
     );
   }
 }
-
