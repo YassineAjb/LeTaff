@@ -69,12 +69,10 @@ class ExamplePage extends StatelessWidget {
       containerBg: Colors.black,  //the black transition ****
 
       onDone: () {
-        /// TODO: Go to desire page like login or home
-        /// 
         // Navigate to your desired page here, for example:
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => const Home(), // Replace with your desired page
+            builder: (context) => const Home(), 
           ),
         );
       },
