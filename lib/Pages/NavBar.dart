@@ -109,11 +109,22 @@ class _HomeState extends State<Home> with TickerProviderStateMixin<Home> {
           data: NavigationBarThemeData(
             labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>((Set<WidgetState> states) {
               if (states.contains(WidgetState.selected)) {
-                return TextStyle(color: Colors.deepOrange); // Color for selected label
+                return const TextStyle(color: Colors.deepOrange); // Color for selected label
               }
-              return TextStyle(color: const Color.fromARGB(255, 255, 255, 255)); // Color for unselected label
+              return const TextStyle(color: Color.fromARGB(255, 255, 255, 255)); // Color for unselected label
             }),
+
+
+            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            iconTheme: WidgetStateProperty.resolveWith<IconThemeData>((Set<WidgetState> states) {
+              if (states.contains(WidgetState.selected)) {
+                return const IconThemeData(color: Colors.white, size: 30); // Customize selected icon
+              }
+              return const IconThemeData(color: Colors.grey, size: 24); // Customize unselected icon
+            }),          
+            //
           ),
+
           child: NavigationBar(
             backgroundColor: const Color.fromARGB(255, 24, 24, 24),
             selectedIndex: selectedIndex,
@@ -125,8 +136,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin<Home> {
             destinations: allDestinations.map<NavigationDestination>(
               (Destination destination) {
                 return NavigationDestination(
-                  icon: Icon(destination.icon, color: destination.color),
-                  label: destination.title,
+//                  icon: Icon(destination.icon, color: destination.color),
+                    icon: Icon(destination.icon, color: Colors.white),
+                   label: destination.title,
                 );
               },
             ).toList(),
