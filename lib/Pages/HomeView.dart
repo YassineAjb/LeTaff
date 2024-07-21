@@ -15,6 +15,55 @@ class HomeView extends StatelessWidget {
       'assets/NAMELogo.png',
     ];
 
+    // Data for services containers
+    final List<Map<String, dynamic>> servicesData = [
+      {
+        'title': 'SOLUTIONS WEB',
+        'description':
+            'Nous mettons à votre disposition notre expertise pour répondre de manière globale à vos besoins en ligne\n\n+ Site Web Vitrine\n+ Site Web E-Commerce\n+ Site Web sur mesure',
+        'buttonText': 'Details',
+        'buttonAction': () {
+          // Define your button action here
+          print("Details for SOLUTIONS WEB");
+        },
+        'image': 'assets/webdev.png', // Path to the image
+      },
+      {
+        'title': 'DÉVELOPPEMENT MOBILE',
+        'description':
+            'Nous créons des applications mobiles performantes et adaptées à vos besoins\n\n+ Applications iOS\n+ Applications Android\n+ Applications cross-platform',
+        'buttonText': 'En savoir plus',
+        'buttonAction': () {
+          // Define your button action here
+          print("Details for DÉVELOPPEMENT MOBILE");
+        },
+        'image': 'assets/webdev.png', // Path to the image
+      },
+      {
+        'title': 'MARKETING DIGITAL',
+        'description':
+            'Nous vous aidons à accroître votre visibilité en ligne et à atteindre vos objectifs commerciaux\n\n+ SEO\n+ SEA\n+ Réseaux sociaux',
+        'buttonText': 'Contactez-nous',
+        'buttonAction': () {
+          // Define your button action here
+          print("Details for MARKETING DIGITAL");
+        },
+        'image': 'assets/webdev.png', // Path to the image
+      },
+      {
+        'title': 'CONCEPTION GRAPHIQUE',
+        'description':
+            'Nous créons des designs uniques et attrayants pour vos supports de communication\n\n+ Logos\n+ Chartes graphiques\n+ Print et digital',
+        'buttonText': 'Voir nos travaux',
+        'buttonAction': () {
+          // Define your button action here
+          print("Details for CONCEPTION GRAPHIQUE");
+        },
+        'image': 'assets/webdev.png', // Path to the image
+      },
+    ];
+
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -233,80 +282,79 @@ class HomeView extends StatelessWidget {
                     endIndent: 20, // Indentation from the end (trailing edge)
                   ),
 
-                  const SizedBox(height: 40),
-
-                  // Services container
-                  Container(
-                      padding: const EdgeInsets.all(16.0), // Padding inside the container
-                      margin: const EdgeInsets.symmetric(horizontal: 20.0), // Margin around the container
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 24, 24, 24), // Background color of the container
-                        borderRadius: BorderRadius.circular(10.0), // Rounded corners
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.5), // Shadow color
-                            spreadRadius: 2,
-                            blurRadius: 5,
-                            offset: const Offset(0, 3), // Shadow position
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start, // Align children to the start
-                        children: [
-                          const Text(
-                            "SOLUTIONS WEB",
-                            style: TextStyle(
-                              color: Color.fromARGB(255, 216, 216, 216),
-                              fontSize: 24.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 10.0), // Space between title and text
-                          Text(
-                            "Nous mettons à votre disposition notre expertise pour répondre de manière globale à vos besoins en ligne\n\n"
-                            "+ Site Web Vitrine\n"
-                            "+ Site Web E-Commerce\n"
-                            "+ Site Web sur mesure",
-                            style: TextStyle(
-                              color: Colors.grey[400],
-                              fontSize: 16.0,
-                            ),
-                          ),
-
-                          const SizedBox(height: 20.0), // Space between text and button
-                          Center(
-                            child: ElevatedButton(
-                              onPressed: () {
-                                // Define your button action here
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.deepOrange, // Button color
+                  const SizedBox(height: 40),        
+                  // Horizontal Scroll of service containers
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: servicesData.map((service) {
+                        return Container(
+                          width: 300,
+                          height: 340,
+                          padding: const EdgeInsets.all(16.0),
+                          margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 24, 24, 24),
+                            borderRadius: BorderRadius.circular(10.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: const Offset(0, 3),
                               ),
-                              child: const Row(
-                              mainAxisSize: MainAxisSize.min,
-                              //mainAxisAlignment: MainAxisAlignment.start, 
-                              //mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  "Details",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Icon(
-                                  Icons.moving, 
-                                  color: Colors.black,
-                                  size: 30, 
-                                ),
-                              ],
-                            ),
-                            ),
+                            ],
                           ),
-                        ],
-                      ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                service['title'],
+                                style: const TextStyle(
+                                  color: Color.fromARGB(255, 216, 216, 216),
+                                  fontSize: 24.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 10.0),
+                              Text(
+                                service['description'],
+                                style: TextStyle(
+                                  color: Colors.grey[400],
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                              const SizedBox(height: 20.0),
+                              ElevatedButton(
+                                onPressed: service['buttonAction'],
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.deepOrange,
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      service['buttonText'],
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    const Icon(
+                                      Icons.moving,
+                                      color: Colors.black,
+                                      size: 30,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList(),
                     ),
-
+                  ),
+                  const SizedBox(height: 40),        
+                  
                   // Grid view of cards                  
                   GridView.builder(
                     shrinkWrap: true,
