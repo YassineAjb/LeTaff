@@ -1,29 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:rive_animated_icon/rive_animated_icon.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
+
+// class HomeView extends StatelessWidget {
+//   const HomeView({super.key});
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
-
-//
   @override
   _HomeViewState createState() => _HomeViewState();
 }
-
-class _HomeViewState extends State<HomeView> {
-  double _opacity = 0.0;
-
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration(milliseconds: 500), () {
-      setState(() {
-        _opacity = 1.0;
-      });
-    });
-  }
-//
   
+class _HomeViewState extends State<HomeView> {
+
   @override
   Widget build(BuildContext context) {
     // List of image paths
@@ -88,19 +79,23 @@ class _HomeViewState extends State<HomeView> {
     final List<Map<String, dynamic>> ProjectData = [
       {
         'title': 'ACADEMINY',
-        'image': 'assets/hom2.png',
+        'image': 'assets/Academiny.jpg',
+        'isVisible': true,
       },
       {
         'title': 'SAVONNERIE\nZEN',
-        'image': 'assets/hom2.png',
+        'image': 'assets/Savonnerie-Zen.jpg',
+        'isVisible': true,
       },
       {
         'title': 'ABSQJ',
-        'image': 'assets/hom2.png',
+        'image': 'assets/abqsj.jpg',
+        'isVisible': true,
       },
       {
         'title': 'CLINIQUE RADIOLOGIQUE',
-        'image': 'assets/hom2.png',
+        'image': 'assets/Clinique-radiologique.jpg',
+        'isVisible': true,
       },
     ];
 
@@ -240,23 +235,6 @@ class _HomeViewState extends State<HomeView> {
                       ),
                     ),
                   
-                    // Grid view of cards
-                    // GridView.builder(
-                    //   shrinkWrap: true,
-                    //   physics: const NeverScrollableScrollPhysics(),
-                    //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    //     crossAxisCount: 3,
-                    //     crossAxisSpacing: 16,
-                    //     mainAxisSpacing: 16,
-                    //   ),
-                    //   itemCount: 6,
-                    //   itemBuilder: (context, index) {
-                    //     return Card(
-                    //       elevation: 4,
-                    //       child: Image.asset('assets/EXPRESSLogo.png', fit: BoxFit.cover),
-                    //     );
-                    //   },
-                    // ),
                       
                     // Grid view of cards
                     GridView.builder(
@@ -325,8 +303,7 @@ class _HomeViewState extends State<HomeView> {
                       indent: 20, // Indentation from the start (leading edge)
                       endIndent: 20, // Indentation from the end (trailing edge)
                     ),
-      
-                    const SizedBox(height: 40),        
+                    const SizedBox(height: 40),
                     // Horizontal Scroll of service containers
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
@@ -491,7 +468,7 @@ class _HomeViewState extends State<HomeView> {
                         ],
                       ),
                     ),
-          
+
                     const SizedBox(height: 40),        
                     const Text(
                       "Travaux réalisés",
@@ -502,115 +479,238 @@ class _HomeViewState extends State<HomeView> {
                         fontWeight: FontWeight.bold, // This makes the text bold
                       ),
                     ),
-                    const SizedBox(height: 20),        
-                    // Horizontal Scroll of projects containers
-SingleChildScrollView(
-  scrollDirection: Axis.horizontal,
-  child: Row(
-    children: ProjectData.map((Project) {
-      return Container(
-        width: 340,
-        height: 340,
-        margin: const EdgeInsets.symmetric(horizontal: 10.0),
-        decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 24, 24, 24),
-          borderRadius: BorderRadius.circular(10.0),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.5),
-              spreadRadius: 2,
-              blurRadius: 5,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10.0),
-          child: Stack(
-            children: [
-              Image.asset(
-                Project['image'],
-                width: 340,
-                height: 340,
-                fit: BoxFit.cover,
-              ),
-              Container(
-                width: 340,
-                height: 340,
-                padding: const EdgeInsets.all(16.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.black.withOpacity(0.1),
-                      Colors.black.withOpacity(0.6),
-                    ],
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 16.0,
-                left: 16.0,
-                child: AnimatedOpacity(
-                  opacity: _opacity,
-                  duration: Duration(seconds: 1),
-                child: Text(
-                  Project['title'],
-                  style: const TextStyle(
-                    color: Colors.deepOrange,
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),),
-            ],
-          ),
-        ),
-      );
-    }).toList(),
+                    const SizedBox(height: 20), 
+
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: ProjectData.map((project) {
+                          return VisibilityDetector(
+                            key: Key(project['title']),
+                            onVisibilityChanged: (info) {
+                              print('Visibility changed for ${project['title']}: ${info.visibleFraction}');
+                      if (info.visibleFraction > 0) {
+                        setState(() {
+                          project['isVisible'] = true;
+                          print('${project['isVisible']}');
+                        });
+                      }
+                            },
+                            child: Container(
+                              width: 340,
+                              height: 340,
+                              margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 24, 24, 24),
+                                borderRadius: BorderRadius.circular(10.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.5),
+                                    spreadRadius: 2,
+                                    blurRadius: 5,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10.0),
+                                child: Stack(
+                                  children: [
+                                    Image.asset(
+                                      project['image'],
+                                      width: 340,
+                                      height: 340,
+                                      fit: BoxFit.cover,
+                                    ),
+                                    Container(
+                                      width: 340,
+                                      height: 340,
+                                      padding: const EdgeInsets.all(16.0),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10.0),
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            Colors.black.withOpacity(0.1),
+                                            Colors.black.withOpacity(0.6),
+                                          ],
+                                          begin: Alignment.bottomCenter,
+                                          end: Alignment.topCenter,
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      top: 16.0,
+                                      left: 16.0,
+                                      child: project['isVisible']
+                                          ? Container(
+                                              padding: EdgeInsets.all(8.0), // Optional: Add padding if needed
+                                              decoration: BoxDecoration(
+                                                color: Color.fromARGB(255, 0, 0, 0).withOpacity(0.4), // Change opacity here
+                                                borderRadius: BorderRadius.circular(12.0), // Set your desired border radius here
+                                              ),
+                                              child: Text(
+                                                project['title'],
+                                                style: const TextStyle(
+                                                  color: Colors.deepOrange,
+                                                  fontSize: 24.0,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ).animate()
+                                                .fade(duration: 1000.ms)
+                                                .scale(delay: 1000.ms),
+                                            )
+                                          : Container(),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+
+
+
+                    const SizedBox(height: 40), 
+
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                      color: const Color.fromARGB(255, 24, 24, 24),),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 350,
+                              height: 340,
+                              margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0),
+                                    spreadRadius: 2,
+                                    blurRadius: 5,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  "POURQUOI NOUS\nCHOISIR !",
+                                  textAlign: TextAlign.center, // Center-align all lines
+                                  style: TextStyle(
+                                    color: Color.fromARGB(255, 205, 205, 205),
+                                    fontSize: 66.0,
+                                    letterSpacing: 2.0,
+                                    fontWeight: FontWeight.bold, // This makes the text bold
+                                  ),
+                                ),
+                              ),
+
+                            ),
+                            const SizedBox(width: 16.0), // Optional: Add spacing between containers
+                            Container(
+                              width: 250,
+                              height: 340,
+                              margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0),
+                                    spreadRadius: 2,
+                                    blurRadius: 5,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  "INNOVATION,\nFIABILITÉ\nFLEXIBILITÉ, EXPERTISE, ENGAGEMENT",
+                                  //textAlign: TextAlign.center, // Center-align all lines
+                                  style: TextStyle(
+                                    color: Color.fromARGB(255, 205, 205, 205),
+                                    fontSize: 30.0,
+                                    letterSpacing: 2.0,
+                                    fontWeight: FontWeight.bold, // This makes the text bold
+                                  ),
+                                ),
+                              ),
+                            ),
+Column(
+  mainAxisAlignment: MainAxisAlignment.center,
+  crossAxisAlignment: CrossAxisAlignment.center,
+  children: [
+    Container(
+  margin: const EdgeInsets.only(bottom: 20.0), // Adding bottom margin
+  child: const Text(
+    "INNOVATION",
+    style: TextStyle(
+      color: Color.fromARGB(255, 205, 205, 205),
+      fontSize: 35.0,
+      letterSpacing: 1.0,
+    ),
   ),
 ),
 
-                    const SizedBox(height: 40),
+    Container(
+      margin: const EdgeInsets.only(bottom: 10.0), // Adding bottom margin
+      width: 100,
+      height: 100,
+      //margin: const EdgeInsets.symmetric(horizontal: 10.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(360.0),
+        boxShadow: [
+          BoxShadow(
+            color: const Color.fromARGB(255, 129, 129, 129).withOpacity(0.4),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: const Center(
+        child: Text(
+          "95%",
+          //textAlign: TextAlign.center, // Center-align all lines
+          style: TextStyle(
+            color: Color.fromARGB(255, 205, 205, 205),
+            fontSize: 30.0,
+            letterSpacing: 2.0,
+            fontWeight: FontWeight.bold, // This makes the text bold
+          ),
+        ),
+      ),
+    ),
+    const SizedBox(height: 10.0), // Space between the container and text
+    const Text(
+      "Nous sommes constamment à\nla recherche de nouvelles\nidées et de solutions créatives\npour répondre à vos besoins",
+      textAlign: TextAlign.center,       
+      style: TextStyle(
+        color: Colors.grey,
+        fontSize: 20.0,
+        letterSpacing: 1.0,
+      ),
+    ),
+  ],
+),
 
-                    // Grid view of cards                  
-                    GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 16,
-                        mainAxisSpacing: 16,
+const SizedBox(width: 10.0), // Space between the container and text
+                          ],
+                        ),
                       ),
-                      itemCount: 26,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          elevation: 4,
-                          child: Column(
-                            children: [
-                              Expanded(
-                                child: Image.asset('assets/onboard_two.png', fit: BoxFit.cover),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  'Item ${index + 1}',
-                                  style: Theme.of(context).textTheme.titleMedium,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
+                    )
+
                   ],
                 ),
               ),
             ),
             
-            const SliverToBoxAdapter(child: SizedBox(height: 20)),
+            const SliverToBoxAdapter(child: SizedBox(height: 50)),
+                    
           ],
         ),
       ),

@@ -31,7 +31,8 @@ dependencies:
   flutter:
     sdk: flutter
   animated_introduction: ^1.0.4
-
+  flutter_animate: ^4.5.0
+  visibility_detector: ^0.2.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
