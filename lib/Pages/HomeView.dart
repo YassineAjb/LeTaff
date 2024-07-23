@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:letaff/Pages/AboutUsView.dart';
 import 'package:rive_animated_icon/rive_animated_icon.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -98,6 +99,12 @@ class _HomeViewState extends State<HomeView> {
         'isVisible': true,
       },
     ];
+
+    final List<Map<String, String>> items = [
+  {"percentage": "95%", "label": "INNOVATION", "description": "Nous sommes constamment à la recherche de nouvelles idées et de solutions créatives pour répondre à vos besoins"},
+  {"percentage": "90%", "label": "FIABILITÉ", "description": "Vous pouvez compter sur notre fiabilité pour assurer la continuité de vos projets"},
+  {"percentage": "95%", "label": "EXPERTISE", "description": "Notre expertise approfondie garantit des résultats de qualité supérieure."},
+  ];
 
     return SafeArea(
       child: Scaffold(
@@ -443,7 +450,12 @@ class _HomeViewState extends State<HomeView> {
                             ),
                           ),
                           /*ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => AboutUsView()),
+                              );
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.deepOrange, // Use `primary` instead of `backgroundColor`
                             ),
@@ -543,9 +555,9 @@ class _HomeViewState extends State<HomeView> {
                                       left: 16.0,
                                       child: project['isVisible']
                                           ? Container(
-                                              padding: EdgeInsets.all(8.0), // Optional: Add padding if needed
+                                              padding: const EdgeInsets.all(8.0), // Optional: Add padding if needed
                                               decoration: BoxDecoration(
-                                                color: Color.fromARGB(255, 0, 0, 0).withOpacity(0.4), // Change opacity here
+                                                color: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.4), // Change opacity here
                                                 borderRadius: BorderRadius.circular(12.0), // Set your desired border radius here
                                               ),
                                               child: Text(
@@ -640,70 +652,292 @@ class _HomeViewState extends State<HomeView> {
                                 ),
                               ),
                             ),
-Column(
-  mainAxisAlignment: MainAxisAlignment.center,
-  crossAxisAlignment: CrossAxisAlignment.center,
-  children: [
-    Container(
-  margin: const EdgeInsets.only(bottom: 20.0), // Adding bottom margin
-  child: const Text(
-    "INNOVATION",
-    style: TextStyle(
-      color: Color.fromARGB(255, 205, 205, 205),
-      fontSize: 35.0,
-      letterSpacing: 1.0,
-    ),
-  ),
-),
 
-    Container(
-      margin: const EdgeInsets.only(bottom: 10.0), // Adding bottom margin
-      width: 100,
-      height: 100,
-      //margin: const EdgeInsets.symmetric(horizontal: 10.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(360.0),
-        boxShadow: [
-          BoxShadow(
-            color: const Color.fromARGB(255, 129, 129, 129).withOpacity(0.4),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: const Center(
-        child: Text(
-          "95%",
-          //textAlign: TextAlign.center, // Center-align all lines
-          style: TextStyle(
-            color: Color.fromARGB(255, 205, 205, 205),
-            fontSize: 30.0,
-            letterSpacing: 2.0,
-            fontWeight: FontWeight.bold, // This makes the text bold
-          ),
-        ),
-      ),
-    ),
-    const SizedBox(height: 10.0), // Space between the container and text
-    const Text(
-      "Nous sommes constamment à\nla recherche de nouvelles\nidées et de solutions créatives\npour répondre à vos besoins",
-      textAlign: TextAlign.center,       
-      style: TextStyle(
-        color: Colors.grey,
-        fontSize: 20.0,
-        letterSpacing: 1.0,
-      ),
-    ),
-  ],
-),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start, // Adjusted to start to align items properly
+                              children: items.map((item) {
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10.0), // Padding between items
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        item['label']!,
+                                        style: const TextStyle(
+                                          color: Color.fromARGB(255, 205, 205, 205),
+                                          fontSize: 30.0,
+                                          letterSpacing: 2.0,
+                                          fontWeight: FontWeight.bold, // This makes the text bold
+                                        ),
+                                      ),
+                                      const SizedBox(height: 10.0), // Space between percentage and label
+                                      Container(
+                                        width: 100,
+                                        height: 100,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(360.0),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: const Color.fromARGB(255, 129, 129, 129).withOpacity(0.4),
+                                              spreadRadius: 2,
+                                              blurRadius: 5,
+                                              offset: const Offset(0, 3),
+                                            ),
+                                          ],
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            item['percentage']!,
+                                            style: const TextStyle(
+                                              color: Color.fromARGB(255, 205, 205, 205),
+                                              fontSize: 30.0,
+                                              letterSpacing: 2.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),          
+                                      const SizedBox(height: 20), // Space between label and description
+                                      Container(
+                                        width: 300,
+                                        child: Text(
+                                          item['description']!,
+                                          textAlign: TextAlign.center,
+                                          style: const TextStyle(
+                                            color: Color.fromARGB(255, 150, 150, 150),
+                                            fontSize: 16.0,
+                                            letterSpacing: 1.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }).toList(),
+                            ),
 
-const SizedBox(width: 10.0), // Space between the container and text
-                          ],
+                            Container(
+                              width: 600, 
+                              height: 340, // Set the height of the container
+                              padding: const EdgeInsets.all(16.0), // Adding padding inside the container
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 27, 27, 27), // Background color for the container
+                                //borderRadius: BorderRadius.circular(10.0), // Rounded corners
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.1), // Shadow color with opacity
+                                    spreadRadius: 2,
+                                    blurRadius: 5,
+                                    offset: const Offset(0, 3), // Shadow position
+                                  ),
+                                ],
+                              ),
+                              child: Stack(
+                                children: [
+                                  const Positioned(
+                                    top: 2.0,
+                                    left: 2.0,
+                                    child: Text(
+                                      "POURQUOI\nNOUS CHOISIR",
+                                      style: TextStyle(
+                                        color: Colors.deepOrange, // Text color
+                                        fontSize: 15.0, // Text size
+                                        letterSpacing: 2.0,
+                                        fontWeight: FontWeight.bold, // Text weight
+                                      ),
+                                    ),
+                                  ),
+                                  const Positioned(
+                                    top: 130.0,
+                                    left: 16.0,
+                                    child: Text(
+                                      "Projets",
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 18.0, // Text size
+                                      ),
+                                    ),
+                                  ),
+                                  const Positioned(
+                                    top: 130.0,
+                                    left: 200.0,
+                                    child: Text(
+                                      "Clients \net partenaires",
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 18.0, // Text size
+                                      ),
+                                    ),
+                                  ),
+                                  const Positioned(
+                                    top: 250.0,
+                                    left: 16.0,
+                                    child: Text(
+                                      "Années",
+                                      style: TextStyle(
+                                        color: Colors.grey, // Text color
+                                        fontSize: 18.0, // Text size
+                                      ),
+                                    ),
+                                  ),
+                                  const Positioned(
+                                    top: 250.0,
+                                    left: 200.0,
+                                    child: Text(
+                                      "Filiales",
+                                      style: TextStyle(
+                                        color: Colors.grey, // Text color
+                                        fontSize: 18.0, // Text size
+                                      ),
+                                    ),
+                                  ),
+                                  const Positioned(
+                                    top: 80.0,
+                                    left: 16.0,
+                                    child: Text(
+                                      "50+",
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 255, 255, 255), // Text color
+                                        fontSize: 40.0, // Text size
+                                      ),
+                                    ),
+                                  ),
+                                  const Positioned(
+                                    top: 80.0,
+                                    left: 200.0,
+                                    child: Text(
+                                      "30+",
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 255, 255, 255), // Text color
+                                        fontSize: 40.0, // Text size
+                                      ),
+                                    ),
+                                  ),
+                                  const Positioned(
+                                    top: 200.0,
+                                    left: 16.0,
+                                    child: Text(
+                                      "6",
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 255, 255, 255), // Text color
+                                        fontSize: 40.0, // Text size
+                                      ),
+                                    ),
+                                  ),
+                                  const Positioned(
+                                    top: 200.0,
+                                    left: 200.0,
+                                    child: Text(
+                                      "2",
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 255, 255, 255), // Text color
+                                        fontSize: 40.0, // Text size
+                                      ),
+                                    ),
+                                  ),
+                                  const Positioned(
+                                    top: 200.0,
+                                    left: 200.0,
+                                    child: Text(
+                                      "2",
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 255, 255, 255), // Text color
+                                        fontSize: 40.0, // Text size
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: 0.0,
+                                    left: 250.0,
+                                    child: Image.asset(
+                                      'assets/counter-3.png', 
+                                      width: 340,
+                                      height: 340,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 20), // Space between label and description
+                            // const Column(
+                            //   children: [
+                            //     Text(
+                            //           "Avez-vous un projet ?",
+                            //           style: TextStyle(
+                            //             color: Colors.deepOrange, // Text color
+                            //             fontSize: 15.0, // Text size
+                            //             letterSpacing: 2.0,
+                            //             fontWeight: FontWeight.bold, // Text weight
+                            //           ),
+                            //         ),
+                            //     Text(
+                            //           "Réalisons un projet\nexceptionnel\nensemble !",
+                            //           style: TextStyle(
+                            //             color: Color.fromARGB(255, 187, 187, 187), // Text color
+                            //             fontSize: 15.0, // Text size
+                            //             letterSpacing: 2.0,
+                            //             fontWeight: FontWeight.bold, // Text weight
+                            //           ),
+                            //         ),
+                            //   ],
+
+                            // ),
+                            Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0), // Adding bottom margin
+                                child: Text(
+                                  "Avez-vous un projet ?",
+                                  style: TextStyle(
+                                    color: Colors.deepOrange, // Text color
+                                    fontSize: 30.0, // Text size
+                                    letterSpacing: 2.0,
+                                    fontWeight: FontWeight.bold, // Text weight
+                                  ),
+                                ),
+                              ),
+                              const Padding(
+                                padding: const EdgeInsets.only(bottom: 20.0), // Adding bottom margin
+                                child: Text(
+                                  "Réalisons un projet\nexceptionnel\nensemble !",
+                                  textAlign: TextAlign.center, // Center-align all lines
+                                  style: TextStyle(
+                                    color: Color.fromARGB(255, 187, 187, 187), // Text color
+                                    fontSize: 22.0, // Text size
+                                    letterSpacing: 2.0,
+                                    fontWeight: FontWeight.bold, // Text weight
+                                  ),
+                                ),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => AboutUsView()),
+                                  );
+                                },
+                                  style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color.fromARGB(255, 58, 58, 58),
+                                  ),
+                                  child: const Text('Contacter Nous',
+                                    style: TextStyle(
+                                    color: Colors.deepOrange, // Text color
+                                    fontSize: 15.0, // Text size
+                                    letterSpacing: 2.0,
+                                    fontWeight: FontWeight.bold, // Text weight
+                                  ),),
+                              ),
+                            ],
+                          ),
+
+                          const SizedBox(width: 20), 
+                          
+                          ],    
                         ),
                       ),
                     )
-
                   ],
                 ),
               ),
