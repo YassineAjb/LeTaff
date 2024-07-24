@@ -1,6 +1,6 @@
 import 'package:animated_introduction/animated_introduction.dart';
 import 'package:flutter/material.dart';
-import 'package:letaff/Pages/NavBar.dart';
+import 'package:letaff/NavBar/NavBar.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

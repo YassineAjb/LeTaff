@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:letaff/Pages/DestinationView.dart';
+import 'package:letaff/NavBar/DestinationView.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -109,7 +109,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin<Home> {
           data: NavigationBarThemeData(
             labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>((Set<WidgetState> states) {
               if (states.contains(WidgetState.selected)) {
-                return const TextStyle(color: Colors.deepOrange); // Color for selected label
+                return const TextStyle(color: Colors.deepOrange,fontSize: 18); // Color for selected label
               }
               return const TextStyle(color: Color.fromARGB(255, 255, 255, 255)); // Color for unselected label
             }),
@@ -118,7 +118,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin<Home> {
             // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             iconTheme: WidgetStateProperty.resolveWith<IconThemeData>((Set<WidgetState> states) {
               if (states.contains(WidgetState.selected)) {
-                return const IconThemeData(color: Colors.white, size: 30); // Customize selected icon
+                return const IconThemeData(color: Color.fromARGB(255, 255, 0, 0), size: 30); // Customize selected icon
               }
               return const IconThemeData(color: Colors.grey, size: 24); // Customize unselected icon
             }),          
@@ -137,8 +137,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin<Home> {
               (Destination destination) {
                 return NavigationDestination(
 //                  icon: Icon(destination.icon, color: destination.color),
-                    icon: Icon(destination.icon, color: Colors.white),
-                   label: destination.title,
+                    icon: Icon(destination.icon),
+                    label: destination.title,
                 );
               },
             ).toList(),
