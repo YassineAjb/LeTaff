@@ -76,7 +76,7 @@ class _HomeViewState extends State<HomeView> {
       },
     ];
 
-// Data for services containers
+ // Data for projects containers
     final List<Map<String, dynamic>> ProjectData = [
       {
         'title': 'ACADEMINY',
@@ -399,7 +399,7 @@ class _HomeViewState extends State<HomeView> {
                     
                     Container(
                             width: 400,
-                            height: 600,
+                            height: 650,
                             padding: const EdgeInsets.all(16.0),
                             margin: const EdgeInsets.symmetric(horizontal: 10.0),
                             decoration: BoxDecoration(
@@ -419,10 +419,10 @@ class _HomeViewState extends State<HomeView> {
                                 opacity: 0.1, 
                               ),
                             ),
-                          child: const Column(
+                          child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start, // Align children to the start
                           children: [
-                          Text(
+                          const Text(
                             "QUI SOMMES-NOUS ?",
                             style: TextStyle(
                               color: Colors.deepOrange,
@@ -431,8 +431,8 @@ class _HomeViewState extends State<HomeView> {
                               fontWeight: FontWeight.bold, 
                             ),
                           ),
-                          SizedBox(height: 10.0), // Add space between the texts
-                          Text(
+                          const SizedBox(height: 10.0), // Add space between the texts
+                          const Text(
                             "LE TAFF - AGENCE DE SERVICES NUMÉRIQUES ET DIGITAL",
                             style: TextStyle(
                               color: Color.fromARGB(255, 216, 216, 216),
@@ -441,7 +441,7 @@ class _HomeViewState extends State<HomeView> {
                               fontWeight: FontWeight.bold, 
                             ),
                           ),
-                          Text(
+                          const Text(
                             "Notre équipe est composée de développeurs passionnés par les dernières avancées technologiques, et nous proposons une vaste gamme de services pour répondre à vos besoins. De plus, notre expertise englobe la création de sites web vitrines élégants, le développement d'applications mobiles sophistiquées, la mise en place de plateformes e-commerce performantes, ainsi que des solutions d'hébergement et d'infogérance de pointe. En outre, nous excellons dans le domaine du référencement (SEO), des audits techniques, de la formation, et bien d'autres prestations. Faites nous confiance pour concrétiser vos projets digitaux et atteindre vos objectifs en ligne.",
                             style: TextStyle(
                             color: Color.fromARGB(255, 190, 190, 190),
@@ -449,7 +449,8 @@ class _HomeViewState extends State<HomeView> {
                             fontWeight: FontWeight.bold, 
                             ),
                           ),
-                          /*ElevatedButton(
+                          const SizedBox(height: 20),        
+                          ElevatedButton(
                             onPressed: () {
                               Navigator.push(
                                 context,
@@ -459,7 +460,7 @@ class _HomeViewState extends State<HomeView> {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.deepOrange, // Use `primary` instead of `backgroundColor`
                             ),
-                            child: Row(
+                            child: const Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
@@ -476,7 +477,7 @@ class _HomeViewState extends State<HomeView> {
                                 ),
                               ],
                             ),
-                          )*/
+                          )
                         ],
                       ),
                     ),
