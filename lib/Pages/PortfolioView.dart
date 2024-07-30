@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:letaff/Pages/AboutUsView.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'dart:async';
+import 'package:url_launcher/url_launcher.dart';
+
 
 class PortfolioView extends StatefulWidget {
   const PortfolioView({super.key});
@@ -22,6 +25,13 @@ class _PortfolioViewState extends State<PortfolioView> {
       _startAutoScroll();
     });
   }
+
+Future<void> _launchURL(String url) async {
+  final Uri uri = Uri.parse(url);
+  if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+    throw Exception('Could not launch $url');
+  }
+}
 
   void _startAutoScroll() {
     const duration = Duration(seconds: 1);
@@ -217,12 +227,149 @@ class _PortfolioViewState extends State<PortfolioView> {
                         }).toList(),
                       ),
                     ),
+                    
                     const SizedBox(height: 40),
+                    // New Container added here
+                    Center(
+                      child: Container(
+                        padding: const EdgeInsets.all(16.0),
+                        decoration: BoxDecoration(
+                          //color: Colors.grey[800],
+                          borderRadius: BorderRadius.circular(90.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.5),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                          border: Border.all(
+                            color: Colors.white, // Set the border color
+                            width: 1.5, // Set the border width
+                          ),
+                        ),
+                        child: const Text(
+                          'TRAVAILLONS ENSEMBLE',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Container(
+                        padding: const EdgeInsets.all(16.0),
+                        decoration: BoxDecoration(
+                          //color: Colors.grey[800],
+                          borderRadius: BorderRadius.circular(90.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.5),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: const Text(
+                          'Nous aimerions en savoir\nplus sur votre projet',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 185, 185, 185),
+                            fontSize: 27.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: SizedBox(
+                        width: 120, // Adjust to the desired diameter
+                        height: 120, // Must match the width to make it a circle
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => AboutUsView()),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(90), // Half of width/height for a circle
+                           side: const BorderSide(
+                              color: Colors.deepOrange, // Border color
+                              width: 2.5, // Border width
+                            ),
+                            ),
+                            padding: EdgeInsets.zero, // Remove padding to ensure circular shape
+                          ),
+                          child: const Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  "Parlons\nNous",textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.deepOrange,
+                                    fontSize: 19,
+                                  ),
+                                ),
+                                SizedBox(width: 2), // Add some spacing between text and icon
+                                Icon(
+                                  Icons.moving,
+                                  color: Colors.deepOrange,
+                                  size: 20,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(height: 50),
+                    // Social Media Buttons
+                    Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            icon: Image.asset('assets/linked4.png', width: 35, height: 30),
+                            onPressed: () => _launchURL('https://www.linkedin.com'),
+                          ),
+                          const SizedBox(width: 0),
+                          IconButton(
+                            icon: Image.asset('assets/face5.png', width: 30, height: 30),
+                            onPressed: () => _launchURL('https://www.facebook.com'),
+                          ),
+                          const SizedBox(width: 0),
+                          IconButton(
+                            icon: Image.asset('assets/insta4.png', width: 30, height: 30),
+                            onPressed: () => _launchURL('https://www.instagram.com'),
+                          ),
+                          const SizedBox(width: 0),
+                          // IconButton(
+                          //   icon: const Icon(Icons.facebook, color: Colors.deepOrange, size: 30,),
+                          //   onPressed: () => _launchURL('https://www.facebook.com'),
+                          // ),
+                          // PACKAGE PROBLEM !!!!!!!!!!
+                          // IconButton(
+                          //   icon: Icon(FlutterSocialIcons.linkedin, color: Colors.blue),
+                          //   onPressed: () => _launchURL('https://www.linkedin.com'),
+                          // ),
+                        ],
+                      ),
+                    ),
+
                   ],
                 ),
               ),
             ),
+
             const SliverToBoxAdapter(child: SizedBox(height: 50)),
+
           ],
         ),
       ),
