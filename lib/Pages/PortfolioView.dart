@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:letaff/NavBar/DestinationView.dart';
 import 'package:letaff/Pages/AboutUsView.dart';
+import 'package:letaff/Pages/ContactView.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'dart:async';
 import 'package:url_launcher/url_launcher.dart';
@@ -132,7 +134,7 @@ Future<void> _launchURL(String url) async {
               child: Column(
                 children: [
                   Container(
-                    height: 200,
+                    height: 100,
                     color: Colors.black,
                     child: Center(
                       child: Image.asset('assets/le-taff-logo-1.png'),
@@ -365,17 +367,20 @@ Future<void> _launchURL(String url) async {
                         height: 120, // Must match the width to make it a circle
                         child: ElevatedButton(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => AboutUsView()),
-                            );
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(builder: (context) => AboutUsView()),
+                            // );
+                    
+                            Navigator.pushNamed(context, '/contact');
+                            print('Navigating to ContactView...');
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(90), // Half of width/height for a circle
                            side: const BorderSide(
-                              color: Colors.deepOrange, // Border color
+                              color: Color.fromARGB(255, 115, 115, 115), // Border color
                               width: 2.5, // Border width
                             ),
                             ),

@@ -13,9 +13,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin<Home> {
   Destination(0, 'Home', Icons.home, Colors.teal),
   Destination(1, 'Services', Icons.assistant, Colors.cyan),
   Destination(2, 'Portfolio', Icons.batch_prediction, Colors.orange),
-  Destination(3, 'About Us', Icons.info, Colors.blue),
-  Destination(4, 'Contact', Icons.contact_mail, Colors.green),  // New destination
-  Destination(5, 'Career', Icons.work, Colors.purple),          // New destination
+  Destination(3, 'Career', Icons.info, Colors.blue),
+  Destination(4, 'Contact', Icons.contact_mail, Colors.green),  
+  Destination(5, 'About Us', Icons.work, Colors.purple),          
 ];
 
 
@@ -110,39 +110,38 @@ void initState() {
           ),
         ),
         bottomNavigationBar: NavigationBarTheme(
-  data: NavigationBarThemeData(
-    labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>((Set<WidgetState> states) {
-      if (states.contains(WidgetState.selected)) {
-        return const TextStyle(color: Colors.deepOrange, fontSize: 18); // Color for selected label
-      }
-      return const TextStyle(color: Color.fromARGB(255, 255, 255, 255)); // Color for unselected label
-    }),
-    iconTheme: WidgetStateProperty.resolveWith<IconThemeData>((Set<WidgetState> states) {
-      if (states.contains(WidgetState.selected)) {
-        return const IconThemeData(color: Color.fromARGB(255, 255, 0, 0), size: 30); // Customize selected icon
-      }
-      return const IconThemeData(color: Colors.grey, size: 24); // Customize unselected icon
-    }),
-  ),
-  child: NavigationBar(
-    backgroundColor: const Color.fromARGB(255, 24, 24, 24),
-    selectedIndex: selectedIndex,
-    onDestinationSelected: (int index) {
-      setState(() {
-        selectedIndex = index;
-      });
-    },
-    destinations: allDestinations.map<NavigationDestination>(
-      (Destination destination) {
-        return NavigationDestination(
-          icon: Icon(destination.icon),
-          label: destination.title,
-        );
-      },
-    ).toList(),
-  ),
-),
-
+          data: NavigationBarThemeData(
+            labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>((Set<WidgetState> states) {
+              if (states.contains(WidgetState.selected)) {
+                return const TextStyle(color: Colors.deepOrange, fontSize: 15); // Color for selected label
+              }
+              return const TextStyle(color: Color.fromARGB(255, 255, 255, 255)); // Color for unselected label
+            }),
+            iconTheme: WidgetStateProperty.resolveWith<IconThemeData>((Set<WidgetState> states) {
+              if (states.contains(WidgetState.selected)) {
+                return const IconThemeData(color: Color.fromARGB(255, 255, 0, 0), size: 25); // Customize selected icon
+              }
+              return const IconThemeData(color: Colors.grey, size: 21); // Customize unselected icon
+            }),
+          ),
+          child: NavigationBar(
+            backgroundColor: const Color.fromARGB(255, 24, 24, 24),
+            selectedIndex: selectedIndex,
+            onDestinationSelected: (int index) {
+              setState(() {
+                selectedIndex = index;
+              });
+            },
+            destinations: allDestinations.map<NavigationDestination>(
+              (Destination destination) {
+                return NavigationDestination(
+                  icon: Icon(destination.icon),
+                  label: destination.title,
+                );
+              },
+            ).toList(),
+          ),
+        ),
       ),
     );
   }

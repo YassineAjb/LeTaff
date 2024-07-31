@@ -40,11 +40,11 @@ class DestinationView extends StatelessWidget {
               case 2:
                 return PortfolioView();
               case 3:
-                return AboutUsView();
+                return CareerView();
               case 4:
                 return ContactView();
               case 5:
-                return CareerView();
+                return AboutUsView();
               default:
                 return HomeView();
             }

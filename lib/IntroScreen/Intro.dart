@@ -1,6 +1,7 @@
 import 'package:animated_introduction/animated_introduction.dart';
 import 'package:flutter/material.dart';
 import 'package:letaff/NavBar/NavBar.dart';
+import 'package:letaff/Pages/ContactView.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -16,7 +17,11 @@ class MyApp extends StatelessWidget {
 
         useMaterial3: true,
       ),
-  
+        routes: {
+        '/home': (context) => const Home(),
+        '/contact': (context) => const ContactView(),  // Define the route for ContactView
+        // Add other routes here
+      },
       home: const ExamplePage(),
     );
   }
@@ -71,11 +76,14 @@ class ExamplePage extends StatelessWidget {
 
       onDone: () {
         // Navigate to your desired page here, for example:
-        Navigator.of(context).pushReplacement(
+        Navigator.of(context).pushReplacementNamed('/home');
+
+        /*Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => const Home(), 
           ),
-        );
+        );*/
+
       },
     );
   }
