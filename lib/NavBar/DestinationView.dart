@@ -3,6 +3,8 @@ import 'package:letaff/Pages/HomeView.dart';
 import 'package:letaff/Pages/ServicesView.dart';
 import 'package:letaff/Pages/PortfolioView.dart';
 import 'package:letaff/Pages/AboutUsView.dart';
+import 'package:letaff/Pages/CareerView.dart';
+import 'package:letaff/Pages/ContactView.dart';
 
 class Destination {
   const Destination(this.index, this.title, this.icon, this.color);
@@ -39,6 +41,10 @@ class DestinationView extends StatelessWidget {
                 return PortfolioView();
               case 3:
                 return AboutUsView();
+              case 4:
+                return ContactView();
+              case 5:
+                return CareerView();
               default:
                 return HomeView();
             }

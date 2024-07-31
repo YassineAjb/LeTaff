@@ -33,22 +33,47 @@ Future<void> _launchURL(String url) async {
   }
 }
 
-  void _startAutoScroll() {
-    const duration = Duration(seconds: 1);
-    _autoScrollTimer = Timer.periodic(duration, (timer) {
-      if (_scrollController.hasClients) {
-        final maxScrollExtent = _scrollController.position.maxScrollExtent;
-        final currentScrollPosition = _scrollController.position.pixels;
-        final targetPosition = (currentScrollPosition + 340 + 20) % (maxScrollExtent + 340 + 20);
+  // void _startAutoScroll() {
+  //   const duration = Duration(seconds: 3);
+  //   _autoScrollTimer = Timer.periodic(duration, (timer) {
+  //     if (_scrollController.hasClients) {
+  //       final maxScrollExtent = _scrollController.position.maxScrollExtent;
+  //       final currentScrollPosition = _scrollController.position.pixels;
+  //       final targetPosition = (currentScrollPosition + 350 + 20) % (maxScrollExtent + 350 + 20);
 
+  //       _scrollController.animateTo(
+  //         targetPosition,
+  //         duration: const Duration(seconds: 1),
+  //         curve: Curves.easeInOut,
+  //       );
+  //     }
+  //   });
+  // }
+  void _startAutoScroll() {
+  const duration = Duration(seconds: 3);
+  _autoScrollTimer = Timer.periodic(duration, (timer) {
+    if (_scrollController.hasClients) {
+      final maxScrollExtent = _scrollController.position.maxScrollExtent;
+      final currentScrollPosition = _scrollController.position.pixels;
+      final targetPosition = currentScrollPosition + 360;
+
+      if (targetPosition >= maxScrollExtent) {
+        _scrollController.animateTo(
+          0.0,
+          duration: const Duration(seconds: 1),
+          curve: Curves.easeInOut,
+        );
+      } else {
         _scrollController.animateTo(
           targetPosition,
           duration: const Duration(seconds: 1),
           curve: Curves.easeInOut,
         );
       }
-    });
-  }
+    }
+  });
+}
+
 
   @override
   void dispose() {
@@ -62,22 +87,38 @@ Future<void> _launchURL(String url) async {
     final List<Map<String, dynamic>> projectData = [
       {
         'title': 'ACADEMINY',
-        'image': 'assets/Academiny.jpg',
+        'date': 'Octobre 3,2023',
+        'image': 'assets/Academiny-770x980.jpg',
         'isVisible': true,
       },
       {
-        'title': 'SAVONNERIE\nZEN',
-        'image': 'assets/Savonnerie-Zen.jpg',
+        'title': 'SAVONNERIE ZEN',
+        'date': 'Octobre 3,2023',
+        'image': 'assets/Savonnerie-Zen-770x852.jpg',
         'isVisible': true,
       },
       {
         'title': 'ABSQJ',
-        'image': 'assets/abqsj.jpg',
+        'date': 'Octobre 4,2023',
+        'image': 'assets/abqsj-770x852.jpg',
         'isVisible': true,
       },
       {
         'title': 'CLINIQUE RADIOLOGIQUE',
-        'image': 'assets/Clinique-radiologique.jpg',
+        'date': 'Octobre 4,2023',
+        'image': 'assets/Clinique-radiologique-770x853.jpg',
+        'isVisible': true,
+      },
+      {
+        'title': 'LA FERME DE POULIN',
+        'date': 'Octobre 4,2023',
+        'image': 'assets/La-ferme-de-Poulin-770x934.jpg',
+        'isVisible': true,
+      },
+      {
+        'title': 'BANKAI',
+        'date': 'Octobre 4,2023',
+        'image': 'assets/bankai-770x853.jpg',
         'isVisible': true,
       },
     ];
@@ -196,29 +237,64 @@ Future<void> _launchURL(String url) async {
                                         ),
                                       ),
                                     ),
+                                    // Positioned(
+                                    //   top: 16.0,
+                                    //   left: 16.0,
+                                    //   child: project['isVisible']
+                                    //       ? Container(
+                                    //           padding: const EdgeInsets.all(8.0),
+                                    //           decoration: BoxDecoration(
+                                    //             color: Colors.black.withOpacity(0.4),
+                                    //             borderRadius: BorderRadius.circular(12.0),
+                                    //           ),
+                                    //           child: Text(
+                                    //             project['title'],
+                                    //             style: const TextStyle(
+                                    //               color: Colors.deepOrange,
+                                    //               fontSize: 24.0,
+                                    //               fontWeight: FontWeight.bold,
+                                    //             ),
+                                    //           ).animate()
+                                    //             .fade(duration: 1000.ms)
+                                    //             .scale(delay: 1000.ms),
+                                    //                                                       )
+                                    //       : Container(),
+                                    // ),
                                     Positioned(
-                                      top: 16.0,
-                                      left: 16.0,
-                                      child: project['isVisible']
-                                          ? Container(
-                                              padding: const EdgeInsets.all(8.0),
-                                              decoration: BoxDecoration(
-                                                color: Colors.black.withOpacity(0.4),
-                                                borderRadius: BorderRadius.circular(12.0),
+                                    top: 16.0,
+                                    left: 16.0,
+                                    child: project['isVisible']
+                                      ? Container(
+                                        padding: const EdgeInsets.all(8.0),
+                                        decoration: BoxDecoration(
+                                          color: Colors.black.withOpacity(0.4),
+                                          borderRadius: BorderRadius.circular(12.0),
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              project['title'],
+                                              style: const TextStyle(
+                                                color: Colors.deepOrange,
+                                                fontSize: 24.0,
+                                                fontWeight: FontWeight.bold,
                                               ),
-                                              child: Text(
-                                                project['title'],
-                                                style: const TextStyle(
-                                                  color: Colors.deepOrange,
-                                                  fontSize: 24.0,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ).animate()
-                                                .fade(duration: 1000.ms)
-                                                .scale(delay: 1000.ms),
-                                            )
-                                          : Container(),
-                                    ),
+                                            ).animate().fade(duration: 1000.ms).scale(delay: 1000.ms),
+                                            const SizedBox(height: 8.0), // Space between title and date
+                                            Text(
+                                              project['date'],
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 16.0,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                      : Container(),
+                                  ),
+
                                   ],
                                 ),
                               ),
@@ -336,25 +412,25 @@ Future<void> _launchURL(String url) async {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           IconButton(
-                            icon: Image.asset('assets/linked4.png', width: 35, height: 30),
+                            icon: Image.asset('assets/linked4.png', width: 45, height: 45),
                             onPressed: () => _launchURL('https://www.linkedin.com'),
                           ),
                           const SizedBox(width: 0),
                           IconButton(
-                            icon: Image.asset('assets/face5.png', width: 30, height: 30),
+                            icon: Image.asset('assets/face5.png', width: 45, height: 45),
                             onPressed: () => _launchURL('https://www.facebook.com'),
                           ),
                           const SizedBox(width: 0),
                           IconButton(
-                            icon: Image.asset('assets/insta4.png', width: 30, height: 30),
+                            icon: Image.asset('assets/insta4.png', width: 45, height: 45),
                             onPressed: () => _launchURL('https://www.instagram.com'),
                           ),
                           const SizedBox(width: 0),
+                          // PACKAGE PROBLEM !!!!!!!!!!
                           // IconButton(
                           //   icon: const Icon(Icons.facebook, color: Colors.deepOrange, size: 30,),
                           //   onPressed: () => _launchURL('https://www.facebook.com'),
                           // ),
-                          // PACKAGE PROBLEM !!!!!!!!!!
                           // IconButton(
                           //   icon: Icon(FlutterSocialIcons.linkedin, color: Colors.blue),
                           //   onPressed: () => _launchURL('https://www.linkedin.com'),
