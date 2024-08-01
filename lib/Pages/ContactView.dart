@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
 
@@ -129,8 +130,8 @@ Future<void> _launchURL(String url) async {
                           ),
                           const SizedBox(width: 0),
                           IconButton(
-                            icon: Image.asset('assets/face5.png', width: 45, height: 45),
-                            onPressed: () => _launchURL('https://www.facebook.com'),
+                            icon: Image.asset('assets/beIcon.png', width: 45, height: 45),
+                            onPressed: () => _launchURL('https://www.linkedin.com'),
                           ),
                           const SizedBox(width: 0),
                           IconButton(
@@ -138,6 +139,15 @@ Future<void> _launchURL(String url) async {
                             onPressed: () => _launchURL('https://www.instagram.com'),
                           ),
                           const SizedBox(width: 0),
+                          IconButton(
+                            icon: Image.asset('assets/face5.png', width: 45, height: 45),
+                            onPressed: () => _launchURL('https://www.facebook.com'),
+                          ),
+                          IconButton(
+                            icon: Image.asset('assets/tiktokicon.png', width: 45, height: 45),
+                            onPressed: () => _launchURL('https://www.instagram.com'),
+                          ),
+                          
                           // PACKAGE PROBLEM !!!!!!!!!!
                           // IconButton(
                           //   icon: const Icon(Icons.facebook, color: Colors.deepOrange, size: 30,),
@@ -150,16 +160,81 @@ Future<void> _launchURL(String url) async {
                         ],
                       ),
                     ),
+
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/logo-blanc.png', // Replace with your image asset path
+                            width: 100,
+                            height: 100,
+                          ),
+                          const SizedBox(height: 10),
+                          const Text(
+                            'Chez Le Taff, nous nous engageons à fournir des services numériques de haute qualité, de solutions web, des applications mobiles personnalisées et des stratégies marketing efficaces.',
+                            style: TextStyle(
+                            color: Color.fromARGB(255, 255, 255, 255),
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    const Center(
+                      child: Text(
+                        'CONTACT',
+                        style: TextStyle(
+                        color: Color.fromARGB(255, 255, 139, 139),
+                          fontSize: 70,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ).animate(onPlay: (controller) => controller.repeat())
+                      .shimmer(duration: 1200.ms, color: Colors.deepOrange)
+                      .animate()
+                      .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
+                      .slide(),
+                    
+                    const SizedBox(height: 40),
+                    const Text(
+                        '©2023 | Tous droits réservés par Le Taff',
+                        style: TextStyle(
+                        color: Color.fromARGB(255, 255, 255, 255),
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+
                   ],
                 ),
               ),
             ),
-            const SliverToBoxAdapter(child: SizedBox(height: 50)),
+            const SliverToBoxAdapter(child: SizedBox(height: 10)),
           ],
         ),
       ),
     );
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   Widget _buildForm(BuildContext context) {
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -259,6 +334,9 @@ Future<void> _launchURL(String url) async {
             onChanged: (value) {
               name = value.capitalize();
             },
+            style:  const TextStyle(
+              color: Color.fromARGB(255, 255, 255, 255), // Change this to your desired color for the input text
+            ),
             validator: (value) {
               if (value == null || value.isEmpty || value.length < 3) {
                 return 'Name must contain at least 3 characters';
@@ -280,6 +358,9 @@ Future<void> _launchURL(String url) async {
                 borderSide: BorderSide(color: Color.fromARGB(255, 177, 177, 177), width: 1.5),
               ),
               border: OutlineInputBorder(),
+            ),
+            style:  const TextStyle(
+              color: Color.fromARGB(255, 255, 255, 255), // Change this to your desired color for the input text
             ),
             keyboardType: TextInputType.emailAddress,
             validator: (value) {
@@ -314,6 +395,9 @@ Future<void> _launchURL(String url) async {
             ),
             border: OutlineInputBorder(),
           ),
+          style:  const TextStyle(
+              color: Color.fromARGB(255, 255, 255, 255), // Change this to your desired color for the input text
+            ),
           keyboardType: TextInputType.phone,
           validator: (value) {
             if (value == null || value.isEmpty) {
@@ -343,6 +427,9 @@ Future<void> _launchURL(String url) async {
                 borderSide: BorderSide(color: Color.fromARGB(255, 177, 177, 177), width: 1.5),
               ),
               border: OutlineInputBorder(),
+            ),
+            style:  const TextStyle(
+              color: Color.fromARGB(255, 255, 255, 255), // Change this to your desired color for the input text
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -376,6 +463,9 @@ Future<void> _launchURL(String url) async {
                 borderSide: BorderSide(color: Color.fromARGB(255, 177, 177, 177), width: 1.5),
               ),
               border: OutlineInputBorder(),
+            ),  
+            style:  const TextStyle(
+              color: Color.fromARGB(255, 255, 255, 255), // Change this to your desired color for the input text
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {

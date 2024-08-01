@@ -615,13 +615,17 @@ class _HomeViewState extends State<HomeView> {
                                   "POURQUOI NOUS\nCHOISIR !",
                                   textAlign: TextAlign.center, // Center-align all lines
                                   style: TextStyle(
-                                    color: Color.fromARGB(255, 205, 205, 205),
+                                    color: Colors.deepOrange,
                                     fontSize: 66.0,
                                     letterSpacing: 2.0,
                                     fontWeight: FontWeight.bold, // This makes the text bold
                                   ),
                                 ),
-                              ),
+                              ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color: Color.fromARGB(255, 255, 255, 255))
+                                      .animate()
+                                      .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
 
                             ),
                             const SizedBox(width: 16.0), // Optional: Add spacing between containers
@@ -748,7 +752,12 @@ class _HomeViewState extends State<HomeView> {
                                         fontWeight: FontWeight.bold, // Text weight
                                       ),
                                     ),
-                                  ),
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                      .shimmer(duration: 1200.ms, color: Color.fromARGB(255, 255, 255, 255))
+                                      .animate()
+                                      .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
+                                      .slide(),
+                                
                                   const Positioned(
                                     top: 130.0,
                                     left: 16.0,
