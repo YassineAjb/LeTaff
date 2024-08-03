@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:letaff/NavBar/DestinationView.dart';
-import 'package:letaff/Pages/AboutUsView.dart';
-import 'package:letaff/Pages/ContactView.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'dart:async';
 import 'package:url_launcher/url_launcher.dart';

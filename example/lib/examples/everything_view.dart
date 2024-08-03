@@ -26,7 +26,7 @@ class EverythingView extends StatelessWidget {
             'fade+tint+blur+scale',
             a
                 .fadeIn(curve: Curves.easeOutCirc)
-                .untint(color: Colors.white)
+                .untint(color: ui.Color.fromARGB(255, 0, 0, 0))
                 .blurXY(begin: 16)
                 .scaleXY(begin: 1.5),
           ),
