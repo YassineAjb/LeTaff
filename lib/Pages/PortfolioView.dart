@@ -302,9 +302,8 @@ Future<void> _launchURL(String url) async {
                         }).toList(),
                       ),
                     ),
-                    
                     const SizedBox(height: 40),
-                    // New Container added here
+                    
                     Center(
                       child: Container(
                         padding: const EdgeInsets.all(16.0),

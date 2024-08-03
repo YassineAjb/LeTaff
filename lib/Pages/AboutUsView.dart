@@ -248,153 +248,261 @@ class _AboutUsViewState extends State<AboutUsView> {
                       .animate(onPlay: (controller) => controller.repeat()) // Repeat animation indefinitely
                       .shimmer(duration: 3000.ms), // Apply shimmer effect
 
-const SizedBox(height: 40,),
+                    const SizedBox(height: 40,),
 
-SizedBox(
-  height: 500,
-  width: 400,
-  child: Stack(
-    children: [
-      Positioned(
-        top: 0,
-        left: 0,
-        child: Image.asset(
-          "assets/A-U-1.jpg",
-          height: 200,
-          width: 180,
-          fit: BoxFit.cover,
-        )
-          .animate(onPlay: (controller) => controller.repeat())
-          .shimmer(duration: 2800.ms),
-      ),
-      Positioned(
-        top: 0,
-        left: 190,
-        child: Image.asset(
-          "assets/A-U-2.jpg",
-          height: 200,
-          width: 180,
-          fit: BoxFit.cover,
-        )
-          .animate(onPlay: (controller) => controller.repeat())
-          .shimmer(duration: 3200.ms),
-      ),
-      Positioned(
-        top: 220,
-        left: 0,
-        child: Image.asset(
-          "assets/A-U-3.jpg",
-          height: 200,
-          width: 180,
-          fit: BoxFit.cover,
-        )
-          .animate(onPlay: (controller) => controller.repeat())
-          .shimmer(duration: 3200.ms),
-      ),
-      Positioned(
-        top: 220,
-        left: 190,
-        child: Image.asset(
-          "assets/A-U-4.jpg",
-          height: 200,
-          width: 180,
-          fit: BoxFit.cover,
-        )
-          .animate(onPlay: (controller) => controller.repeat())
-          .shimmer(duration: 2800.ms),
-          // .boxShadow(
-          //         end: const BoxShadow(
-          //           blurRadius: 4,
-          //           color: Colors.white,
-          //           spreadRadius: 3,
-          //         ),
-          //         curve: Curves.easeOutExpo,
-          //       ),
-                // .scaleXY(end: 1.1, curve: Curves.easeOutCirc),
-      ),
-    ],
-  ),
-),
+                    SizedBox(
+                      height: 450,
+                      width: 400,
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            top: 0,
+                            left: 0,
+                            child: Image.asset(
+                              "assets/A-U-1.jpg",
+                              height: 200,
+                              width: 180,
+                              fit: BoxFit.cover,
+                            )
+                              .animate(onPlay: (controller) => controller.repeat())
+                              .shimmer(duration: 2800.ms),
+                          ),
+                          Positioned(
+                            top: 0,
+                            left: 190,
+                            child: Image.asset(
+                              "assets/A-U-2.jpg",
+                              height: 200,
+                              width: 180,
+                              fit: BoxFit.cover,
+                            )
+                              .animate(onPlay: (controller) => controller.repeat())
+                              .shimmer(duration: 3200.ms),
+                          ),
+                          Positioned(
+                            top: 220,
+                            left: 0,
+                            child: Image.asset(
+                              "assets/A-U-3.jpg",
+                              height: 200,
+                              width: 180,
+                              fit: BoxFit.cover,
+                            )
+                              .animate(onPlay: (controller) => controller.repeat())
+                              .shimmer(duration: 3200.ms),
+                          ),
+                          Positioned(
+                            top: 220,
+                            left: 190,
+                            child: Image.asset(
+                              "assets/A-U-4.jpg",
+                              height: 200,
+                              width: 180,
+                              fit: BoxFit.cover,
+                            )
+                              .animate(onPlay: (controller) => controller.repeat())
+                              .shimmer(duration: 2800.ms),
+                              // .boxShadow(
+                              //         end: const BoxShadow(
+                              //           blurRadius: 4,
+                              //           color: Colors.white,
+                              //           spreadRadius: 3,
+                              //         ),
+                              //         curve: Curves.easeOutExpo,
+                              //       ),
+                                    // .scaleXY(end: 1.1, curve: Curves.easeOutCirc),
+                          ),
+                        ],
+                      ),
+                    ),
 
-const SizedBox(height: 40,),
+                    //const SizedBox(height: 40,),
 
-Table(
-  border: TableBorder.all(color: Colors.grey), // Border for the table
-  children: [
-    TableRow(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(8),
-          child: const Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "50+",
-                style: TextStyle(fontSize: 16, color: Colors.white),
-              ),
-              Text(
-                "Project",
-                style: TextStyle(fontSize: 16, color: Colors.white),
-              ),
-            ],
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.all(8),
-          child: const Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "30+",
-                style: TextStyle(fontSize: 16, color: Colors.white),
-              ),
-              Text(
-                "Clients et partenaires",
-                style: TextStyle(fontSize: 16, color: Colors.white),
-              ),
-            ],
-          ),
-        ),
-      ],
-    ),
-    TableRow(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(8),
-          child: const Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "6",
-                style: TextStyle(fontSize: 16, color: Colors.white),
-              ),
-              Text(
-                "Années d'expérience",
-                style: TextStyle(fontSize: 16, color: Colors.white),
-              ),
-            ],
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.all(8),
-          child: const Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "2",
-                style: TextStyle(fontSize: 16, color: Colors.white),
-              ),
-              Text(
-                "Filiales",
-                style: TextStyle(fontSize: 16, color: Colors.white),
-              ),
-            ],
-          ),
-        ),
-      ],
-    ),    
-  ],
-)
+                    Table(
+                      //border: TableBorder.all(color: Colors.grey), // Border for the table
+                      children: [
+                        TableRow(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(8),
+                              child: const Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "50+",
+                                    style: TextStyle(fontSize: 30, color: ui.Color.fromARGB(255, 168, 168, 168)),
+                                  ),
+                                  Text(
+                                    "Project",
+                                    style: TextStyle(fontSize: 17, color: Colors.white),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(8),
+                              child: const Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "30+",
+                                    style: TextStyle(fontSize: 30, color: ui.Color.fromARGB(255, 168, 168, 168)),
+                                  ),
+                                  Text(
+                                    "Clients et partenaires",
+                                    style: TextStyle(fontSize: 17, color: Colors.white),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        TableRow(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(8),
+                              child: const Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "6",
+                                    style: TextStyle(fontSize: 30, color: ui.Color.fromARGB(255, 168, 168, 168)),
+                                  ),
+                                  Text(
+                                    "Années d'expérience",
+                                    style: TextStyle(fontSize: 17, color: Colors.white),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(8),
+                              child: const Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "2",
+                                    style: TextStyle(fontSize: 30, color: ui.Color.fromARGB(255, 168, 168, 168)),
+                                  ),
+                                  Text(
+                                    "Filiales",
+                                    style: TextStyle(fontSize: 17, color: Colors.white),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 50,),
+
+                    Center(
+                      child: Container(
+                        padding: const EdgeInsets.all(16.0),
+                        decoration: BoxDecoration(
+                          //color: Colors.grey[800],
+                          borderRadius: BorderRadius.circular(90.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.5),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                          border: Border.all(
+                            color: Colors.white, // Set the border color
+                            width: 1.5, // Set the border width
+                          ),
+                        ),
+                        child: const Text(
+                          'TRAVAILLEZ AVEC NOUS',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Container(
+                        padding: const EdgeInsets.all(16.0),
+                        decoration: BoxDecoration(
+                          //color: Colors.grey[800],
+                          borderRadius: BorderRadius.circular(90.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.5),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: const Text(
+                          "Nous serions ravis d'en savoir davantage sur votre projet",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 185, 185, 185),
+                            fontSize: 27.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: SizedBox(
+                        width: 120, // Adjust to the desired diameter
+                        height: 120, // Must match the width to make it a circle
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(builder: (context) => AboutUsView()),
+                            // );
+                    
+                            Navigator.pushNamed(context, '/contact');
+                            print('Navigating to ContactView...');
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(90), // Half of width/height for a circle
+                           side: const BorderSide(
+                              color: Color.fromARGB(255, 115, 115, 115), // Border color
+                              width: 2.5, // Border width
+                            ),
+                            ),
+                            padding: EdgeInsets.zero, // Remove padding to ensure circular shape
+                          ),
+                          child: const Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  "Contactez\nNous",textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.deepOrange,
+                                    fontSize: 19,
+                                  ),
+                                ),
+                                SizedBox(width: 2), // Add some spacing between text and icon
+                                Icon(
+                                  Icons.moving,
+                                  color: Colors.deepOrange,
+                                  size: 20,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ).animate(onPlay: (controller) => controller.repeat())
+                      .shimmer(duration: 4000.ms), 
+                    ),
 
         
                   ],
