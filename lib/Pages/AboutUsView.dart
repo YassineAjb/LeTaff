@@ -264,8 +264,21 @@ class _AboutUsViewState extends State<AboutUsView> {
                               width: 180,
                               fit: BoxFit.cover,
                             )
-                              .animate(onPlay: (controller) => controller.repeat())
-                              .shimmer(duration: 2800.ms),
+                              .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
+                              //.shimmer(duration: 3000.ms)
+                              .boxShadow(duration: 3000.ms,
+                                  begin: const BoxShadow(
+                                    blurRadius: 4,
+                                    color: ui.Color.fromARGB(255, 255, 255, 255),
+                                    spreadRadius: 1,
+                                  ),
+                                  end: const BoxShadow(
+                                    blurRadius: 4,
+                                    color: ui.Color.fromARGB(255, 255, 255, 255),
+                                    spreadRadius: 3,
+                                  ),
+                                  curve: Curves.easeInOut,
+                                ), 
                           ),
                           Positioned(
                             top: 0,
@@ -276,8 +289,21 @@ class _AboutUsViewState extends State<AboutUsView> {
                               width: 180,
                               fit: BoxFit.cover,
                             )
-                              .animate(onPlay: (controller) => controller.repeat())
-                              .shimmer(duration: 3200.ms),
+                              .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
+                              //.shimmer(duration: 7000.ms)
+                              .boxShadow(duration: 3000.ms,
+                                  begin: const BoxShadow(
+                                    blurRadius: 4,
+                                    color: ui.Color.fromARGB(255, 255, 255, 255),
+                                    spreadRadius: 1,
+                                  ),
+                                  end: const BoxShadow(
+                                    blurRadius: 4,
+                                    color: ui.Color.fromARGB(255, 255, 255, 255),
+                                    spreadRadius: 3,
+                                  ),
+                                  curve: Curves.easeInOut,
+                                ),
                           ),
                           Positioned(
                             top: 220,
@@ -288,8 +314,21 @@ class _AboutUsViewState extends State<AboutUsView> {
                               width: 180,
                               fit: BoxFit.cover,
                             )
-                              .animate(onPlay: (controller) => controller.repeat())
-                              .shimmer(duration: 3200.ms),
+                              .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
+                              //.shimmer(duration: 7000.ms)
+                              .boxShadow(duration: 3000.ms,
+                                  begin: const BoxShadow(
+                                    blurRadius: 4,
+                                    color: ui.Color.fromARGB(255, 255, 255, 255),
+                                    spreadRadius: 1,
+                                  ),
+                                  end: const BoxShadow(
+                                    blurRadius: 4,
+                                    color: ui.Color.fromARGB(255, 255, 255, 255),
+                                    spreadRadius: 3,
+                                  ),
+                                  curve: Curves.easeInOut,
+                                ),
                           ),
                           Positioned(
                             top: 220,
@@ -300,17 +339,22 @@ class _AboutUsViewState extends State<AboutUsView> {
                               width: 180,
                               fit: BoxFit.cover,
                             )
-                              .animate(onPlay: (controller) => controller.repeat())
-                              .shimmer(duration: 2800.ms),
-                              // .boxShadow(
-                              //         end: const BoxShadow(
-                              //           blurRadius: 4,
-                              //           color: Colors.white,
-                              //           spreadRadius: 3,
-                              //         ),
-                              //         curve: Curves.easeOutExpo,
-                              //       ),
-                                    // .scaleXY(end: 1.1, curve: Curves.easeOutCirc),
+                              .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
+                              //.shimmer(duration: 7000.ms)
+                              .boxShadow(duration: 3000.ms,
+                                  begin: const BoxShadow(
+                                    blurRadius: 4,
+                                    color: ui.Color.fromARGB(255, 255, 255, 255),
+                                    spreadRadius: 1,
+                                  ),
+                                  end: const BoxShadow(
+                                    blurRadius: 4,
+                                    color: ui.Color.fromARGB(255, 255, 255, 255),
+                                    spreadRadius: 3,
+                                  ),
+                                  curve: Curves.easeInOut,
+                                ),
+                                    //.scaleXY(end: 1.001, curve: Curves.easeOutCirc),
                           ),
                         ],
                       ),
@@ -325,15 +369,16 @@ class _AboutUsViewState extends State<AboutUsView> {
                           children: [
                             Container(
                               padding: const EdgeInsets.all(8),
-                              child: const Column(
+                              child:  Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text(
+                                  const Text(
                                     "50+",
                                     style: TextStyle(fontSize: 30, color: ui.Color.fromARGB(255, 168, 168, 168)),
-                                  ),
-                                  Text(
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                    .shimmer(duration: 3000.ms, color: Colors.deepOrange),
+                                  const Text(
                                     "Project",
                                     style: TextStyle(fontSize: 17, color: Colors.white),
                                   ),
@@ -342,15 +387,16 @@ class _AboutUsViewState extends State<AboutUsView> {
                             ),
                             Container(
                               padding: const EdgeInsets.all(8),
-                              child: const Column(
+                              child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text(
+                                  const Text(
                                     "30+",
                                     style: TextStyle(fontSize: 30, color: ui.Color.fromARGB(255, 168, 168, 168)),
-                                  ),
-                                  Text(
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                    .shimmer(duration: 3000.ms, color: Colors.deepOrange),
+                                  const Text(
                                     "Clients et partenaires",
                                     style: TextStyle(fontSize: 17, color: Colors.white),
                                   ),
@@ -363,15 +409,16 @@ class _AboutUsViewState extends State<AboutUsView> {
                           children: [
                             Container(
                               padding: const EdgeInsets.all(8),
-                              child: const Column(
+                              child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text(
+                                  const Text(
                                     "6",
                                     style: TextStyle(fontSize: 30, color: ui.Color.fromARGB(255, 168, 168, 168)),
-                                  ),
-                                  Text(
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                    .shimmer(duration: 3000.ms, color: Colors.deepOrange),
+                                  const Text(
                                     "Années d'expérience",
                                     style: TextStyle(fontSize: 17, color: Colors.white),
                                   ),
@@ -380,15 +427,16 @@ class _AboutUsViewState extends State<AboutUsView> {
                             ),
                             Container(
                               padding: const EdgeInsets.all(8),
-                              child: const Column(
+                              child:  Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text(
+                                  const Text(
                                     "2",
                                     style: TextStyle(fontSize: 30, color: ui.Color.fromARGB(255, 168, 168, 168)),
-                                  ),
-                                  Text(
+                                  ).animate(onPlay: (controller) => controller.repeat())
+                                    .shimmer(duration: 3000.ms, color: Colors.deepOrange),
+                                  const Text(
                                     "Filiales",
                                     style: TextStyle(fontSize: 17, color: Colors.white),
                                   ),
@@ -399,6 +447,12 @@ class _AboutUsViewState extends State<AboutUsView> {
                         ),
                       ],
                     ),
+        //             .animate(onPlay: (controller) => controller.repeat())
+        // .shimmer(duration: 1200.ms, color: ui.Color.fromARGB(255, 192, 41, 0))
+        // .animate() // this wraps the previous Animate in another Animate
+        // .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
+        // .slide(),
+
                     const SizedBox(height: 50,),
 
                     Center(
