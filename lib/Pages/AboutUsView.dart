@@ -235,20 +235,19 @@ class _AboutUsViewState extends State<AboutUsView> {
                       ),
                     ),
 
-                    Image.asset("assets/A-U-1.jpg")
-                      .animate(onPlay: (controller) => controller.repeat()) // Repeat animation indefinitely
-                      .shimmer(duration: 3000.ms), // Apply shimmer effect
-                    Image.asset("assets/A-U-2.jpg")
-                      .animate(onPlay: (controller) => controller.repeat()) // Repeat animation indefinitely
-                      .shimmer(duration: 3000.ms), // Apply shimmer effect
-                    Image.asset("assets/A-U-3.jpg")
-                      .animate(onPlay: (controller) => controller.repeat()) // Repeat animation indefinitely
-                      .shimmer(duration: 3000.ms), // Apply shimmer effect
-                    Image.asset("assets/A-U-4.jpg")
-                      .animate(onPlay: (controller) => controller.repeat()) // Repeat animation indefinitely
-                      .shimmer(duration: 3000.ms), // Apply shimmer effect
+                    // Image.asset("assets/A-U-1.jpg")
+                    //   .animate(onPlay: (controller) => controller.repeat()) // Repeat animation indefinitely
+                    //   .shimmer(duration: 3000.ms), // Apply shimmer effect
+                    // Image.asset("assets/A-U-2.jpg")
+                    //   .animate(onPlay: (controller) => controller.repeat()) // Repeat animation indefinitely
+                    //   .shimmer(duration: 3000.ms), // Apply shimmer effect
+                    // Image.asset("assets/A-U-3.jpg")
+                    //   .animate(onPlay: (controller) => controller.repeat()) // Repeat animation indefinitely
+                    //   .shimmer(duration: 3000.ms), // Apply shimmer effect
+                    // Image.asset("assets/A-U-4.jpg")
+                    //   .animate(onPlay: (controller) => controller.repeat()) // Repeat animation indefinitely
+                    //   .shimmer(duration: 3000.ms), // Apply shimmer effect
 
-                    const SizedBox(height: 40,),
 
                     SizedBox(
                       height: 450,
@@ -266,7 +265,7 @@ class _AboutUsViewState extends State<AboutUsView> {
                             )
                               .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
                               //.shimmer(duration: 3000.ms)
-                              .boxShadow(duration: 3000.ms,
+                              .boxShadow(duration: 1000.ms,
                                   begin: const BoxShadow(
                                     blurRadius: 4,
                                     color: ui.Color.fromARGB(255, 255, 255, 255),
@@ -291,7 +290,7 @@ class _AboutUsViewState extends State<AboutUsView> {
                             )
                               .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
                               //.shimmer(duration: 7000.ms)
-                              .boxShadow(duration: 3000.ms,
+                              .boxShadow(duration: 1100.ms,
                                   begin: const BoxShadow(
                                     blurRadius: 4,
                                     color: ui.Color.fromARGB(255, 255, 255, 255),
@@ -316,7 +315,7 @@ class _AboutUsViewState extends State<AboutUsView> {
                             )
                               .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
                               //.shimmer(duration: 7000.ms)
-                              .boxShadow(duration: 3000.ms,
+                              .boxShadow(duration: 1200.ms,
                                   begin: const BoxShadow(
                                     blurRadius: 4,
                                     color: ui.Color.fromARGB(255, 255, 255, 255),
@@ -341,7 +340,7 @@ class _AboutUsViewState extends State<AboutUsView> {
                             )
                               .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
                               //.shimmer(duration: 7000.ms)
-                              .boxShadow(duration: 3000.ms,
+                              .boxShadow(duration: 1300.ms,
                                   begin: const BoxShadow(
                                     blurRadius: 4,
                                     color: ui.Color.fromARGB(255, 255, 255, 255),
@@ -554,8 +553,8 @@ class _AboutUsViewState extends State<AboutUsView> {
                             ),
                           ),
                         ),
-                      ).animate(onPlay: (controller) => controller.repeat())
-                      .shimmer(duration: 4000.ms), 
+                      ).animate(onPlay: (controller) => controller.repeat(reverse: true))
+                      .shimmer(duration: 4000.ms),
                     ),
 
         
