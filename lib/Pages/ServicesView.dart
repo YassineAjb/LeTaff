@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ServicesView extends StatefulWidget {
   @override
@@ -10,6 +11,8 @@ class ServicesView extends StatefulWidget {
 class _ServicesViewState extends State<ServicesView> {
   final ScrollController _scrollController = ScrollController();
   Timer? _scrollTimer;
+  final ScrollController _textScrollController = ScrollController();
+  Timer? _textScrollTimer;
 
   @override
   void initState() {
@@ -21,12 +24,23 @@ class _ServicesViewState extends State<ServicesView> {
       });
     });
     _startAutoScroll();
+    _startTextAutoScroll();
+
   }
+
+Future<void> _launchURL(String url) async {
+  final Uri uri = Uri.parse(url);
+  if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+    throw Exception('Could not launch $url');
+  }
+}
 
   @override
   void dispose() {
     _scrollTimer?.cancel();
+    _textScrollTimer?.cancel();
     _scrollController.dispose();
+    _textScrollController.dispose();
     super.dispose();
   }
 
@@ -53,16 +67,56 @@ class _ServicesViewState extends State<ServicesView> {
     });
   }
 
+void _startTextAutoScroll() {
+  _textScrollTimer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
+    if (_textScrollController.hasClients) {
+      final double maxScrollExtent = _textScrollController.position.maxScrollExtent;
+      final double currentScrollPosition = _textScrollController.position.pixels;
+
+      // Increase scroll increment for smoother scrolling
+      const double scrollIncrement = 4.0;
+
+      if (currentScrollPosition < maxScrollExtent) {
+        _textScrollController.animateTo(
+          currentScrollPosition + scrollIncrement,
+          duration: const Duration(milliseconds: 100),
+          curve: Curves.linear,
+        );
+      } else {
+        // Smoothly scroll back to the start
+        _textScrollController.animateTo(
+          0,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.linear,
+        );
+      }
+    }
+  });
+}
+
+
+
+
   @override
   Widget build(BuildContext context) {
+    // List of image paths
+    final List<String> imagePaths = [
+      'assets/creative1Logo.png',
+      'assets/creative2Logo.png',
+      'assets/innovateLogo.png',
+      'assets/EXPRESSLogo.png',
+      'assets/BRANDNAMELogo.png',
+      'assets/NAMELogo.png',
+    ];
+    
     // Data for services containers
     final List<Map<String, dynamic>> servicesData = [
       {
         'title': 'SOLUTIONS WEB',
         'description': 'Nous mettons à votre disposition notre expertise pour répondre de manière globale à vos besoins en ligne.',
-        'buttonText': 'Details',
+        'buttonText': 'Savoir plus',
         'buttonAction': () {
-          // Define your button action here
+          Navigator.pushNamed(context, '/contact');
           print("Details for Service SOLUTIONS WEB");
         },
         'image': 'assets/Sweb.jpg',
@@ -70,9 +124,9 @@ class _ServicesViewState extends State<ServicesView> {
       {
         'title': 'APPLICATIONS MOBILE',
         'description': "Nous mettons à votre disposition notre expertise en développement d'applications mobiles pour répondre de manière globale à vos besoins du création des applications personnalisées .",
-        'buttonText': 'En savoir plus',
+        'buttonText': 'Savoir plus',
         'buttonAction': () {
-          // Define your button action here
+          Navigator.pushNamed(context, '/contact');
           print("Details for Service DÉVELOPPEMENT MOBILE");
         },
         'image': 'assets/SMobile.png',
@@ -80,9 +134,9 @@ class _ServicesViewState extends State<ServicesView> {
       {
         'title': 'MARKETING DIGITAL',
         'description': 'Nous élaborons des stratégies ciblées et innovantes pour renforcer votre visibilité en ligne et assurer la croissance de votre entreprise',
-        'buttonText': 'Contactez-nous',
+        'buttonText': 'Savoir plus',
         'buttonAction': () {
-          // Define your button action here
+          Navigator.pushNamed(context, '/contact');
           print("Details for Service MARKETING DIGITAL");
         },
         'image': 'assets/SDigital.png',
@@ -90,33 +144,48 @@ class _ServicesViewState extends State<ServicesView> {
       {
         'title': 'Maintenance',
         'description': 'Nous offrons une assistance technique pour résoudre les problèmes rapidement et efficacement',
-        'buttonText': '',
+        'buttonText': 'Savoir plus',
         'buttonAction': () {
-          // Define your button action here
+          Navigator.pushNamed(context, '/contact');
           print("Details for Service Maintenance");
         },
         'image': 'assets/Smaintenance.jpg',
       },
     ];
 
-    // Widget buildServiceDescriptions() {
-    //   return Column(
-    //     crossAxisAlignment: CrossAxisAlignment.start,
-    //     children: servicesData.map((service) {
-    //       return Padding(
-    //         padding: const EdgeInsets.symmetric(vertical: 8.0),
-    //         child: Text(
-    //           service['description'],
-    //           style: TextStyle(
-    //             color: Colors.grey[400],
-    //             fontSize: 16.0,
-    //           ),
-    //         ).animate(onPlay: (controller) => controller.repeat())
-    //             .shimmer(duration: 4000.ms, color: Colors.deepOrange),
-    //       );
-    //     }).toList(),
-    //   );
-    // }
+        // New data list for scrolling texts
+    final List<String> scrollingTexts = [
+      '        ',
+      'SOLUTIONS WEB',
+      'DEV MOBILE',
+      'MARKETING',
+      'MAINTENANCE',
+      'SOLUTIONS WEB',
+    ];
+
+Widget buildScrollingTexts() {
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        controller: _textScrollController,
+        child: Row(
+          children: scrollingTexts.map((text) {
+            return Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Center(
+                child: Text(
+                  text,
+                  style: const TextStyle(
+                    color: Color.fromARGB(255, 4, 0, 63),
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+      );
+    }
 Widget buildServiceDescriptions() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -288,7 +357,15 @@ Widget buildServiceDescriptions() {
                                       ElevatedButton(
                                         onPressed: service['buttonAction'],
                                         style: ElevatedButton.styleFrom(
-                                          backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+                                          backgroundColor: Colors.black,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(90), 
+                                            side: const BorderSide(
+                                              color: Color.fromARGB(255, 115, 115, 115), 
+                                              width: 1.5, 
+                                            ),
+                                          ),
+                                          // padding: EdgeInsets.zero, 
                                         ),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.min,
@@ -299,6 +376,7 @@ Widget buildServiceDescriptions() {
                                                 color: Colors.deepOrange,
                                               ),
                                             ),
+                                            const SizedBox(width: 5.0),
                                             const Icon(
                                               Icons.moving,
                                               color: Colors.deepOrange,
@@ -316,13 +394,270 @@ Widget buildServiceDescriptions() {
                         }).toList(),
                       ),
                     ),
+                    const SizedBox(height: 40),
+
+                    const Text(
+                      "Transformation Numérique Intégrale : Nos Services de Développement Digital",
+                      style: TextStyle(
+                        color: Colors.deepOrange,
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )        .animate(onPlay: (controller) => controller.repeat())
+                              // .fadeIn(duration: 900.ms, delay: 300.ms)
+                              .shimmer(duration: 9000.ms,blendMode: BlendMode.srcOver, color: Colors.white12),
+                              // .move(begin: const Offset(-16, 0), curve: Curves.easeOutQuad),
+                    const SizedBox(height: 20),
+
+                    const SizedBox(
+                      height: 350,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 360,
+                              height: 400,
+                              child: Text(
+                                "Nos services de développement digital offrent une palette complète de solutions pour répondre à vos besoins en ligne. Cela englobe la conception et la création de sites web, le développement d’applications mobiles sur mesure, des stratégies SEO avancées visant à renforcer votre présence en ligne, une stratégie de marketing digital percutante, la création de graphismes originaux, ainsi que des services de développement et de marketing intégrés.",
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 142, 142, 142),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 13), 
+                            SizedBox(
+                              width: 360,height: 400,
+                              child: Text(
+                              "Notre équipe d’experts met à votre disposition son savoir-faire afin d’assurer la croissance de votre entreprise grâce à des solutions numériques novatrices. De plus, nous sommes là pour vous offrir une assistance technique rapide et efficace, résolvant rapidement les problèmes liés au développement digital. Avec nos services, vous pouvez atteindre vos objectifs en ligne de manière complète et hautement efficace, tout en restant à la pointe de la transformation numérique.",
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 142, 142, 142),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    
+                    // New scrolling texts view
+                    buildScrollingTexts(),
+                    const SizedBox(height: 40),
+
+                    const Text(
+                      "Technologies",
+                      style: TextStyle(
+                        color: Colors.deepOrange,
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const Text(
+                      "Explorez notre univers de technologies adaptéesau service du progrès",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 33,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+
+                    // Grid view of cards
+                    GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 16,
+                            mainAxisSpacing: 16,
+                          ),
+                          itemCount: imagePaths.length,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              elevation: 4,
+                              color: const Color.fromARGB(255, 16, 16, 16), // card color
+                              child: Image.asset(imagePaths[index], fit: BoxFit.cover),
+                            );
+                          },
+                    ),
+                    const SizedBox(height: 20),
+                    // Horizontal line (Divider)
+                    const Divider(
+                      color: Colors.grey, // Color of the divider
+                      thickness: 1, // Thickness of the divider
+                      indent: 20, // Indentation from the start (leading edge)
+                      endIndent: 20, // Indentation from the end (trailing edge)
+                    ),
+                    const SizedBox(height: 15),
+
+                    Center(
+                      child: Container(
+                        padding: const EdgeInsets.all(16.0),
+                        decoration: BoxDecoration(
+                          //color: Colors.grey[800],
+                          borderRadius: BorderRadius.circular(90.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.5),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                          border: Border.all(
+                            color: Colors.white, // Set the border color
+                            width: 1.5, // Set the border width
+                          ),
+                        ),
+                        child: const Text(
+                          'TRAVAILLONS ENSEMBLE',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Container(
+                        padding: const EdgeInsets.all(16.0),
+                        decoration: BoxDecoration(
+                          //color: Colors.grey[800],
+                          borderRadius: BorderRadius.circular(90.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.5),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: const Text(
+                          'Nous aimerions en savoir\nplus sur votre projet',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 185, 185, 185),
+                            fontSize: 27.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: SizedBox(
+                        width: 120, // Adjust to the desired diameter
+                        height: 120, // Must match the width to make it a circle
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(builder: (context) => AboutUsView()),
+                            // );
+                    
+                            Navigator.pushNamed(context, '/contact');
+                            print('Navigating to ContactView...');
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(90), // Half of width/height for a circle
+                           side: const BorderSide(
+                              color: Color.fromARGB(255, 115, 115, 115), // Border color
+                              width: 2.5, // Border width
+                            ),
+                            ),
+                            padding: EdgeInsets.zero, // Remove padding to ensure circular shape
+                          ),
+                          child: const Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  "Parlons\nNous",textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.deepOrange,
+                                    fontSize: 19,
+                                  ),
+                                ),
+                                SizedBox(width: 2), // Add some spacing between text and icon
+                                Icon(
+                                  Icons.moving,
+                                  color: Colors.deepOrange,
+                                  size: 20,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ).animate(onPlay: (controller) => controller.repeat(reverse: true))
+                      .shimmer(duration: 4000.ms),
+                      ),
+                    ),
+
+                    const SizedBox(height: 50),
+                    // Social Media Buttons
+                    Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            icon: Image.asset('assets/linked4.png', width: 45, height: 45),
+                            onPressed: () => _launchURL('https://www.linkedin.com'),
+                          ),
+                          const SizedBox(width: 0),
+                          IconButton(
+                            icon: Image.asset('assets/beIcon.png', width: 45, height: 45),
+                            onPressed: () => _launchURL('https://www.linkedin.com'),
+                          ),
+                          const SizedBox(width: 0),
+                          IconButton(
+                            icon: Image.asset('assets/insta4.png', width: 45, height: 45),
+                            onPressed: () => _launchURL('https://www.instagram.com'),
+                          ),
+                          const SizedBox(width: 0),
+                          IconButton(
+                            icon: Image.asset('assets/face5.png', width: 45, height: 45),
+                            onPressed: () => _launchURL('https://www.facebook.com'),
+                          ),
+                          IconButton(
+                            icon: Image.asset('assets/tiktokicon.png', width: 45, height: 45),
+                            onPressed: () => _launchURL('https://www.instagram.com'),
+                          ),
+                          
+                          // PACKAGE PROBLEM !!!!!!!!!!
+                          // IconButton(
+                          //   icon: const Icon(Icons.facebook, color: Colors.deepOrange, size: 30,),
+                          //   onPressed: () => _launchURL('https://www.facebook.com'),
+                          // ),
+                          // IconButton(
+                          //   icon: Icon(FlutterSocialIcons.linkedin, color: Colors.blue),
+                          //   onPressed: () => _launchURL('https://www.linkedin.com'),
+                          // ),
+                        ],
+                      ),
+                    ),
 
                     const SizedBox(height: 40),
+
+
+
+
+
+
+
+
+
+
+const SizedBox(height: 60),
                   ],
                 ),
               ),
             ),
           ],
+                              
         ),
       ),
     );
