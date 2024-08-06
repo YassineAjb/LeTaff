@@ -4,12 +4,12 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:letaff/Pages/ContactView.dart';
 
-class SolutionWebView extends StatefulWidget {
+class SolutionMaintView extends StatefulWidget {
   @override
-  _SolutionWebViewState createState() => _SolutionWebViewState();
+  _SolutionMaintViewState createState() => _SolutionMaintViewState();
 }
 
-class _SolutionWebViewState extends State<SolutionWebView> {
+class _SolutionMaintViewState extends State<SolutionMaintView> {
   
 
   @override

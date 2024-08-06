@@ -4,12 +4,12 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:letaff/Pages/ContactView.dart';
 
-class SolutionWebView extends StatefulWidget {
+class SolutionMobileView extends StatefulWidget {
   @override
-  _SolutionWebViewState createState() => _SolutionWebViewState();
+  _SolutionMobileViewState createState() => _SolutionMobileViewState();
 }
 
-class _SolutionWebViewState extends State<SolutionWebView> {
+class _SolutionMobileViewState extends State<SolutionMobileView> {
   
 
   @override
@@ -36,7 +36,7 @@ class _SolutionWebViewState extends State<SolutionWebView> {
             },
           ),
           title: const Text(
-            'Solution Web',
+            'Applications Mobile',
             style: TextStyle(
               color: Colors.white, // Change this to your desired text color
             ),
@@ -54,15 +54,9 @@ class _SolutionWebViewState extends State<SolutionWebView> {
                     width: 390,
                     color: const ui.Color.fromARGB(255, 0, 0, 0),
                     child: Center(
-                      child: Image.asset('assets/solutions-webjpg.jpg'),
+                      child: Image.asset('assets/applications-mobiles.jpg'),
                     ),
                   ),
-                  // const Divider(
-                  //   color: Colors.grey,
-                  //   thickness: 1,
-                  //   indent: 30,
-                  //   endIndent: 30,
-                  // ),
                 ],
               ),
             ),
@@ -75,7 +69,7 @@ class _SolutionWebViewState extends State<SolutionWebView> {
                   children: [
                     const SizedBox(height: 10),
                     const Text(
-                      "Nous nous engageons à développer des solutions web sur mesure, que ce soit pour des applications, des sites vitrines ou des plateformes e-commerce, afin de répondre à tous vos besoins en ligne.",
+                      "Nous nous dédions à la création d'applications mobiles sur mesure, adaptées à vos besoins spécifiques. Que ce soit pour des applications grand public, professionnelles ou personnel,",
                       style: TextStyle(
                         color: Color.fromARGB(255, 255, 255, 255),
                         fontSize: 22.0,
@@ -85,7 +79,7 @@ class _SolutionWebViewState extends State<SolutionWebView> {
                     ),
                     const SizedBox(height: 20),
                     const Text(
-                      "notre engagement envers l'excellence se traduit par une approche rigoureuse de chaque projet, garantissant des résultats remarquables en termes de conception et de développement.",
+                      "Notre engagement envers l'excellence se traduit par une approche rigoureuse de chaque projet, garantissant des résultats remarquables en termes de conception et de développement.",
                       style: TextStyle(
                         color: Color.fromARGB(255, 255, 255, 255),
                         fontSize: 22.0,
@@ -104,32 +98,14 @@ class _SolutionWebViewState extends State<SolutionWebView> {
                             Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Text(
-                                '+ Laravel',
+                                '+ Framework Flutter',
                                 style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 22,), // Set text color
                               ),
                             ),
                             Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Text(
-                                '+ JavaScript',
-                                style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 22,), // Set text color
-                              ),
-                            ),
-                          ],
-                        ),
-                        TableRow(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                '+ Vue Js',
-                                style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 22,), // Set text color
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                '+ WordPress',
+                                '+ Intégration Firebase',
                                 style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 22,), // Set text color
                               ),
                             ),
@@ -140,14 +116,32 @@ class _SolutionWebViewState extends State<SolutionWebView> {
                             Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Text(
-                                '+ PHP',
+                                '+ Développement iOS',
+                                style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 21,), // Set text color
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                '+ Programmation Dart',
+                                style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 21,), // Set text color
+                              ),
+                            ),
+                          ],
+                        ),
+                        TableRow(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                '+ Node.js',
                                 style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 22,), // Set text color
                               ),
                             ),
                             Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Text(
-                                '+ Dévelopment Front End',
+                                '+ Sécurité des Applications',
                                 style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 22,), // Set text color
                               ),
                             ),
@@ -218,7 +212,7 @@ const SizedBox(height: 30),
 
 
 const Text(
-"Nous proposons des applications web avec l’une des meilleures structures organisées : CMS ou codage.",
+"Des Applications Mobiles Exceptionnelles sur Android et iOS avec Flutter :",
   style: TextStyle(
     color: Color.fromARGB(255, 255, 255, 255),
     fontSize: 25.0,
@@ -240,7 +234,7 @@ Container(
 const SizedBox(height: 10),
 
                     const Text(
-                      "Notre expertise en matière de développement de logiciels, et nous nous distinguons par notre maîtrise des technologies de pointe telles que Vue.js, Laravel, React et Node.js. Grâce à notre expertise, nous sommes en mesure de concevoir et de créer des solutions web avancée.",
+                      "Grâce à notre expertise approfondie en développement Android et iOS, nous sommes en mesure de concevoir des applications mobiles exceptionnelles pour une variété d’industries et de types de projets en utilisant Flutter.",
                       style: TextStyle(
                         color: Color.fromARGB(255, 255, 255, 255),
                         fontSize: 22.0,
@@ -250,7 +244,7 @@ const SizedBox(height: 10),
                     ),
                     const SizedBox(height: 20),
                     const Text(
-                      "Nous excels dans le développement de logiciels et la création de solutions web avancées en utilisant une variété de CMS tels que WordPress, PrestaShop, Drupal, Shopify, et bien d’autres encore. Notre expertise nous permet de choisir le CMS qui répond le mieux à vos besoins spécifiques pour des résultats exceptionnels.",
+                      "Notre engagement se traduit par la garantie de sécurité, de performances optimales et de développement rapide, grâce à l’expertise de nos professionnels et à nos méthodologies efficaces. Nous priorisons la qualité et l’efficacité à chaque étape de votre projet, vous assurant ainsi des résultats exceptionnels.",
                       style: TextStyle(
                         color: Color.fromARGB(255, 255, 255, 255),
                         fontSize: 22.0,
@@ -264,7 +258,7 @@ Container(
   width: 390,
   color: const ui.Color.fromARGB(255, 0, 0, 0),
   child: Center(
-    child: Image.asset('assets/S o l u t i o n s W e b.png'),
+    child: Image.asset('assets/S o l u t i o n s Mob.png'),
   ),
 ),
 const SizedBox(height: 30),
