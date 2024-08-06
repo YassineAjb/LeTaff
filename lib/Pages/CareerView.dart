@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
-import 'dart:ui' as ui;
+// import 'dart:ui' as ui;
 
 class CareerView extends StatefulWidget {
   @override
@@ -415,6 +415,7 @@ Widget buildPostesListe() {
     color: const Color(0x8080DDFF),
     margin: const EdgeInsets.symmetric(vertical: 16),
   ).animate().scale(duration: 600.ms, alignment: Alignment.centerLeft);
+
 }
 
 class ToggleTextContainer extends StatefulWidget {
