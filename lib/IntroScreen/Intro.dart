@@ -2,6 +2,7 @@ import 'package:animated_introduction/animated_introduction.dart';
 import 'package:flutter/material.dart';
 import 'package:letaff/NavBar/NavBar.dart';
 import 'package:letaff/Pages/ContactView.dart';
+import 'package:letaff/Pages/SolutionWebView.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -19,8 +20,8 @@ class MyApp extends StatelessWidget {
       ),
         routes: {
         '/home': (context) => const Home(),
-        '/contact': (context) => const ContactView(),  // Define the route for ContactView
-        // Add other routes here
+        '/contact': (context) => const ContactView(),  
+        '/solutionweb': (context) => SolutionWebView(),
       },
       home: const ExamplePage(),
     );
@@ -52,7 +53,7 @@ final List<SingleIntroScreen> pages = [
   const SingleIntroScreen(
     title: 'Welcome to LETAFF !',
     description: 'Découvrez notre portfolio de réalisations, une collection visuelle de nos sites web et applications exceptionnels.',
-    imageAsset: 'assets/onboard_one.png',
+    imageAsset: 'assets/men33.png',
     sideDotsBgColor : Colors.deepOrange,
     mainCircleBgColor : Colors.deepOrange,
     headerBgColor: Colors.black,

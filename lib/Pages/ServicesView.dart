@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:letaff/Pages/SolutionWebView.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ServicesView extends StatefulWidget {
@@ -116,7 +117,10 @@ void _startTextAutoScroll() {
         'description': 'Nous mettons à votre disposition notre expertise pour répondre de manière globale à vos besoins en ligne.',
         'buttonText': 'Savoir plus',
         'buttonAction': () {
-          Navigator.pushNamed(context, '/contact');
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => SolutionWebView()),
+          );
           print("Details for Service SOLUTIONS WEB");
         },
         'image': 'assets/Sweb.jpg',
@@ -126,7 +130,10 @@ void _startTextAutoScroll() {
         'description': "Nous mettons à votre disposition notre expertise en développement d'applications mobiles pour répondre de manière globale à vos besoins du création des applications personnalisées .",
         'buttonText': 'Savoir plus',
         'buttonAction': () {
-          Navigator.pushNamed(context, '/contact');
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SolutionWebView()),
+          );
           print("Details for Service DÉVELOPPEMENT MOBILE");
         },
         'image': 'assets/SMobile.png',
@@ -146,7 +153,7 @@ void _startTextAutoScroll() {
         'description': 'Nous offrons une assistance technique pour résoudre les problèmes rapidement et efficacement',
         'buttonText': 'Savoir plus',
         'buttonAction': () {
-          Navigator.pushNamed(context, '/contact');
+          Navigator.pushNamed(context, '/solutionwebview()');
           print("Details for Service Maintenance");
         },
         'image': 'assets/Smaintenance.jpg',
