@@ -2,7 +2,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:letaff/Pages/ContactView.dart';
+// import 'package:letaff/Pages/ContactView.dart';
 
 class SolutionWebView extends StatefulWidget {
   @override

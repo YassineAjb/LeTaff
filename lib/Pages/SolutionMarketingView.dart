@@ -2,7 +2,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:letaff/Pages/ContactView.dart';
+// import 'package:letaff/Pages/ContactView.dart';
 
 class SolutionMarketingView extends StatefulWidget {
   @override
@@ -36,7 +36,7 @@ class _SolutionMarketingViewState extends State<SolutionMarketingView> {
             },
           ),
           title: const Text(
-            'Solution Web',
+            'Marketing Digital',
             style: TextStyle(
               color: Colors.white, // Change this to your desired text color
             ),
@@ -54,15 +54,9 @@ class _SolutionMarketingViewState extends State<SolutionMarketingView> {
                     width: 390,
                     color: const ui.Color.fromARGB(255, 0, 0, 0),
                     child: Center(
-                      child: Image.asset('assets/solutions-webjpg.jpg'),
+                      child: Image.asset('assets/marketing-digital.jpg'),
                     ),
                   ),
-                  // const Divider(
-                  //   color: Colors.grey,
-                  //   thickness: 1,
-                  //   indent: 30,
-                  //   endIndent: 30,
-                  // ),
                 ],
               ),
             ),
@@ -75,7 +69,7 @@ class _SolutionMarketingViewState extends State<SolutionMarketingView> {
                   children: [
                     const SizedBox(height: 10),
                     const Text(
-                      "Nous nous engageons à développer des solutions web sur mesure, que ce soit pour des applications, des sites vitrines ou des plateformes e-commerce, afin de répondre à tous vos besoins en ligne.",
+                    "Chaque décision que nous prenons doit répondre à la question cruciale : comment cela vous bénéficier mieux de vos projects ? Nous travaillons à développer des solutions.",
                       style: TextStyle(
                         color: Color.fromARGB(255, 255, 255, 255),
                         fontSize: 22.0,
@@ -85,7 +79,7 @@ class _SolutionMarketingViewState extends State<SolutionMarketingView> {
                     ),
                     const SizedBox(height: 20),
                     const Text(
-                      "notre engagement envers l'excellence se traduit par une approche rigoureuse de chaque projet, garantissant des résultats remarquables en termes de conception et de développement.",
+                      "Nous vous aidons au démarrage de votre stratégie grâce à notre expertise et à nos formations, garantissant ainsi des résultats satisfaisants.",
                       style: TextStyle(
                         color: Color.fromARGB(255, 255, 255, 255),
                         fontSize: 22.0,
@@ -104,32 +98,14 @@ class _SolutionMarketingViewState extends State<SolutionMarketingView> {
                             Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Text(
-                                '+ Laravel',
+                                '+ Marketing de contenu',
                                 style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 22,), // Set text color
                               ),
                             ),
                             Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Text(
-                                '+ JavaScript',
-                                style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 22,), // Set text color
-                              ),
-                            ),
-                          ],
-                        ),
-                        TableRow(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                '+ Vue Js',
-                                style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 22,), // Set text color
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                '+ WordPress',
+                                '+ Marketing par e-mail',
                                 style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 22,), // Set text color
                               ),
                             ),
@@ -140,14 +116,32 @@ class _SolutionMarketingViewState extends State<SolutionMarketingView> {
                             Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Text(
-                                '+ PHP',
+                                '+ Publicité',
                                 style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 22,), // Set text color
                               ),
                             ),
                             Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Text(
-                                '+ Dévelopment Front End',
+                                '+ Gestion des médias sociaux',
+                                style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 22,), // Set text color
+                              ),
+                            ),
+                          ],
+                        ),
+                        TableRow(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                '+ Analyse de données et reporting',
+                                style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 22,), // Set text color
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                '+ Optimisation pour les moteurs de recherche ( SEO )',
                                 style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 22,), // Set text color
                               ),
                             ),
@@ -167,58 +161,59 @@ Column(
       leading: const Icon(Icons.circle,size: 13,color:  Colors.deepOrange)
                 .animate(onPlay: (controller) => controller.repeat())
                 .shimmer(duration: 4000.ms, color: const ui.Color.fromARGB(255, 226, 185, 172)),
-      title: const Text('Réalisation du CDC et Estimation devis',
+      title: const Text('Analyse et Stratégie',
       style: TextStyle(color: Colors.deepOrange,fontSize: 20,),
       ).animate(onPlay: (controller) => controller.repeat())
         .shimmer(duration: 4000.ms, color: const ui.Color.fromARGB(255, 255, 158, 129)),
     ),
-const Text('Notre première étape cruciale pour concevoir nos solutions web C’est à partir de ce document que nous pourrons estimer avec précision le devis.',
+const Text('Le marketing digital commence par l’analyser du votre marché et votre public cible, puis développez une stratégie digitale précise.',
 style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 18,),
 ),
+
      ListTile(
       leading: const Icon(Icons.circle,size: 13,color: Colors.deepOrange)
       .animate(onPlay: (controller) => controller.repeat())
                 .shimmer(duration: 4000.ms, color: const ui.Color.fromARGB(255, 226, 185, 172)),
-      title: const Text('Conception et Développement',
+      title: const Text('Conception de Campagnes',
       style: TextStyle(color: Colors.deepOrange,fontSize: 20,),
       ).animate(onPlay: (controller) => controller.repeat())
         .shimmer(duration: 4000.ms, color: ui.Color.fromARGB(255, 255, 158, 129)),
     ),
-    const Text('Nous commençons par analyser les besoins fonctionnels et nos spécifications, puis nous procédons au développement du site en fonction de ces données.',
+    const Text('Créez des campagnes sur mesure, en utilisant les canaux appropriés pour votre entreprise ou projets .',
     style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 18,),
     ),
+
     ListTile(
       leading: const Icon(Icons.circle,size: 13,color:  Colors.deepOrange)
       .animate(onPlay: (controller) => controller.repeat())
                 .shimmer(duration: 4000.ms, color: const ui.Color.fromARGB(255, 226, 185, 172)),
-      title: const Text('L’adaptation du méthodologie agiles',
+      title: const Text('Mise en Œuvre et Gestion',
       style: TextStyle(color:Colors.deepOrange ,fontSize: 20,),)
       .animate(onPlay: (controller) => controller.repeat())
         .shimmer(duration: 4000.ms, color: ui.Color.fromARGB(255, 255, 158, 129)),
     ),
-    const Text('Notre première étape cruciale pour concevoir nos solutions web C’est à partir de ce document que nous pourrons estimer avec précision le devis.',
+    const Text('La mise en place des campagnes est suivie de près par notre équipe experte. Nous surveillons attentivement leur progression et, si nécessaire, nous apportons des ajustements stratégiques pour garantir des résultats optimaux',
     style: TextStyle(color:ui.Color.fromARGB(255, 236, 236, 236),fontSize: 18,),
     ),
+
     ListTile(
       leading: const Icon(Icons.circle,size: 13,color:  Colors.deepOrange)
       .animate(onPlay: (controller) => controller.repeat())
                 .shimmer(duration: 4000.ms, color: const ui.Color.fromARGB(255, 226, 185, 172)),
-      title: const Text('Mise en production et suivi de maintenance',
+      title: const Text('Optimisation Continue',
       style: TextStyle(color:Colors.deepOrange,fontSize: 20,),
       ).animate(onPlay: (controller) => controller.repeat())
         .shimmer(duration: 4000.ms, color: ui.Color.fromARGB(255, 255, 158, 129)),
     ),
-    const Text('Une formation est dispensée au client, inclus d’une période de suivi et de maintenance pour garantir le bon fonctionnement continu de son système.',
+    const Text('Le suivi continue les performances, analysez les données, et apportez des ajustements pour maximiser les résultats tout au long de la campagne.',
     style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 18,),
     ),
   ],
 ),
 const SizedBox(height: 30),
 
-
-
 const Text(
-"Nous proposons des applications web avec l’une des meilleures structures organisées : CMS ou codage.",
+"Des stratégies de marketing digital structurées",
   style: TextStyle(
     color: Color.fromARGB(255, 255, 255, 255),
     fontSize: 25.0,
@@ -240,7 +235,7 @@ Container(
 const SizedBox(height: 10),
 
                     const Text(
-                      "Notre expertise en matière de développement de logiciels, et nous nous distinguons par notre maîtrise des technologies de pointe telles que Vue.js, Laravel, React et Node.js. Grâce à notre expertise, nous sommes en mesure de concevoir et de créer des solutions web avancée.",
+                      "Nous offrons une gamme complète de services de marketing digital, comprenant la création de contenu engageant, la gestion des réseaux sociaux pour une présence dynamique, et le marketing par email ciblé. Notre approche stratégique vise à maximiser votre visibilité en ligne et à générer des résultats concrets pour votre entreprise.",
                       style: TextStyle(
                         color: Color.fromARGB(255, 255, 255, 255),
                         fontSize: 22.0,
@@ -248,9 +243,12 @@ const SizedBox(height: 10),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+
+
+
                     const SizedBox(height: 20),
                     const Text(
-                      "Nous excels dans le développement de logiciels et la création de solutions web avancées en utilisant une variété de CMS tels que WordPress, PrestaShop, Drupal, Shopify, et bien d’autres encore. Notre expertise nous permet de choisir le CMS qui répond le mieux à vos besoins spécifiques pour des résultats exceptionnels.",
+                      "Nous proposons une palette diversifiée de services incluant l’analyse de données et la création de rapports, la publicité sponsorisée pour accroître votre visibilité, et le SEO pour une meilleure optimisation en ligne. Notre approche méthodique garantit des résultats mesurables et un avantage compétitif pour votre entreprise.",
                       style: TextStyle(
                         color: Color.fromARGB(255, 255, 255, 255),
                         fontSize: 22.0,
@@ -264,7 +262,7 @@ Container(
   width: 390,
   color: const ui.Color.fromARGB(255, 0, 0, 0),
   child: Center(
-    child: Image.asset('assets/S o l u t i o n s W e b.png'),
+    child: Image.asset('assets/S o l u t i o n s Mar.png'),
   ),
 ),
 const SizedBox(height: 30),
