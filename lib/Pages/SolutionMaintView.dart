@@ -36,7 +36,7 @@ class _SolutionMaintViewState extends State<SolutionMaintView> {
             },
           ),
           title: const Text(
-            'Solution Web',
+            'Maintenance',
             style: TextStyle(
               color: Colors.white, // Change this to your desired text color
             ),
@@ -54,15 +54,9 @@ class _SolutionMaintViewState extends State<SolutionMaintView> {
                     width: 390,
                     color: const ui.Color.fromARGB(255, 0, 0, 0),
                     child: Center(
-                      child: Image.asset('assets/solutions-webjpg.jpg'),
+                      child: Image.asset('assets/dev-1.jpg'),
                     ),
                   ),
-                  // const Divider(
-                  //   color: Colors.grey,
-                  //   thickness: 1,
-                  //   indent: 30,
-                  //   endIndent: 30,
-                  // ),
                 ],
               ),
             ),
@@ -75,8 +69,8 @@ class _SolutionMaintViewState extends State<SolutionMaintView> {
                   children: [
                     const SizedBox(height: 10),
                     const Text(
-                      "Nous nous engageons à développer des solutions web sur mesure, que ce soit pour des applications, des sites vitrines ou des plateformes e-commerce, afin de répondre à tous vos besoins en ligne.",
-                      style: TextStyle(
+                      "Nous proposons des services de maintenance corrective pour les sites web et applications mobiles de nos clients, assurant ainsi la stabilité et la performance continue de leurs services numériques.",
+                        style: TextStyle(
                         color: Color.fromARGB(255, 255, 255, 255),
                         fontSize: 22.0,
                         height: 1.2,
@@ -85,7 +79,7 @@ class _SolutionMaintViewState extends State<SolutionMaintView> {
                     ),
                     const SizedBox(height: 20),
                     const Text(
-                      "notre engagement envers l'excellence se traduit par une approche rigoureuse de chaque projet, garantissant des résultats remarquables en termes de conception et de développement.",
+                      "Nous assurons également la maintenance préventive pour anticiper les problèmes potentiels et garantir la durabilité de vos sites web et applications mobiles.",
                       style: TextStyle(
                         color: Color.fromARGB(255, 255, 255, 255),
                         fontSize: 22.0,
@@ -93,9 +87,9 @@ class _SolutionMaintViewState extends State<SolutionMaintView> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 30),
 
-                    hr,
+                    //hr,
                     Table(
                       border: TableBorder.all(color: const ui.Color.fromARGB(255, 20, 20, 20), width: 2.0), 
                       children: const [
@@ -104,32 +98,14 @@ class _SolutionMaintViewState extends State<SolutionMaintView> {
                             Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Text(
-                                '+ Laravel',
+                                '+ Correction des bogues',
                                 style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 22,), // Set text color
                               ),
                             ),
                             Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Text(
-                                '+ JavaScript',
-                                style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 22,), // Set text color
-                              ),
-                            ),
-                          ],
-                        ),
-                        TableRow(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                '+ Vue Js',
-                                style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 22,), // Set text color
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                '+ WordPress',
+                                '+ Optimisation des performances',
                                 style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 22,), // Set text color
                               ),
                             ),
@@ -140,14 +116,32 @@ class _SolutionMaintViewState extends State<SolutionMaintView> {
                             Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Text(
-                                '+ PHP',
+                                '+ Audits de sécurité',
                                 style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 22,), // Set text color
                               ),
                             ),
                             Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Text(
-                                '+ Dévelopment Front End',
+                                '+ Mises à jour des logicielles',
+                                style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 22,), // Set text color
+                              ),
+                            ),
+                          ],
+                        ),
+                        TableRow(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                '+ Sauvegarde et récupération des données',
+                                style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 22,), // Set text color
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                '+ Support utilisateur',
                                 style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 22,), // Set text color
                               ),
                             ),
@@ -167,48 +161,51 @@ Column(
       leading: const Icon(Icons.circle,size: 13,color:  Colors.deepOrange)
                 .animate(onPlay: (controller) => controller.repeat())
                 .shimmer(duration: 4000.ms, color: const ui.Color.fromARGB(255, 226, 185, 172)),
-      title: const Text('Réalisation du CDC et Estimation devis',
+      title: const Text('Diagnostic et Évaluation',
       style: TextStyle(color: Colors.deepOrange,fontSize: 20,),
       ).animate(onPlay: (controller) => controller.repeat())
         .shimmer(duration: 4000.ms, color: const ui.Color.fromARGB(255, 255, 158, 129)),
     ),
-const Text('Notre première étape cruciale pour concevoir nos solutions web C’est à partir de ce document que nous pourrons estimer avec précision le devis.',
-style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 18,),
-),
+    const Text('La première étape de notre processus de maintenance consiste à diagnostiquer l’état actuel de votre site web ou de votre application mobile.',
+    style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 18,),
+    ),
+
      ListTile(
       leading: const Icon(Icons.circle,size: 13,color: Colors.deepOrange)
       .animate(onPlay: (controller) => controller.repeat())
                 .shimmer(duration: 4000.ms, color: const ui.Color.fromARGB(255, 226, 185, 172)),
-      title: const Text('Conception et Développement',
+      title: const Text('Planification et Stratégie',
       style: TextStyle(color: Colors.deepOrange,fontSize: 20,),
       ).animate(onPlay: (controller) => controller.repeat())
         .shimmer(duration: 4000.ms, color: ui.Color.fromARGB(255, 255, 158, 129)),
     ),
-    const Text('Nous commençons par analyser les besoins fonctionnels et nos spécifications, puis nous procédons au développement du site en fonction de ces données.',
+    const Text('Une fois le diagnostic terminé, nous élaborons une stratégie de maintenance préventive sur mesure. Cela inclut la planification des mises à jour, des correctifs de sécurité.',
     style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 18,),
     ),
+
     ListTile(
       leading: const Icon(Icons.circle,size: 13,color:  Colors.deepOrange)
       .animate(onPlay: (controller) => controller.repeat())
                 .shimmer(duration: 4000.ms, color: const ui.Color.fromARGB(255, 226, 185, 172)),
-      title: const Text('L’adaptation du méthodologie agiles',
+      title: const Text('Mise en Œuvre et Suivi',
       style: TextStyle(color:Colors.deepOrange ,fontSize: 20,),)
       .animate(onPlay: (controller) => controller.repeat())
         .shimmer(duration: 4000.ms, color: ui.Color.fromARGB(255, 255, 158, 129)),
     ),
-    const Text('Notre première étape cruciale pour concevoir nos solutions web C’est à partir de ce document que nous pourrons estimer avec précision le devis.',
+    const Text('Nous mettons en œuvre les actions définies dans la stratégie de maintenance, en veillant à ce que chaque mise à jour ou amélioration soit effectuée de manière efficace et sans interruption majeure de service',
     style: TextStyle(color:ui.Color.fromARGB(255, 236, 236, 236),fontSize: 18,),
     ),
+
     ListTile(
       leading: const Icon(Icons.circle,size: 13,color:  Colors.deepOrange)
       .animate(onPlay: (controller) => controller.repeat())
                 .shimmer(duration: 4000.ms, color: const ui.Color.fromARGB(255, 226, 185, 172)),
-      title: const Text('Mise en production et suivi de maintenance',
+      title: const Text('Optimisation Continue',
       style: TextStyle(color:Colors.deepOrange,fontSize: 20,),
       ).animate(onPlay: (controller) => controller.repeat())
         .shimmer(duration: 4000.ms, color: ui.Color.fromARGB(255, 255, 158, 129)),
     ),
-    const Text('Une formation est dispensée au client, inclus d’une période de suivi et de maintenance pour garantir le bon fonctionnement continu de son système.',
+    const Text('La maintenance est un processus continu. Nous surveillons constamment les performances, analysons les données et adaptons notre stratégie .',
     style: TextStyle(color: ui.Color.fromARGB(255, 236, 236, 236),fontSize: 18,),
     ),
   ],
@@ -218,7 +215,7 @@ const SizedBox(height: 30),
 
 
 const Text(
-"Nous proposons des applications web avec l’une des meilleures structures organisées : CMS ou codage.",
+"Entretien du maintenance Correctif et Préventif",
   style: TextStyle(
     color: Color.fromARGB(255, 255, 255, 255),
     fontSize: 25.0,
@@ -240,7 +237,7 @@ Container(
 const SizedBox(height: 10),
 
                     const Text(
-                      "Notre expertise en matière de développement de logiciels, et nous nous distinguons par notre maîtrise des technologies de pointe telles que Vue.js, Laravel, React et Node.js. Grâce à notre expertise, nous sommes en mesure de concevoir et de créer des solutions web avancée.",
+                      "Notre équipe dédiée à la maintenance corrective intervient rapidement pour résoudre tout problème ou dysfonctionnement sur votre site web ou application mobile. Nous réagissons de manière efficace pour minimiser les interruptions de service, garantissant ainsi une expérience utilisateur continue.",
                       style: TextStyle(
                         color: Color.fromARGB(255, 255, 255, 255),
                         fontSize: 22.0,
@@ -250,7 +247,7 @@ const SizedBox(height: 10),
                     ),
                     const SizedBox(height: 20),
                     const Text(
-                      "Nous excels dans le développement de logiciels et la création de solutions web avancées en utilisant une variété de CMS tels que WordPress, PrestaShop, Drupal, Shopify, et bien d’autres encore. Notre expertise nous permet de choisir le CMS qui répond le mieux à vos besoins spécifiques pour des résultats exceptionnels.",
+                      "La maintenance préventive est au cœur de notre approche. Nous identifions et traitons les problèmes potentiels avant qu’ils ne deviennent des obstacles majeurs. Grâce à des mises à jour régulières et des correctifs proactifs, nous assurons la stabilité et la sécurité de votre plateforme numérique, vous permettant de vous concentrer sur vos objectifs.",
                       style: TextStyle(
                         color: Color.fromARGB(255, 255, 255, 255),
                         fontSize: 22.0,
@@ -264,14 +261,14 @@ Container(
   width: 390,
   color: const ui.Color.fromARGB(255, 0, 0, 0),
   child: Center(
-    child: Image.asset('assets/S o l u t i o n s W e b.png'),
+    child: Image.asset('assets/S o l u t i o n s Main.png'),
   ),
 ),
 const SizedBox(height: 30),
 
 Center(
   child: const Text(
-        'Notre valeur pour\nvos solutions web',
+        'La valeur de la\nMaintenance',
           style: TextStyle(
             color:Colors.deepOrange,
             fontSize: 33,
