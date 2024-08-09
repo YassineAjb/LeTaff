@@ -32,22 +32,6 @@ Future<void> _launchURL(String url) async {
   }
 }
 
-  // void _startAutoScroll() {
-  //   const duration = Duration(seconds: 3);
-  //   _autoScrollTimer = Timer.periodic(duration, (timer) {
-  //     if (_scrollController.hasClients) {
-  //       final maxScrollExtent = _scrollController.position.maxScrollExtent;
-  //       final currentScrollPosition = _scrollController.position.pixels;
-  //       final targetPosition = (currentScrollPosition + 350 + 20) % (maxScrollExtent + 350 + 20);
-
-  //       _scrollController.animateTo(
-  //         targetPosition,
-  //         duration: const Duration(seconds: 1),
-  //         curve: Curves.easeInOut,
-  //       );
-  //     }
-  //   });
-  // }
   void _startAutoScroll() {
   const duration = Duration(seconds: 3);
   _autoScrollTimer = Timer.periodic(duration, (timer) {
