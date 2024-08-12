@@ -484,6 +484,14 @@ class _ToggleTextContainerState extends State<ToggleTextContainer> {
           decoration: BoxDecoration(
             color: const Color.fromARGB(255, 31, 31, 31),
             borderRadius: BorderRadius.circular(10.0),
+          image: DecorationImage(
+              image: const AssetImage('assets/ContMain.png'), 
+              fit: BoxFit.cover,
+              colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(0.7), 
+                BlendMode.darken,
+              ),
+            ),
           ),
           child: Center(
             child: Padding(

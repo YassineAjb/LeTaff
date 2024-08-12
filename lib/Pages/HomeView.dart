@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:letaff/Pages/AboutUsView.dart';
+import 'package:letaff/Pages/PortfolioView.dart';
+import 'package:letaff/Pages/SolutionMarketingView.dart';
+import 'package:letaff/Pages/SolutionMobileView.dart';
+import 'package:letaff/Pages/SolutionWebView.dart';
 import 'package:rive_animated_icon/rive_animated_icon.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -36,8 +40,11 @@ class _HomeViewState extends State<HomeView> {
             'Nous mettons à votre disposition notre expertise pour répondre de manière globale à vos besoins en ligne\n\n+ Site Web Vitrine\n+ Site Web E-Commerce\n+ Site Web sur mesure',
         'buttonText': 'Details',
         'buttonAction': () {
-          // Define your button action here
-          print("Details for SOLUTIONS WEB");
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SolutionWebView()),
+          );
+          print("Details for Service DÉVELOPPEMENT MOBILE");
         },
         'image': 'assets/webdev.png',
       },
@@ -47,8 +54,11 @@ class _HomeViewState extends State<HomeView> {
             'Nous créons des applications mobiles performantes et adaptées à vos besoins\n\n+ Applications iOS\n+ Applications Android\n+ Applications cross-platform',
         'buttonText': 'En savoir plus',
         'buttonAction': () {
-          // Define your button action here
-          print("Details for DÉVELOPPEMENT MOBILE");
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SolutionMobileView()),
+          );
+          print("Details for Service DÉVELOPPEMENT MOBILE");
         },
         'image': 'assets/mobiledev.png',
       },
@@ -58,8 +68,11 @@ class _HomeViewState extends State<HomeView> {
             'Nous vous aidons à accroître votre visibilité en ligne et à atteindre vos objectifs commerciaux\n\n+ SEO\n+ SEA\n+ Réseaux sociaux',
         'buttonText': 'Contactez-nous',
         'buttonAction': () {
-          // Define your button action here
-          print("Details for MARKETING DIGITAL");
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SolutionMarketingView()),
+          );
+          print("Details for Service DÉVELOPPEMENT MOBILE");
         },
         'image': 'assets/marketing.png',
       },
@@ -69,8 +82,11 @@ class _HomeViewState extends State<HomeView> {
             'Nous créons des designs uniques et attrayants pour vos supports de communication\n\n+ Logos\n+ Chartes graphiques\n+ Print et digital',
         'buttonText': 'Voir nos travaux',
         'buttonAction': () {
-          // Define your button action here
-          print("Details for CONCEPTION GRAPHIQUE");
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SolutionMarketingView()),
+          );
+          print("Details for Service DÉVELOPPEMENT MOBILE");
         },
         'image': 'assets/maintenance.png',
       },
@@ -925,7 +941,7 @@ class _HomeViewState extends State<HomeView> {
                                 onPressed: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => AboutUsView()),
+                                    MaterialPageRoute(builder: (context) => const PortfolioView()),
                                   );
                                 },
                                   style: ElevatedButton.styleFrom(

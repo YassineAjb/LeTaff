@@ -215,7 +215,7 @@ Widget buildServiceDescriptions() {
               service['title'],
               style:const TextStyle(
                 //color: const Color.fromARGB(255, 255, 255, 255),
-                color:Color.fromARGB(255, 113, 217, 255),
+                color:Color.fromARGB(255, 255, 255, 255),
                 fontSize: 20.0,
               ),
             ).animate(onPlay: (controller) => controller.repeat())
@@ -228,7 +228,7 @@ Widget buildServiceDescriptions() {
                 fontSize: 16.0,
               ),
             ).animate(onPlay: (controller) => controller.repeat())
-                .shimmer(duration: 4000.ms, color: Colors.deepOrange),
+                .shimmer(duration: 4000.ms, color: const Color.fromARGB(255, 255, 255, 255)),
           ],
         ),
       );
