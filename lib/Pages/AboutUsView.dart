@@ -15,12 +15,13 @@ class _AboutUsViewState extends State<AboutUsView> {
   late VideoPlayerController _controller;
 
   // Firestore instance
-  // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  // List<Map<String, dynamic>> statsData = [];
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  List<Map<String, dynamic>> statsData = [];
 
   @override
   void initState() {
     super.initState();
+    _fetchStats(); // Fetch data when the screen is initialized
     _controller = VideoPlayerController.asset('assets/video.mp4')
       ..initialize().then((_) {
         setState(() {});
@@ -29,17 +30,17 @@ class _AboutUsViewState extends State<AboutUsView> {
       });
   }
 
-  // Future<void> _fetchStats() async {
-  //   try {
-  //     // Fetch data from Firestore
-  //     QuerySnapshot snapshot = await _firestore.collection('stats').get();
-  //     setState(() {
-  //       statsData = snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
-  //     });
-  //   } catch (e) {
-  //     print("Error fetching Stats: $e");
-  //   }
-  // }
+  Future<void> _fetchStats() async {
+    try {
+      // Fetch data from Firestore
+      QuerySnapshot snapshot = await _firestore.collection('stats').get();
+      setState(() {
+        statsData = snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+      });
+    } catch (e) {
+      print("Error fetching Stats: $e");
+    }
+  }
 
   @override
   void dispose() {
@@ -50,7 +51,14 @@ class _AboutUsViewState extends State<AboutUsView> {
 
   @override
   Widget build(BuildContext context) {
-    
+
+// final List<Map<String, dynamic>> tableData = [
+//   {"value": 50, "label": "Project"},
+//   {"value": 30, "label": "Clients et partenaires"},
+//   {"value": 6, "label": "Années d'expérience"},
+//   {"value": 2, "label": "Filiales"},
+// ];
+
     return SafeArea(
       child: Scaffold(
         body: CustomScrollView(
@@ -377,121 +385,53 @@ class _AboutUsViewState extends State<AboutUsView> {
 
                     //const SizedBox(height: 40,),
 
-                    Table(
-                      //border: TableBorder.all(color: Colors.grey), // Border for the table
-                      children: [
-                        TableRow(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(8),
-                              child:  Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  // const Text(
-                                  //   "50+",
-                                  //   style: TextStyle(fontSize: 30, color: ui.Color.fromARGB(255, 168, 168, 168)),
-                                  // ).animate(onPlay: (controller) => controller.repeat())
-                                  //   .shimmer(duration: 3000.ms, color: Colors.deepOrange),
-                                  
-                                  //       const Text(
-                                  //         "Project",
-                                  //         style: TextStyle(fontSize: 17, color: Colors.white),
-                                  //       ),
+Table(
+  // Optionally, set a border for the table
+  columnWidths: const {
+    0: FlexColumnWidth(1),
+    1: FlexColumnWidth(1),
+  },
+  children: [
+    for (int i = 0; i < statsData.length; i += 2)
+      TableRow(
+        children: [
+          Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(8),
+            child: AnimatedNumberWidget(
+              endValue: statsData[i]["value"],
+              label: statsData[i]["label"],
+            ),
+          ),
+          Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(8),
+            child: AnimatedNumberWidget(
+              endValue: statsData[i + 1]["value"],
+              label: statsData[i + 1]["label"],
+            ),
+          ),
+        ],
+      ),
+  ],
+),
 
-                                  Container(
-                                    padding: const EdgeInsets.all(8),
-                                    child: const AnimatedNumberWidget(
-                                      endValue: 50,
-                                      label: "Project",
-                                    ),
-                                  ),
-                                  
-                                ],
-                              ),
-                             ),
-                            Container(
-                              // padding: const EdgeInsets.all(8),
-                              // child: Column(
-                              //   mainAxisAlignment: MainAxisAlignment.center,
-                              //   crossAxisAlignment: CrossAxisAlignment.center,
-                              //   children: [
-                              //     const Text(
-                              //       "30+",
-                              //       style: TextStyle(fontSize: 30, color: ui.Color.fromARGB(255, 168, 168, 168)),
-                              //     ).animate(onPlay: (controller) => controller.repeat())
-                              //       .shimmer(duration: 3000.ms, color: Colors.deepOrange),
-                              //     const Text(
-                              //       "Clients et partenaires",
-                              //       style: TextStyle(fontSize: 17, color: Colors.white),
-                              //     ),
-                              //   ],
-                              // ),
-                              padding: const EdgeInsets.all(8),
-                              child: const AnimatedNumberWidget(
-                                endValue: 30,
-                                label: "Clients et partenaires",
-                              ),
-                            ),
-                          ],
-                        ),
-                        TableRow(
-                          children: [
-                            Container(
-                              // padding: const EdgeInsets.all(8),
-                              // child: Column(
-                              //   mainAxisAlignment: MainAxisAlignment.center,
-                              //   crossAxisAlignment: CrossAxisAlignment.center,
-                              //   children: [
-                              //     const Text(
-                              //       "6",
-                              //       style: TextStyle(fontSize: 30, color: ui.Color.fromARGB(255, 168, 168, 168)),
-                              //     ).animate(onPlay: (controller) => controller.repeat())
-                              //       .shimmer(duration: 3000.ms, color: Colors.deepOrange),
-                              //     const Text(
-                              //       "Années d'expérience",
-                              //       style: TextStyle(fontSize: 17, color: Colors.white),
-                              //     ),
-                              //   ],
-                              // ),
-                              padding: const EdgeInsets.all(8),
-                              child: const AnimatedNumberWidget(
-                                endValue: 6,
-                                label: "Années d'expérience",
-                              ),
-                            ),
-                            Container(
-                              // padding: const EdgeInsets.all(8),
-                              // child:  Column(
-                              //   mainAxisAlignment: MainAxisAlignment.center,
-                              //   crossAxisAlignment: CrossAxisAlignment.center,
-                              //   children: [
-                              //     const Text(
-                              //       "2",
-                              //       style: TextStyle(fontSize: 30, color: ui.Color.fromARGB(255, 168, 168, 168)),
-                              //     ).animate(onPlay: (controller) => controller.repeat())
-                              //       .shimmer(duration: 3000.ms, color: Colors.deepOrange),
-                              //     const Text(
-                              //       "Filiales",
-                              //       style: TextStyle(fontSize: 17, color: Colors.white),
-                              //     ),
-                              //   ],
-                              // ),
-                              padding: const EdgeInsets.all(8),
-                              child: const AnimatedNumberWidget(
-                                endValue: 2,
-                                label: "Filiales",
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-        //             .animate(onPlay: (controller) => controller.repeat())
-        // .shimmer(duration: 1200.ms, color: ui.Color.fromARGB(255, 192, 41, 0))
-        // .animate() // this wraps the previous Animate in another Animate
-        // .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
-        // .slide(),
+          // padding: const EdgeInsets.all(8),
+          // child:  Column(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   crossAxisAlignment: CrossAxisAlignment.center,
+          //   children: [
+          //     const Text(
+          //       "2",
+          //       style: TextStyle(fontSize: 30, color: ui.Color.fromARGB(255, 168, 168, 168)),
+          //     ).animate(onPlay: (controller) => controller.repeat())
+          //       .shimmer(duration: 3000.ms, color: Colors.deepOrange),
+          //     const Text(
+          //       "Filiales",
+          //       style: TextStyle(fontSize: 17, color: Colors.white),
+          //     ),
+          //   ],
+          // ),
 
                     const SizedBox(height: 50,),
 
@@ -618,10 +558,10 @@ class AnimatedNumberWidget extends StatefulWidget {
   final String label;
 
   const AnimatedNumberWidget({
-    Key? key,
+    super.key,
     required this.endValue,
     required this.label,
-  }) : super(key: key);
+  });
 
   @override
   _AnimatedNumberWidgetState createState() => _AnimatedNumberWidgetState();
