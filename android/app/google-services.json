@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "662039345975",
+    "project_id": "letaff-c16f5",
+    "storage_bucket": "letaff-c16f5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:662039345975:android:6fd9db8f900a41abc5f8b2",
+        "android_client_info": {
+          "package_name": "com.example.letaff"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0QZzMNYD2WZO-MSpVZr1B9Fy1FqGglDo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

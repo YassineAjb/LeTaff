@@ -1,9 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'dart:async';
 import 'package:url_launcher/url_launcher.dart';
-
 
 class PortfolioView extends StatefulWidget {
   const PortfolioView({super.key});
@@ -13,162 +13,153 @@ class PortfolioView extends StatefulWidget {
 }
 
 class _PortfolioViewState extends State<PortfolioView> {
-  late ScrollController _scrollController;
-  Timer? _autoScrollTimer;
+  final ScrollController _scrollController = ScrollController();
+  Timer? _scrollTimer;
+
+  // Firestore instance
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  List<Map<String, dynamic>> projectData = [];
 
   @override
   void initState() {
     super.initState();
-    _scrollController = ScrollController();
+    
+    _fetchProjects(); // Fetch data when the screen is initialized
+    print("-------------------------------------------------");
+    print(projectData);
+    print("-------------------------------------------------");
+
+        // Trigger the animations when the page is opened
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _startAutoScroll();
+      setState(() {
+        // This rebuilds the widget to start the animations
+      });
+    });
+    _startAutoScroll();
+  }
+
+  Future<void> _fetchProjects() async {
+    try {
+      // Fetch data from Firestore
+      QuerySnapshot snapshot = await _firestore.collection('projects').get();
+      setState(() {
+        projectData = snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+      });
+    } catch (e) {
+      print("Error fetching projects: $e");
+    }
+  }
+
+  Future<void> _launchURL(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
+void _startAutoScroll() {
+    _scrollTimer = Timer.periodic(const Duration(seconds: 3), (timer) {
+      if (_scrollController.hasClients) {
+        final double maxScrollExtent = _scrollController.position.maxScrollExtent;
+        final double currentScrollPosition = _scrollController.position.pixels;
+
+        if (currentScrollPosition < maxScrollExtent) {
+          _scrollController.animateTo(
+            currentScrollPosition + 380, // Adjust this value as needed
+            duration: const Duration(seconds: 1),
+            curve: Curves.easeInOut,
+          );
+        } else {
+          _scrollController.animateTo(
+            0,
+            duration: const Duration(seconds: 1),
+            curve: Curves.easeInOut,
+          );
+        }
+      }
     });
   }
-
-Future<void> _launchURL(String url) async {
-  final Uri uri = Uri.parse(url);
-  if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-    throw Exception('Could not launch $url');
-  }
-}
-
-  void _startAutoScroll() {
-  const duration = Duration(seconds: 3);
-  _autoScrollTimer = Timer.periodic(duration, (timer) {
-    if (_scrollController.hasClients) {
-      final maxScrollExtent = _scrollController.position.maxScrollExtent;
-      final currentScrollPosition = _scrollController.position.pixels;
-      final targetPosition = currentScrollPosition + 360;
-
-      if (targetPosition >= maxScrollExtent) {
-        _scrollController.animateTo(
-          0.0,
-          duration: const Duration(seconds: 1),
-          curve: Curves.easeInOut,
-        );
-      } else {
-        _scrollController.animateTo(
-          targetPosition,
-          duration: const Duration(seconds: 1),
-          curve: Curves.easeInOut,
-        );
-      }
-    }
-  });
-}
 
 
   @override
   void dispose() {
-    _autoScrollTimer?.cancel();
+    _scrollTimer?.cancel();
     _scrollController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> projectData = [
-      {
-        'title': 'ACADEMINY',
-        'date': 'Octobre 3,2023',
-        'image': 'assets/Academiny-770x980.jpg',
-        'isVisible': true,
-      },
-      {
-        'title': 'SAVONNERIE ZEN',
-        'date': 'Octobre 3,2023',
-        'image': 'assets/Savonnerie-Zen-770x852.jpg',
-        'isVisible': true,
-      },
-      {
-        'title': 'ABSQJ',
-        'date': 'Octobre 4,2023',
-        'image': 'assets/abqsj-770x852.jpg',
-        'isVisible': true,
-      },
-      {
-        'title': 'CLINIQUE RADIOLOGIQUE',
-        'date': 'Octobre 4,2023',
-        'image': 'assets/Clinique-radiologique-770x853.jpg',
-        'isVisible': true,
-      },
-      {
-        'title': 'LA FERME DE POULIN',
-        'date': 'Octobre 4,2023',
-        'image': 'assets/La-ferme-de-Poulin-770x934.jpg',
-        'isVisible': true,
-      },
-      {
-        'title': 'BANKAI',
-        'date': 'Octobre 4,2023',
-        'image': 'assets/bankai-770x853.jpg',
-        'isVisible': true,
-      },
-    ];
-
     return SafeArea(
       child: Scaffold(
-        body: CustomScrollView(
-          slivers: [
-            const SliverToBoxAdapter(child: SizedBox(height: 20)),
-            SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  Container(
-                    height: 100,
-                    color: Colors.black,
-                    child: Center(
-                      child: Image.asset('assets/le-taff-logo-1.png'),
+        body: projectData.isEmpty
+            ? const Center(child: CircularProgressIndicator())
+            : CustomScrollView(
+                slivers: [
+                  const SliverToBoxAdapter(child: SizedBox(height: 20)),
+                  SliverToBoxAdapter(
+                    child: Container(
+                      height: 100,
+                      color: Colors.black,
+                      child: Center(
+                        child: Image.asset('assets/le-taff-logo-1.png'),
+                      ),
                     ),
                   ),
-                  const Divider(
-                    color: Colors.grey,
-                    thickness: 1,
-                    indent: 30,
-                    endIndent: 30,
+                  const SliverToBoxAdapter(
+                    child: Divider(
+                      color: Colors.grey,
+                      thickness: 1,
+                      indent: 30,
+                      endIndent: 30,
+                    ),
                   ),
-                ],
-              ),
-            ),
-            const SliverToBoxAdapter(child: SizedBox(height: 20)),
-            SliverToBoxAdapter(
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "PORTFOLIO DE",
-                      style: TextStyle(
-                        color: Colors.deepOrange,
-                        fontSize: 30.0,
+                  const SliverToBoxAdapter(child: SizedBox(height: 20)),
+                  SliverToBoxAdapter(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "PORTFOLIO DE",
+                            style: TextStyle(
+                              color: Colors.deepOrange,
+                              fontSize: 30.0,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            "Réalisations",
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 120, 120, 120),
+                              fontSize: 69.0,
+                              height: 0.9,
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          Text(
+                            "Découvrez notre portfolio de réalisations, une collection visuelle de nos sites web et applications exceptionnels. Explorez nos réalisations pour voir comment nous transformons les idées en expériences numériques de premier ordre.",
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 221, 221, 221),
+                              fontSize: 19.0,
+                              height: 1.5,
+                            ),
+                          ),
+                          SizedBox(height: 40),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      "Réalisations",
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 120, 120, 120),
-                        fontSize: 69.0,
-                        height: 0.9,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    const Text(
-                      "Découvrez notre portfolio de réalisations, une collection visuelle de nos sites web et applications exceptionnels. Explorez nos réalisations pour voir comment nous transformons les idées en expériences numériques de premier ordre.",
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 221, 221, 221),
-                        fontSize: 19.0,
-                        height: 1.5,
-                      ),
-                    ),
-                    const SizedBox(height: 40),
-                    const SizedBox(height: 20),
-                    SingleChildScrollView(
-                      controller: _scrollController,
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: projectData.map((project) {
+                  ),
+                  SliverToBoxAdapter(
+                    child: Container(
+                      height: 340, // Set a fixed height for the project section
+                      child: ListView.builder(
+                        controller: _scrollController,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: projectData.length,
+                        itemBuilder: (context, index) {
+                          final project = projectData[index];
                           return VisibilityDetector(
                             key: Key(project['title']),
                             onVisibilityChanged: (info) {
@@ -179,8 +170,7 @@ Future<void> _launchURL(String url) async {
                               }
                             },
                             child: Container(
-                              width: 350,
-                              height: 340,
+                              width: 380,
                               margin: const EdgeInsets.symmetric(horizontal: 10.0),
                               decoration: BoxDecoration(
                                 color: const Color.fromARGB(255, 24, 24, 24),
@@ -200,12 +190,12 @@ Future<void> _launchURL(String url) async {
                                   children: [
                                     Image.asset(
                                       project['image'],
-                                      width: 350,
+                                      width: 380,
                                       height: 340,
                                       fit: BoxFit.cover,
                                     ),
                                     Container(
-                                      width: 350,
+                                      width: 380,
                                       height: 340,
                                       padding: const EdgeInsets.all(16.0),
                                       decoration: BoxDecoration(
@@ -220,79 +210,55 @@ Future<void> _launchURL(String url) async {
                                         ),
                                       ),
                                     ),
-                                    // Positioned(
-                                    //   top: 16.0,
-                                    //   left: 16.0,
-                                    //   child: project['isVisible']
-                                    //       ? Container(
-                                    //           padding: const EdgeInsets.all(8.0),
-                                    //           decoration: BoxDecoration(
-                                    //             color: Colors.black.withOpacity(0.4),
-                                    //             borderRadius: BorderRadius.circular(12.0),
-                                    //           ),
-                                    //           child: Text(
-                                    //             project['title'],
-                                    //             style: const TextStyle(
-                                    //               color: Colors.deepOrange,
-                                    //               fontSize: 24.0,
-                                    //               fontWeight: FontWeight.bold,
-                                    //             ),
-                                    //           ).animate()
-                                    //             .fade(duration: 1000.ms)
-                                    //             .scale(delay: 1000.ms),
-                                    //                                                       )
-                                    //       : Container(),
-                                    // ),
                                     Positioned(
-                                    top: 16.0,
-                                    left: 16.0,
-                                    child: project['isVisible']
-                                      ? Container(
-                                        padding: const EdgeInsets.all(8.0),
-                                        decoration: BoxDecoration(
-                                          color: Colors.black.withOpacity(0.4),
-                                          borderRadius: BorderRadius.circular(12.0),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              project['title'],
-                                              style: const TextStyle(
-                                                color: Colors.deepOrange,
-                                                fontSize: 24.0,
-                                                fontWeight: FontWeight.bold,
+                                      top: 16.0,
+                                      left: 16.0,
+                                      child: project['isVisible']
+                                          ? Container(
+                                              padding: const EdgeInsets.all(8.0),
+                                              decoration: BoxDecoration(
+                                                color: Colors.black.withOpacity(0.4),
+                                                borderRadius: BorderRadius.circular(12.0),
                                               ),
-                                            ).animate().fade(duration: 1000.ms).scale(delay: 1000.ms),
-                                            const SizedBox(height: 8.0), // Space between title and date
-                                            Text(
-                                              project['date'],
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 16.0,
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    project['title'],
+                                                    style: const TextStyle(
+                                                      color: Colors.deepOrange,
+                                                      fontSize: 24.0,
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
+                                                  ).animate().fade(duration: 1000.ms).scale(delay: 1000.ms),
+                                                  const SizedBox(height: 8.0),
+                                                  Text(
+                                                    project['date'],
+                                                    style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 16.0,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                      : Container(),
-                                  ),
-
+                                            )
+                                          : Container(),
+                                    ),
                                   ],
                                 ),
                               ),
                             ),
                           );
-                        }).toList(),
+                        },
                       ),
                     ),
-                    const SizedBox(height: 40),
-                    
-                    Center(
+                  ),
+                  const SliverToBoxAdapter(child: SizedBox(height: 40)),
+                  SliverToBoxAdapter(
+                    child: Center(
                       child: Container(
                         padding: const EdgeInsets.all(16.0),
                         decoration: BoxDecoration(
-                          //color: Colors.grey[800],
                           borderRadius: BorderRadius.circular(90.0),
                           boxShadow: [
                             BoxShadow(
@@ -303,8 +269,8 @@ Future<void> _launchURL(String url) async {
                             ),
                           ],
                           border: Border.all(
-                            color: Colors.white, // Set the border color
-                            width: 1.5, // Set the border width
+                            color: Colors.white,
+                            width: 1.5,
                           ),
                         ),
                         child: const Text(
@@ -316,11 +282,12 @@ Future<void> _launchURL(String url) async {
                         ),
                       ),
                     ),
-                    Center(
+                  ),
+                  SliverToBoxAdapter(
+                    child: Center(
                       child: Container(
                         padding: const EdgeInsets.all(16.0),
                         decoration: BoxDecoration(
-                          //color: Colors.grey[800],
                           borderRadius: BorderRadius.circular(90.0),
                           boxShadow: [
                             BoxShadow(
@@ -341,43 +308,41 @@ Future<void> _launchURL(String url) async {
                         ),
                       ),
                     ),
-                    Center(
+                  ),
+                  SliverToBoxAdapter(
+                    child: Center(
                       child: SizedBox(
-                        width: 120, // Adjust to the desired diameter
-                        height: 120, // Must match the width to make it a circle
+                        width: 120,
+                        height: 120,
                         child: ElevatedButton(
                           onPressed: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(builder: (context) => AboutUsView()),
-                            // );
-                    
                             Navigator.pushNamed(context, '/contact');
                             print('Navigating to ContactView...');
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(90), // Half of width/height for a circle
-                           side: const BorderSide(
-                              color: Color.fromARGB(255, 115, 115, 115), // Border color
-                              width: 2.5, // Border width
+                              borderRadius: BorderRadius.circular(90),
+                              side: const BorderSide(
+                                color: Color.fromARGB(255, 115, 115, 115),
+                                width: 2.5,
+                              ),
                             ),
-                            ),
-                            padding: EdgeInsets.zero, // Remove padding to ensure circular shape
+                            padding: EdgeInsets.zero,
                           ),
                           child: const Center(
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
-                                  "Parlons\nNous",textAlign: TextAlign.center,
+                                  "Parlons\nNous",
+                                  textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.deepOrange,
                                     fontSize: 19,
                                   ),
                                 ),
-                                SizedBox(width: 2), // Add some spacing between text and icon
+                                SizedBox(width: 2),
                                 Icon(
                                   Icons.moving,
                                   color: Colors.deepOrange,
@@ -389,10 +354,19 @@ Future<void> _launchURL(String url) async {
                         ),
                       ),
                     ),
-
-                    const SizedBox(height: 50),
-                    // Social Media Buttons
-                    Center(
+                  ),
+                  const SliverToBoxAdapter(child: SizedBox(height: 50)),
+                  
+                  const SliverToBoxAdapter(
+                    child: Divider(
+                    color: Colors.grey,
+                    thickness: 1,
+                    indent: 30,
+                    endIndent: 30,
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Center(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -402,8 +376,8 @@ Future<void> _launchURL(String url) async {
                           ),
                           const SizedBox(width: 0),
                           IconButton(
-                            icon: Image.asset('assets/face5.png', width: 45, height: 45),
-                            onPressed: () => _launchURL('https://www.facebook.com'),
+                            icon: Image.asset('assets/beIcon.png', width: 45, height: 45),
+                            onPressed: () => _launchURL('https://www.linkedin.com'),
                           ),
                           const SizedBox(width: 0),
                           IconButton(
@@ -411,28 +385,22 @@ Future<void> _launchURL(String url) async {
                             onPressed: () => _launchURL('https://www.instagram.com'),
                           ),
                           const SizedBox(width: 0),
-                          // PACKAGE PROBLEM !!!!!!!!!!
-                          // IconButton(
-                          //   icon: const Icon(Icons.facebook, color: Colors.deepOrange, size: 30,),
-                          //   onPressed: () => _launchURL('https://www.facebook.com'),
-                          // ),
-                          // IconButton(
-                          //   icon: Icon(FlutterSocialIcons.linkedin, color: Colors.blue),
-                          //   onPressed: () => _launchURL('https://www.linkedin.com'),
-                          // ),
+                          IconButton(
+                            icon: Image.asset('assets/face5.png', width: 45, height: 45),
+                            onPressed: () => _launchURL('https://www.facebook.com'),
+                          ),
+                          IconButton(
+                            icon: Image.asset('assets/tiktokicon.png', width: 45, height: 45),
+                            onPressed: () => _launchURL('https://www.instagram.com'),
+                          ),
+                          const SizedBox(width: 0),
                         ],
                       ),
                     ),
-
-                  ],
-                ),
+                  ),
+                  const SliverToBoxAdapter(child: SizedBox(height: 50)),
+                ],
               ),
-            ),
-
-            const SliverToBoxAdapter(child: SizedBox(height: 50)),
-
-          ],
-        ),
       ),
     );
   }

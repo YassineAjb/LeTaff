@@ -1,8 +1,9 @@
 import 'dart:ui' as ui;
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:video_player/video_player.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class AboutUsView extends StatefulWidget {
 
@@ -12,6 +13,10 @@ class AboutUsView extends StatefulWidget {
 
 class _AboutUsViewState extends State<AboutUsView> {
   late VideoPlayerController _controller;
+
+  // Firestore instance
+  // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  // List<Map<String, dynamic>> statsData = [];
 
   @override
   void initState() {
@@ -23,6 +28,18 @@ class _AboutUsViewState extends State<AboutUsView> {
         _controller.setLooping(true);
       });
   }
+
+  // Future<void> _fetchStats() async {
+  //   try {
+  //     // Fetch data from Firestore
+  //     QuerySnapshot snapshot = await _firestore.collection('stats').get();
+  //     setState(() {
+  //       statsData = snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+  //     });
+  //   } catch (e) {
+  //     print("Error fetching Stats: $e");
+  //   }
+  // }
 
   @override
   void dispose() {
@@ -371,18 +388,28 @@ class _AboutUsViewState extends State<AboutUsView> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  const Text(
-                                    "50+",
-                                    style: TextStyle(fontSize: 30, color: ui.Color.fromARGB(255, 168, 168, 168)),
-                                  ).animate(onPlay: (controller) => controller.repeat())
-                                    .shimmer(duration: 3000.ms, color: Colors.deepOrange),
-                                  const Text(
-                                    "Project",
-                                    style: TextStyle(fontSize: 17, color: Colors.white),
+                                  // const Text(
+                                  //   "50+",
+                                  //   style: TextStyle(fontSize: 30, color: ui.Color.fromARGB(255, 168, 168, 168)),
+                                  // ).animate(onPlay: (controller) => controller.repeat())
+                                  //   .shimmer(duration: 3000.ms, color: Colors.deepOrange),
+                                  
+                                  //       const Text(
+                                  //         "Project",
+                                  //         style: TextStyle(fontSize: 17, color: Colors.white),
+                                  //       ),
+
+                                  Container(
+                                    padding: const EdgeInsets.all(8),
+                                    child: const AnimatedNumberWidget(
+                                      endValue: 50,
+                                      label: "Project",
+                                    ),
                                   ),
+                                  
                                 ],
                               ),
-                            ),
+                             ),
                             Container(
                               padding: const EdgeInsets.all(8),
                               child: Column(
@@ -566,6 +593,71 @@ class _AboutUsViewState extends State<AboutUsView> {
 
           ],
         ),
+      ),
+    );
+  }
+}
+
+class AnimatedNumberWidget extends StatefulWidget {
+  final int endValue;
+  final String label;
+
+  const AnimatedNumberWidget({
+    Key? key,
+    required this.endValue,
+    required this.label,
+  }) : super(key: key);
+
+  @override
+  _AnimatedNumberWidgetState createState() => _AnimatedNumberWidgetState();
+}
+
+class _AnimatedNumberWidgetState extends State<AnimatedNumberWidget> {
+  int _currentValue = 40;
+
+  @override
+  Widget build(BuildContext context) {
+    return VisibilityDetector(
+      key: Key(widget.label),
+      onVisibilityChanged: (VisibilityInfo info) {
+        if (info.visibleFraction > 0.5) {
+          // Start the animation when the widget is visible
+          setState(() {
+            _currentValue = widget.endValue;
+          });
+        } else if (info.visibleFraction == 0) {
+          // Reset the number when the widget is no longer visible
+          setState(() {
+            _currentValue = 40;
+          });
+        }
+      },
+      child: TweenAnimationBuilder<int>(
+        tween: IntTween(begin: 40, end: _currentValue),
+        duration: const Duration(seconds: 1),
+        builder: (context, value, child) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "$value+",
+                style: const TextStyle(
+                  fontSize: 30,
+                  color: Color.fromARGB(255, 168, 168, 168),
+                ),
+              ).animate(onPlay: (controller) => controller.repeat())
+                .shimmer(duration: 3000.ms, color: Colors.deepOrange),
+              Text(
+                widget.label,
+                style: const TextStyle(
+                  fontSize: 17,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
