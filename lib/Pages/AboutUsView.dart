@@ -411,21 +411,26 @@ class _AboutUsViewState extends State<AboutUsView> {
                               ),
                              ),
                             Container(
+                              // padding: const EdgeInsets.all(8),
+                              // child: Column(
+                              //   mainAxisAlignment: MainAxisAlignment.center,
+                              //   crossAxisAlignment: CrossAxisAlignment.center,
+                              //   children: [
+                              //     const Text(
+                              //       "30+",
+                              //       style: TextStyle(fontSize: 30, color: ui.Color.fromARGB(255, 168, 168, 168)),
+                              //     ).animate(onPlay: (controller) => controller.repeat())
+                              //       .shimmer(duration: 3000.ms, color: Colors.deepOrange),
+                              //     const Text(
+                              //       "Clients et partenaires",
+                              //       style: TextStyle(fontSize: 17, color: Colors.white),
+                              //     ),
+                              //   ],
+                              // ),
                               padding: const EdgeInsets.all(8),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Text(
-                                    "30+",
-                                    style: TextStyle(fontSize: 30, color: ui.Color.fromARGB(255, 168, 168, 168)),
-                                  ).animate(onPlay: (controller) => controller.repeat())
-                                    .shimmer(duration: 3000.ms, color: Colors.deepOrange),
-                                  const Text(
-                                    "Clients et partenaires",
-                                    style: TextStyle(fontSize: 17, color: Colors.white),
-                                  ),
-                                ],
+                              child: const AnimatedNumberWidget(
+                                endValue: 30,
+                                label: "Clients et partenaires",
                               ),
                             ),
                           ],
@@ -433,39 +438,49 @@ class _AboutUsViewState extends State<AboutUsView> {
                         TableRow(
                           children: [
                             Container(
+                              // padding: const EdgeInsets.all(8),
+                              // child: Column(
+                              //   mainAxisAlignment: MainAxisAlignment.center,
+                              //   crossAxisAlignment: CrossAxisAlignment.center,
+                              //   children: [
+                              //     const Text(
+                              //       "6",
+                              //       style: TextStyle(fontSize: 30, color: ui.Color.fromARGB(255, 168, 168, 168)),
+                              //     ).animate(onPlay: (controller) => controller.repeat())
+                              //       .shimmer(duration: 3000.ms, color: Colors.deepOrange),
+                              //     const Text(
+                              //       "Années d'expérience",
+                              //       style: TextStyle(fontSize: 17, color: Colors.white),
+                              //     ),
+                              //   ],
+                              // ),
                               padding: const EdgeInsets.all(8),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Text(
-                                    "6",
-                                    style: TextStyle(fontSize: 30, color: ui.Color.fromARGB(255, 168, 168, 168)),
-                                  ).animate(onPlay: (controller) => controller.repeat())
-                                    .shimmer(duration: 3000.ms, color: Colors.deepOrange),
-                                  const Text(
-                                    "Années d'expérience",
-                                    style: TextStyle(fontSize: 17, color: Colors.white),
-                                  ),
-                                ],
+                              child: const AnimatedNumberWidget(
+                                endValue: 6,
+                                label: "Années d'expérience",
                               ),
                             ),
                             Container(
+                              // padding: const EdgeInsets.all(8),
+                              // child:  Column(
+                              //   mainAxisAlignment: MainAxisAlignment.center,
+                              //   crossAxisAlignment: CrossAxisAlignment.center,
+                              //   children: [
+                              //     const Text(
+                              //       "2",
+                              //       style: TextStyle(fontSize: 30, color: ui.Color.fromARGB(255, 168, 168, 168)),
+                              //     ).animate(onPlay: (controller) => controller.repeat())
+                              //       .shimmer(duration: 3000.ms, color: Colors.deepOrange),
+                              //     const Text(
+                              //       "Filiales",
+                              //       style: TextStyle(fontSize: 17, color: Colors.white),
+                              //     ),
+                              //   ],
+                              // ),
                               padding: const EdgeInsets.all(8),
-                              child:  Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Text(
-                                    "2",
-                                    style: TextStyle(fontSize: 30, color: ui.Color.fromARGB(255, 168, 168, 168)),
-                                  ).animate(onPlay: (controller) => controller.repeat())
-                                    .shimmer(duration: 3000.ms, color: Colors.deepOrange),
-                                  const Text(
-                                    "Filiales",
-                                    style: TextStyle(fontSize: 17, color: Colors.white),
-                                  ),
-                                ],
+                              child: const AnimatedNumberWidget(
+                                endValue: 2,
+                                label: "Filiales",
                               ),
                             ),
                           ],
@@ -613,7 +628,14 @@ class AnimatedNumberWidget extends StatefulWidget {
 }
 
 class _AnimatedNumberWidgetState extends State<AnimatedNumberWidget> {
-  int _currentValue = 40;
+  late int _currentValue;
+
+  @override
+void initState() {
+  super.initState();
+  // Initialize _currentValue in initState
+  _currentValue = (widget.endValue - 10).clamp(0, double.infinity).toInt();
+}
 
   @override
   Widget build(BuildContext context) {
@@ -628,12 +650,17 @@ class _AnimatedNumberWidgetState extends State<AnimatedNumberWidget> {
         } else if (info.visibleFraction == 0) {
           // Reset the number when the widget is no longer visible
           setState(() {
-            _currentValue = 40;
+            _currentValue = (widget.endValue - 10).clamp(0, double.infinity).toInt();
           });
         }
       },
-      child: TweenAnimationBuilder<int>(
-        tween: IntTween(begin: 40, end: _currentValue),
+      // child: TweenAnimationBuilder<int>(
+      //   tween: IntTween(begin: widget.endValue - 10, end: _currentValue),
+        child: TweenAnimationBuilder<int>(
+        tween: IntTween(
+          begin: (widget.endValue - 10).clamp(0, double.infinity).toInt(),
+          end: _currentValue
+        ),
         duration: const Duration(seconds: 1),
         builder: (context, value, child) {
           return Column(
