@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -12,15 +13,32 @@ class CareerView extends StatefulWidget {
 class _CareerViewState extends State<CareerView> {
   late VideoPlayerController _controller;
 
+  // Firestore instance
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  List<Map<String, dynamic>> postesData = [];
+
   @override
   void initState() {
     super.initState();
+    _fetchPostes(); // Fetch data when the screen is initialized
     _controller = VideoPlayerController.asset('assets/REJOIGNEZNOUSvd.mp4')
       ..initialize().then((_) {
         setState(() {});
         _controller.play();
         _controller.setLooping(true);
       });
+  }
+
+Future<void> _fetchPostes() async {
+    try {
+      // Fetch data from Firestore
+      QuerySnapshot snapshot = await _firestore.collection('poste').get();
+      setState(() {
+        postesData = snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+      });
+    } catch (e) {
+      print("Error fetching postes: $e");
+    }
   }
 
 Future<void> _launchURL(String url) async {
@@ -38,33 +56,6 @@ Future<void> _launchURL(String url) async {
 
   @override
   Widget build(BuildContext context) {
-
-    final List<Map<String, dynamic>> PostesData = [
-      {
-        'title': 'Stage WEB',
-        'buttonText': 'Postuler',
-        'buttonAction': () {
-          _launchURL('https://www.google.com');
-          print("Form for Stage Web");
-        },
-      },
-      {
-        'title': 'Stage Mobile',
-        'buttonText': 'Postuler',
-        'buttonAction': () {
-          _launchURL('https://www.google.com');
-          print("Form for Stage Mobile");
-        },
-      },
-      {
-        'title': 'Stage Design',
-        'buttonText': 'Postuler',
-        'buttonAction': () {
-          _launchURL('https://www.google.com');
-          print("Form for Stage Design");
-        },
-      },
-      ];
 
 final List<Map<String, dynamic>> conseilData = [
       {
@@ -84,9 +75,9 @@ final List<Map<String, dynamic>> conseilData = [
 Widget buildPostesListe() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
-    children: PostesData.map((poste) {
+    children: postesData.map((poste) {
       return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        padding: const EdgeInsets.symmetric(vertical: 12.0),
         child: Container(
           decoration: BoxDecoration(
                         color: const Color.fromARGB(255, 49, 49, 49),
@@ -115,9 +106,23 @@ Widget buildPostesListe() {
                   ),
                 ),
                 const SizedBox(height: 8.0),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0), 
+                  child: Text(
+                    poste['description'],
+                    style: const TextStyle(
+                      color: Color.fromARGB(255, 156, 156, 156),
+                      fontSize: 20.0,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8.0),
                 Center(
                   child: ElevatedButton(
-                    onPressed: poste['buttonAction'],
+                    onPressed: () {
+                      _launchURL(poste['link']); 
+                      print("Form for ${poste['title']}"); 
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black,
                       shape: RoundedRectangleBorder(
@@ -129,17 +134,17 @@ Widget buildPostesListe() {
                       ),
                       // padding: EdgeInsets.zero, 
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          poste['buttonText'],
-                          style: const TextStyle(
+                          'Postuler',
+                          style: TextStyle(
                             color: Colors.deepOrange,
                           ),
                         ),
-                        const SizedBox(width: 5.0),
-                        const Icon(
+                        SizedBox(width: 5.0),
+                        Icon(
                           Icons.moving,
                           color: Colors.deepOrange,
                           size: 30,
