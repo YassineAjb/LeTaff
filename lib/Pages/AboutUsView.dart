@@ -2,17 +2,21 @@ import 'dart:ui' as ui;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:letaff/Pages/ContactView.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class AboutUsView extends StatefulWidget {
-
+  
   @override
   _AboutUsViewState createState() => _AboutUsViewState();
 }
 
 class _AboutUsViewState extends State<AboutUsView> {
   late VideoPlayerController _controller;
+  final firebase_storage.FirebaseStorage _storage = firebase_storage.FirebaseStorage.instance;
+  String? _videoUrl;
 
   // Firestore instance
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -22,14 +26,34 @@ class _AboutUsViewState extends State<AboutUsView> {
   void initState() {
     super.initState();
     _fetchStats(); // Fetch data when the screen is initialized
-    _controller = VideoPlayerController.asset('assets/video.mp4')
-      ..initialize().then((_) {
-        setState(() {});
-        _controller.play();
-        _controller.setLooping(true);
-      });
+    // _controller = VideoPlayerController.asset('assets/video.mp4')
+    //   ..initialize().then((_) {
+    //     setState(() {});
+    //     _controller.play();
+    //     _controller.setLooping(true);
+    //   });
+    _fetchVideoUrl(); // Fetch video URL when the screen is initialized
+
   }
 
+Future<void> _fetchVideoUrl() async {
+  try {
+    String videoUrl = await _storage.ref('images/video.mp4').getDownloadURL();
+    setState(() {
+      _videoUrl = videoUrl;
+      _controller = VideoPlayerController.network(_videoUrl!)
+        ..initialize().then((_) {
+          setState(() {});
+          _controller.play();
+          _controller.setLooping(true);
+        });
+    });
+  } catch (e) {
+    print("Error fetching video: $e");
+  }
+}
+
+  
   Future<void> _fetchStats() async {
     try {
       // Fetch data from Firestore
@@ -51,13 +75,6 @@ class _AboutUsViewState extends State<AboutUsView> {
 
   @override
   Widget build(BuildContext context) {
-
-// final List<Map<String, dynamic>> tableData = [
-//   {"value": 50, "label": "Project"},
-//   {"value": 30, "label": "Clients et partenaires"},
-//   {"value": 6, "label": "Années d'expérience"},
-//   {"value": 2, "label": "Filiales"},
-// ];
 
     return SafeArea(
       child: Scaffold(
@@ -125,18 +142,7 @@ class _AboutUsViewState extends State<AboutUsView> {
                           Container(
                             //width: 250,
                             padding: const EdgeInsets.all(16.0),
-                            /*decoration: BoxDecoration(
-                              //color: Colors.grey[800],
-                              borderRadius: BorderRadius.circular(90.0),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.5),
-                                  spreadRadius: 2,
-                                  blurRadius: 5,
-                                  offset: const Offset(0, 3),
-                                ),
-                              ],
-                            ),*/
+                            
                             child: const Text(
                               "Notre agence de développement multinationale spécialisée dans la conception sur mesure de solutions web et d'applications mobiles adaptées à tous types de projets.",
                               //textAlign: TextAlign.center,
@@ -195,12 +201,25 @@ class _AboutUsViewState extends State<AboutUsView> {
                   ),  
                   const SizedBox(height: 50),
 
-                  _controller.value.isInitialized
-                  ? SizedBox(
-                      height: 200,
+                  if (_controller.value.isInitialized)
+                    AspectRatio(
+                      aspectRatio: _controller.value.aspectRatio,
                       child: VideoPlayer(_controller),
                     )
-                  : const CircularProgressIndicator(),
+                  else
+                    const Center(child: CircularProgressIndicator()),
+
+                  /*_controller.value.isInitialized 
+                  //? SizedBox(
+                  //     height: 200,
+                  //     child: VideoPlayer(_controller),
+                  //)
+                  ? AspectRatio(
+                    aspectRatio: _controller.value.aspectRatio,
+                    child: VideoPlayer(_controller),
+                  )
+                  : const CircularProgressIndicator(),*/
+
                   const SizedBox(height: 50),
 
                   const Text(     
@@ -258,20 +277,6 @@ class _AboutUsViewState extends State<AboutUsView> {
                         ),
                       ),
                     ),
-
-                    // Image.asset("assets/A-U-1.jpg")
-                    //   .animate(onPlay: (controller) => controller.repeat()) // Repeat animation indefinitely
-                    //   .shimmer(duration: 3000.ms), // Apply shimmer effect
-                    // Image.asset("assets/A-U-2.jpg")
-                    //   .animate(onPlay: (controller) => controller.repeat()) // Repeat animation indefinitely
-                    //   .shimmer(duration: 3000.ms), // Apply shimmer effect
-                    // Image.asset("assets/A-U-3.jpg")
-                    //   .animate(onPlay: (controller) => controller.repeat()) // Repeat animation indefinitely
-                    //   .shimmer(duration: 3000.ms), // Apply shimmer effect
-                    // Image.asset("assets/A-U-4.jpg")
-                    //   .animate(onPlay: (controller) => controller.repeat()) // Repeat animation indefinitely
-                    //   .shimmer(duration: 3000.ms), // Apply shimmer effect
-
 
                     SizedBox(
                       height: 450,
@@ -494,13 +499,13 @@ Table(
                         height: 120, // Must match the width to make it a circle
                         child: ElevatedButton(
                           onPressed: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(builder: (context) => AboutUsView()),
-                            // );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => ContactView()),
+                            );
                     
-                            Navigator.pushNamed(context, '/contact');
-                            print('Navigating to ContactView...');
+                            // Navigator.pushNamed(context, '/contact');
+                            // print('Navigating to ContactView...');
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black,

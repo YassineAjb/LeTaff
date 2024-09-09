@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:letaff/Pages/ContactView.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'dart:async';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:cached_network_image/cached_network_image.dart';
 
 class PortfolioView extends StatefulWidget {
   const PortfolioView({super.key});
@@ -13,6 +16,11 @@ class PortfolioView extends StatefulWidget {
 }
 
 class _PortfolioViewState extends State<PortfolioView> {
+  
+  final firebase_storage.FirebaseStorage _storage =
+      firebase_storage.FirebaseStorage.instance;
+  String? logoUrl;
+
   final ScrollController _scrollController = ScrollController();
   Timer? _scrollTimer;
 
@@ -29,6 +37,8 @@ class _PortfolioViewState extends State<PortfolioView> {
     print(projectData);
     print("-------------------------------------------------");
 
+    _fetchLogoUrl();
+    
         // Trigger the animations when the page is opened
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
@@ -36,6 +46,20 @@ class _PortfolioViewState extends State<PortfolioView> {
       });
     });
     _startAutoScroll();
+  }
+
+  Future<void> _fetchLogoUrl() async {
+    try {
+      // Get the download URL for the logo from Firebase Storage
+      String url = await _storage
+          .ref('images/le-taff-logo-1.png')
+          .getDownloadURL();
+      setState(() {
+        logoUrl = url;
+      });
+    } catch (e) {
+      print("Error fetching logo: $e");
+    }
   }
 
   Future<void> _fetchProjects() async {
@@ -102,7 +126,15 @@ void _startAutoScroll() {
                       height: 100,
                       color: Colors.black,
                       child: Center(
-                        child: Image.asset('assets/le-taff-logo-1.png'),
+                        child: logoUrl != null
+                            ? CachedNetworkImage(  // Cached image for the logo
+                                imageUrl: logoUrl!,
+                                placeholder: (context, url) => CircularProgressIndicator(),
+                                errorWidget: (context, url, error) => Icon(Icons.error),
+                              )
+                            : const CircularProgressIndicator(),
+                        // Image.network(logoUrl!),
+                        // Image.asset('assets/le-taff-logo-1.png'),
                       ),
                     ),
                   ),
@@ -188,11 +220,19 @@ void _startAutoScroll() {
                                 borderRadius: BorderRadius.circular(10.0),
                                 child: Stack(
                                   children: [
-                                    Image.asset(
-                                      project['image'],
+                                    // Image.asset(
+                                    //   project['image'],
+                                    //   width: 380,
+                                    //   height: 340,
+                                    //   fit: BoxFit.cover,
+                                    // ),
+                                    CachedNetworkImage(
+                                      imageUrl: project['image'], // Cached image
                                       width: 380,
                                       height: 340,
                                       fit: BoxFit.cover,
+                                      placeholder: (context, url) => CircularProgressIndicator(),
+                                      errorWidget: (context, url, error) => Icon(Icons.error),
                                     ),
                                     Container(
                                       width: 380,
@@ -315,9 +355,16 @@ void _startAutoScroll() {
                         width: 120,
                         height: 120,
                         child: ElevatedButton(
+                          // onPressed: () {
+                          //   Navigator.pushNamed(context, '/solutionweb');
+                          //   print('Navigating to ContactView...');
+                          // },
                           onPressed: () {
-                            Navigator.pushNamed(context, '/contact');
-                            print('Navigating to ContactView...');
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const ContactView(),
+                              ),
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black,

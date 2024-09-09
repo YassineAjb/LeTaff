@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:letaff/Pages/AboutUsView.dart';
 import 'package:letaff/Pages/PortfolioView.dart';
@@ -19,6 +22,66 @@ class HomeView extends StatefulWidget {
 }
   
 class _HomeViewState extends State<HomeView> {
+  final ScrollController _scrollController = ScrollController();
+  Timer? _scrollTimer;
+  // Firestore instance
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  List<Map<String, dynamic>> projectData = [];
+
+
+@override
+  void initState() {
+    super.initState();    
+    _fetchProjects(); // Fetch data when the screen is initialized
+
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        // This rebuilds the widget to start the animations
+      });
+    });
+    _startAutoScroll();
+  }
+
+  void _startAutoScroll() {
+    _scrollTimer = Timer.periodic(const Duration(seconds: 3), (timer) {
+      if (_scrollController.hasClients) {
+        final double maxScrollExtent = _scrollController.position.maxScrollExtent;
+        final double currentScrollPosition = _scrollController.position.pixels;
+
+        if (currentScrollPosition < maxScrollExtent) {
+          _scrollController.animateTo(
+            currentScrollPosition + 380, // Adjust this value as needed
+            duration: const Duration(seconds: 1),
+            curve: Curves.easeInOut,
+          );
+        } else {
+          _scrollController.animateTo(
+            0,
+            duration: const Duration(seconds: 1),
+            curve: Curves.easeInOut,
+          );
+        }
+      }
+    });
+  }
+  Future<void> _fetchProjects() async {
+    try {
+      // Fetch data from Firestore
+      QuerySnapshot snapshot = await _firestore.collection('projects').get();
+      setState(() {
+        projectData = snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+      });
+    } catch (e) {
+      print("Error fetching projects: $e");
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollTimer?.cancel();
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,34 +155,10 @@ class _HomeViewState extends State<HomeView> {
       },
     ];
 
- // Data for projects containers
-    final List<Map<String, dynamic>> ProjectData = [
-      {
-        'title': 'ACADEMINY',
-        'image': 'assets/Academiny.jpg',
-        'isVisible': true,
-      },
-      {
-        'title': 'SAVONNERIE\nZEN',
-        'image': 'assets/Savonnerie-Zen.jpg',
-        'isVisible': true,
-      },
-      {
-        'title': 'ABSQJ',
-        'image': 'assets/abqsj.jpg',
-        'isVisible': true,
-      },
-      {
-        'title': 'CLINIQUE RADIOLOGIQUE',
-        'image': 'assets/Clinique-radiologique.jpg',
-        'isVisible': true,
-      },
-    ];
-
-    final List<Map<String, String>> items = [
-  {"percentage": "95%", "label": "INNOVATION", "description": "Nous sommes constamment à la recherche de nouvelles idées et de solutions créatives pour répondre à vos besoins"},
-  {"percentage": "90%", "label": "FIABILITÉ", "description": "Vous pouvez compter sur notre fiabilité pour assurer la continuité de vos projets"},
-  {"percentage": "95%", "label": "EXPERTISE", "description": "Notre expertise approfondie garantit des résultats de qualité supérieure."},
+  final List<Map<String, String>> items = [
+    {"percentage": "95%", "label": "INNOVATION", "description": "Nous sommes constamment à la recherche de nouvelles idées et de solutions créatives pour répondre à vos besoins"},
+    {"percentage": "90%", "label": "FIABILITÉ", "description": "Vous pouvez compter sur notre fiabilité pour assurer la continuité de vos projets"},
+    {"percentage": "95%", "label": "EXPERTISE", "description": "Notre expertise approfondie garantit des résultats de qualité supérieure."},
   ];
 
     return SafeArea(
@@ -511,9 +550,10 @@ class _HomeViewState extends State<HomeView> {
                     const SizedBox(height: 20), 
 
                     SingleChildScrollView(
+                      controller: _scrollController,
                       scrollDirection: Axis.horizontal,
                       child: Row(
-                        children: ProjectData.map((project) {
+                        children: projectData.map((project) {
                           return VisibilityDetector(
                             key: Key(project['title']),
                             onVisibilityChanged: (info) {
@@ -599,8 +639,6 @@ class _HomeViewState extends State<HomeView> {
                       ),
                     ),
 
-
-
                     const SizedBox(height: 40), 
 
                     Container(
@@ -626,24 +664,52 @@ class _HomeViewState extends State<HomeView> {
                                   ),
                                 ],
                               ),
-                              child: const Center(
-                                child: Text(
-                                  "POURQUOI NOUS\nCHOISIR !",
-                                  textAlign: TextAlign.center, // Center-align all lines
-                                  style: TextStyle(
-                                    color: Colors.deepOrange,
-                                    fontSize: 66.0,
-                                    letterSpacing: 2.0,
-                                    fontWeight: FontWeight.bold, // This makes the text bold
+                              child: Stack(
+                                children: [
+                                  Positioned(
+                                    left: 0,
+                                    right: 0,
+                                    top: 0,
+                                    bottom: 0,
+                                    child: Center(
+                                      child: const Text(
+                                        "POURQUOI NOUS\nCHOISIR !",
+                                        textAlign: TextAlign.center, // Center-align all lines
+                                        style: TextStyle(
+                                          color: Colors.deepOrange,
+                                          fontSize: 62.0,
+                                          letterSpacing: 2.0,
+                                          fontWeight: FontWeight.bold, // This makes the text bold
+                                        ),
+                                      ).animate(onPlay: (controller) => controller.repeat())
+                                          .shimmer(duration: 1200.ms, color: Color.fromARGB(255, 255, 255, 255))
+                                          .animate()
+                                          .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
+                                          .slide(),
+                                    ),
                                   ),
-                                ),
-                              ).animate(onPlay: (controller) => controller.repeat())
-                                      .shimmer(duration: 1200.ms, color: Color.fromARGB(255, 255, 255, 255))
-                                      .animate()
-                                      .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
-                                      .slide(),
+                                  Positioned(
+                                          bottom: -5, // Adjust this value as needed
+                                          right: -10,  // Adjust this value as needed
+                                          child: Transform.rotate(
+                                            angle: -90 * 3.14159 / 180, // Rotate 45 degrees
+                                            child: RiveAnimatedIcon(
+                                              riveIcon: RiveIcon.arrowDown,
+                                              width: 48,
+                                              height: 60,
+                                              color: const Color.fromARGB(255, 255, 255, 255),
+                                              strokeWidth: 3,
+                                              loopAnimation: true,
+                                              onTap: (){},
+                                              onHover: (value){}                          
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
 
-                            ),
+
                             const SizedBox(width: 16.0), // Optional: Add spacing between containers
                             Container(
                               width: 250,
