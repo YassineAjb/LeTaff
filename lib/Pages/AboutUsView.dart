@@ -1,4 +1,5 @@
 import 'dart:ui' as ui;
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -22,9 +23,12 @@ class _AboutUsViewState extends State<AboutUsView> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   List<Map<String, dynamic>> statsData = [];
 
+  Map<String, String?> imageUrls = {}; // Map to store URLs
+
   @override
   void initState() {
     super.initState();
+    _fetchImages(); // Fetch all image URLs when the screen is initialized
     _fetchStats(); // Fetch data when the screen is initialized
     // _controller = VideoPlayerController.asset('assets/video.mp4')
     //   ..initialize().then((_) {
@@ -33,7 +37,48 @@ class _AboutUsViewState extends State<AboutUsView> {
     //     _controller.setLooping(true);
     //   });
     _fetchVideoUrl(); // Fetch video URL when the screen is initialized
+  }
 
+// Future<String?> fetchImageUrl(String refPath) async {
+//   try {
+//     String url = await _storage.ref(refPath).getDownloadURL();
+//     return url;
+//   } catch (e) {
+//     print("Error fetching image: $e");
+//     return null;
+//   }
+// }
+  Future<void> _fetchImages() async {
+    // List of image paths and their keys
+    final images = {
+      'logo': 'images/le-taff-logo-1.png',
+      'A-U-1': 'images/A-U-1.jpg',
+      'A-U-2': 'images/A-U-2.jpg',
+      'A-U-3': 'images/A-U-3.jpg',
+      'A-U-4': 'images/A-U-4.jpg',
+    };
+
+    // Fetch URLs for all images
+    final futures = images.entries.map((entry) async {
+      final url = await fetchImageUrl(entry.value);
+      imageUrls[entry.key] = url;
+    });
+
+    // Wait for all images to be fetched
+    await Future.wait(futures);
+    print(imageUrls);
+
+    // Trigger a rebuild to reflect changes
+    setState(() {});
+  }
+  Future<String?> fetchImageUrl(String refPath) async {
+    try {
+      String url = await _storage.ref(refPath).getDownloadURL();
+      return url;
+    } catch (e) {
+      print("Error fetching image: $e");
+      return null;
+    }
   }
 
 Future<void> _fetchVideoUrl() async {
@@ -88,7 +133,15 @@ Future<void> _fetchVideoUrl() async {
                     height: 100,
                     color: Colors.black,
                     child: Center(
-                      child: Image.asset('assets/le-taff-logo-1.png'),
+                      child: 
+                      imageUrls['logo'] != null
+                        ? CachedNetworkImage(
+                            imageUrl: imageUrls['logo']!,
+                            placeholder: (context, url) => const CircularProgressIndicator(),
+                            errorWidget: (context, url, error) => const Icon(Icons.error),
+                          )
+                        : const CircularProgressIndicator(),
+                                //Image.asset('assets/le-taff-logo-1.png'),
                     ),
                   ),
                   const Divider(
@@ -213,12 +266,7 @@ Future<void> _fetchVideoUrl() async {
                   //? SizedBox(
                   //     height: 200,
                   //     child: VideoPlayer(_controller),
-                  //)
-                  ? AspectRatio(
-                    aspectRatio: _controller.value.aspectRatio,
-                    child: VideoPlayer(_controller),
-                  )
-                  : const CircularProgressIndicator(),*/
+                  //)*/
 
                   const SizedBox(height: 50),
 
@@ -286,15 +334,28 @@ Future<void> _fetchVideoUrl() async {
                           Positioned(
                             top: 0,
                             left: 0,
-                            child: Image.asset(
-                              "assets/A-U-1.jpg",
-                              height: 200,
-                              width: 180,
-                              fit: BoxFit.cover,
-                            )
+                             child: imageUrls['A-U-1'] != null
+                              ? CachedNetworkImage(
+                                  imageUrl: imageUrls['A-U-1']!, 
+                                  placeholder: (context, url) => const CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                                  height: 200,     
+                                  width: 180,      
+                                  fit: BoxFit.cover,
+                                )
+                              : const CircularProgressIndicator()
                               .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
                               //.shimmer(duration: 3000.ms)
                               .boxShadow(duration: 1000.ms,
+                            // Image.asset(
+                            //   "assets/A-U-1.jpg",
+                            //   height: 200,
+                            //   width: 180,
+                            //   fit: BoxFit.cover,
+                            // )
+                            //   .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
+                            //   //.shimmer(duration: 3000.ms)
+                            //   .boxShadow(duration: 1000.ms,
                                   begin: const BoxShadow(
                                     blurRadius: 4,
                                     color: ui.Color.fromARGB(255, 255, 255, 255),
@@ -311,15 +372,28 @@ Future<void> _fetchVideoUrl() async {
                           Positioned(
                             top: 0,
                             left: 190,
-                            child: Image.asset(
-                              "assets/A-U-2.jpg",
-                              height: 200,
-                              width: 180,
-                              fit: BoxFit.cover,
-                            )
+                            child: imageUrls['A-U-2'] != null
+                              ? CachedNetworkImage(
+                                  imageUrl: imageUrls['A-U-2']!, 
+                                  placeholder: (context, url) => const CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                                  height: 200,     
+                                  width: 180,      
+                                  fit: BoxFit.cover,
+                                )
+                              : const CircularProgressIndicator()
                               .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
-                              //.shimmer(duration: 7000.ms)
-                              .boxShadow(duration: 1100.ms,
+                              //.shimmer(duration: 3000.ms)
+                              .boxShadow(duration: 1000.ms,
+                            // Image.asset(
+                            //   "assets/A-U-2.jpg",
+                            //   height: 200,
+                            //   width: 180,
+                            //   fit: BoxFit.cover,
+                            // )
+                            //   .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
+                            //   //.shimmer(duration: 7000.ms)
+                            //   .boxShadow(duration: 1100.ms,
                                   begin: const BoxShadow(
                                     blurRadius: 4,
                                     color: ui.Color.fromARGB(255, 255, 255, 255),
@@ -336,15 +410,28 @@ Future<void> _fetchVideoUrl() async {
                           Positioned(
                             top: 220,
                             left: 0,
-                            child: Image.asset(
-                              "assets/A-U-3.jpg",
-                              height: 200,
-                              width: 180,
-                              fit: BoxFit.cover,
-                            )
+                            child: imageUrls['A-U-3'] != null
+                              ? CachedNetworkImage(
+                                  imageUrl: imageUrls['A-U-3']!, 
+                                  placeholder: (context, url) => const CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                                  height: 200,     
+                                  width: 180,      
+                                  fit: BoxFit.cover,
+                                )
+                              : const CircularProgressIndicator()
                               .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
-                              //.shimmer(duration: 7000.ms)
-                              .boxShadow(duration: 1200.ms,
+                              //.shimmer(duration: 3000.ms)
+                              .boxShadow(duration: 1000.ms,
+                            // Image.asset(
+                            //   "assets/A-U-3.jpg",
+                            //   height: 200,
+                            //   width: 180,
+                            //   fit: BoxFit.cover,
+                            // )
+                              // .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
+                              // //.shimmer(duration: 7000.ms)
+                              // .boxShadow(duration: 1200.ms,
                                   begin: const BoxShadow(
                                     blurRadius: 4,
                                     color: ui.Color.fromARGB(255, 255, 255, 255),
@@ -361,15 +448,29 @@ Future<void> _fetchVideoUrl() async {
                           Positioned(
                             top: 220,
                             left: 190,
-                            child: Image.asset(
-                              "assets/A-U-4.jpg",
-                              height: 200,
-                              width: 180,
-                              fit: BoxFit.cover,
-                            )
+                            child: 
+                            imageUrls['A-U-4'] != null
+                              ? CachedNetworkImage(
+                                  imageUrl: imageUrls['A-U-4']!, 
+                                  placeholder: (context, url) => const CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                                  height: 200,     
+                                  width: 180,      
+                                  fit: BoxFit.cover,
+                                )
+                              : const CircularProgressIndicator()
                               .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
-                              //.shimmer(duration: 7000.ms)
-                              .boxShadow(duration: 1300.ms,
+                              //.shimmer(duration: 3000.ms)
+                              .boxShadow(duration: 1000.ms,
+                            //   Image.asset(
+                            //   "assets/A-U-4.jpg",
+                            //   height: 200,
+                            //   width: 180,
+                            //   fit: BoxFit.cover,
+                            // )
+                            //   .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
+                            //   //.shimmer(duration: 7000.ms)
+                            //   .boxShadow(duration: 1300.ms,
                                   begin: const BoxShadow(
                                     blurRadius: 4,
                                     color: ui.Color.fromARGB(255, 255, 255, 255),

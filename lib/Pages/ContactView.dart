@@ -1,10 +1,57 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
 
-class ContactView extends StatelessWidget {
-  const ContactView({super.key});
+class ContactView extends StatefulWidget {
+  
+  @override
+  _ContactViewState createState() => _ContactViewState();
+}
+
+class _ContactViewState extends State<ContactView> {
+
+  final firebase_storage.FirebaseStorage _storage = firebase_storage.FirebaseStorage.instance;
+  Map<String, String?> imageUrls = {}; // Map to store URLs
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchImages();
+  }
+
+Future<void> _fetchImages() async {
+    // List of image paths and their keys
+    final images = {
+      'logo': 'images/le-taff-logo-1.png',
+      'logoB': 'images/logo-blanc.png',
+      
+    };
+
+    // Fetch URLs for all images
+    final futures = images.entries.map((entry) async {
+      final url = await fetchImageUrl(entry.value);
+      imageUrls[entry.key] = url;
+    });
+
+    // Wait for all images to be fetched
+    await Future.wait(futures);
+    print(imageUrls);
+
+    // Trigger a rebuild to reflect changes
+    setState(() {});
+  }
+  Future<String?> fetchImageUrl(String refPath) async {
+    try {
+      String url = await _storage.ref(refPath).getDownloadURL();
+      return url;
+    } catch (e) {
+      print("Error fetching image: $e");
+      return null;
+    }
+  }
 
 Future<void> _launchURL(String url) async {
   final Uri uri = Uri.parse(url);
@@ -12,6 +59,12 @@ Future<void> _launchURL(String url) async {
     throw Exception('Could not launch $url');
   }
 }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -26,7 +79,15 @@ Future<void> _launchURL(String url) async {
                     height: 100,
                     color: Colors.black,
                     child: Center(
-                      child: Image.asset('assets/le-taff-logo-1.png'),
+                      child: 
+                        imageUrls['logo'] != null
+                          ? CachedNetworkImage(
+                              imageUrl: imageUrls['logo']!,
+                              placeholder: (context, url) => const CircularProgressIndicator(),
+                              errorWidget: (context, url, error) => const Icon(Icons.error),
+                            )
+                          : const CircularProgressIndicator(),
+                      //Image.asset('assets/le-taff-logo-1.png'),
                     ),
                   ),
                   const Divider(
@@ -125,26 +186,26 @@ Future<void> _launchURL(String url) async {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           IconButton(
-                            icon: Image.asset('assets/linked4.png', width: 45, height: 45),
+                            icon: Image.asset('asset/linked4.png', width: 45, height: 45),
                             onPressed: () => _launchURL('https://www.linkedin.com'),
                           ),
                           const SizedBox(width: 0),
                           IconButton(
-                            icon: Image.asset('assets/beIcon.png', width: 45, height: 45),
+                            icon: Image.asset('asset/beIcon.png', width: 45, height: 45),
                             onPressed: () => _launchURL('https://www.linkedin.com'),
                           ),
                           const SizedBox(width: 0),
                           IconButton(
-                            icon: Image.asset('assets/insta4.png', width: 45, height: 45),
+                            icon: Image.asset('asset/insta4.png', width: 45, height: 45),
                             onPressed: () => _launchURL('https://www.instagram.com'),
                           ),
                           const SizedBox(width: 0),
                           IconButton(
-                            icon: Image.asset('assets/face5.png', width: 45, height: 45),
+                            icon: Image.asset('asset/face5.png', width: 45, height: 45),
                             onPressed: () => _launchURL('https://www.facebook.com'),
                           ),
                           IconButton(
-                            icon: Image.asset('assets/tiktokicon.png', width: 45, height: 45),
+                            icon: Image.asset('asset/tiktokicon.png', width: 45, height: 45),
                             onPressed: () => _launchURL('https://www.instagram.com'),
                           ),
                           
@@ -166,11 +227,20 @@ Future<void> _launchURL(String url) async {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Image.asset(
-                            'assets/logo-blanc.png', // Replace with your image asset path
+                        imageUrls['logoB'] != null
+                        ? CachedNetworkImage(
+                            imageUrl: imageUrls['logoB']!,
+                            placeholder: (context, url) => const CircularProgressIndicator(),
+                            errorWidget: (context, url, error) => const Icon(Icons.error),
                             width: 100,
                             height: 100,
-                          ),
+                          )
+                        : const CircularProgressIndicator(),
+                          // Image.asset(
+                          //   'asset/logo-blanc.png', // Replace with your image asset path
+                          //   width: 100,
+                          //   height: 100,
+                          // ),
                           const SizedBox(height: 10),
                           const Text(
                             'Chez Le Taff, nous nous engageons à fournir des services numériques de haute qualité, de solutions web, des applications mobiles personnalisées et des stratégies marketing efficaces.',

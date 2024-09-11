@@ -4,6 +4,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
 // import 'dart:ui' as ui;
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class CareerView extends StatefulWidget {
   @override
@@ -11,6 +12,11 @@ class CareerView extends StatefulWidget {
 }
 
 class _CareerViewState extends State<CareerView> {
+
+  final firebase_storage.FirebaseStorage _storage = firebase_storage.FirebaseStorage.instance;
+  Map<String, String?> imageUrls = {}; // Map to store URLs
+  String? _videoUrl;
+
   late VideoPlayerController _controller;
 
   // Firestore instance
@@ -20,14 +26,66 @@ class _CareerViewState extends State<CareerView> {
   @override
   void initState() {
     super.initState();
+    _fetchImages();
     _fetchPostes(); // Fetch data when the screen is initialized
-    _controller = VideoPlayerController.asset('assets/REJOIGNEZNOUSvd.mp4')
-      ..initialize().then((_) {
-        setState(() {});
-        _controller.play();
-        _controller.setLooping(true);
-      });
+    // _controller = VideoPlayerController.asset('assets/REJOIGNEZNOUSvd.mp4')
+    //   ..initialize().then((_) {
+    //     setState(() {});
+    //     _controller.play();
+    //     _controller.setLooping(true);
+    //   });
+    _fetchVideoUrl();
   }
+
+Future<void> _fetchImages() async {
+    // List of image paths and their keys
+    final images = {
+      'logo': 'images/le-taff-logo-1.png',
+      'A-U-1': 'images/A-U-1.jpg',
+      'A-U-2': 'images/A-U-2.jpg',
+      'A-U-3': 'images/A-U-3.jpg',
+      'A-U-4': 'images/A-U-4.jpg',
+    };
+
+    // Fetch URLs for all images
+    final futures = images.entries.map((entry) async {
+      final url = await fetchImageUrl(entry.value);
+      imageUrls[entry.key] = url;
+    });
+
+    // Wait for all images to be fetched
+    await Future.wait(futures);
+    print(imageUrls);
+
+    // Trigger a rebuild to reflect changes
+    setState(() {});
+  }
+  Future<String?> fetchImageUrl(String refPath) async {
+    try {
+      String url = await _storage.ref(refPath).getDownloadURL();
+      return url;
+    } catch (e) {
+      print("Error fetching image: $e");
+      return null;
+    }
+  }
+
+Future<void> _fetchVideoUrl() async {
+  try {
+    String videoUrl = await _storage.ref('images/REJOIGNEZNOUSvd.mp4').getDownloadURL();
+    setState(() {
+      _videoUrl = videoUrl;
+      _controller = VideoPlayerController.network(_videoUrl!)
+        ..initialize().then((_) {
+          setState(() {});
+          _controller.play();
+          _controller.setLooping(true);
+        });
+    });
+  } catch (e) {
+    print("Error fetching video: $e");
+  }
+}
 
 Future<void> _fetchPostes() async {
     try {
@@ -371,26 +429,26 @@ Widget buildPostesListe() {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   IconButton(
-                                    icon: Image.asset('assets/linked4.png', width: 45, height: 45),
+                                    icon: Image.asset('asset/linked4.png', width: 45, height: 45),
                                     onPressed: () => _launchURL('https://www.linkedin.com'),
                                   ),
                                   const SizedBox(width: 0),
                                   IconButton(
-                                    icon: Image.asset('assets/beIcon.png', width: 45, height: 45),
+                                    icon: Image.asset('asset/beIcon.png', width: 45, height: 45),
                                     onPressed: () => _launchURL('https://www.linkedin.com'),
                                   ),
                                   const SizedBox(width: 0),
                                   IconButton(
-                                    icon: Image.asset('assets/insta4.png', width: 45, height: 45),
+                                    icon: Image.asset('asset/insta4.png', width: 45, height: 45),
                                     onPressed: () => _launchURL('https://www.instagram.com'),
                                   ),
                                   const SizedBox(width: 0),
                                   IconButton(
-                                    icon: Image.asset('assets/face5.png', width: 45, height: 45),
+                                    icon: Image.asset('asset/face5.png', width: 45, height: 45),
                                     onPressed: () => _launchURL('https://www.facebook.com'),
                                   ),
                                   IconButton(
-                                    icon: Image.asset('assets/tiktokicon.png', width: 45, height: 45),
+                                    icon: Image.asset('asset/tiktokicon.png', width: 45, height: 45),
                                     onPressed: () => _launchURL('https://www.instagram.com'),
                                   ),
                                 ],
@@ -462,7 +520,7 @@ class _ToggleTextContainerState extends State<ToggleTextContainer> {
             color: const Color.fromARGB(255, 31, 31, 31),
             borderRadius: BorderRadius.circular(10.0),
             image: DecorationImage(
-              image: const AssetImage('assets/ContCareer.png'), 
+              image: const AssetImage('asset/ContCareer.png'), 
               fit: BoxFit.cover,
               colorFilter: ColorFilter.mode(
                 Colors.black.withOpacity(0.7), 

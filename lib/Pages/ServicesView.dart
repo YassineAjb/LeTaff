@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:letaff/Pages/SolutionMaintView.dart';
@@ -6,6 +7,7 @@ import 'package:letaff/Pages/SolutionMarketingView.dart';
 import 'package:letaff/Pages/SolutionMobileView.dart';
 import 'package:letaff/Pages/SolutionWebView.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class ServicesView extends StatefulWidget {
   @override
@@ -13,6 +15,11 @@ class ServicesView extends StatefulWidget {
 }
 
 class _ServicesViewState extends State<ServicesView> {
+
+  final firebase_storage.FirebaseStorage _storage = firebase_storage.FirebaseStorage.instance;
+  Map<String, String?> imageUrls = {}; // Map to store URLs
+  Map<String, String?> ServiceImageUrls = {}; // Map to store URLs
+
   final ScrollController _scrollController = ScrollController();
   Timer? _scrollTimer;
   final ScrollController _textScrollController = ScrollController();
@@ -21,6 +28,7 @@ class _ServicesViewState extends State<ServicesView> {
   @override
   void initState() {
     super.initState();
+    _fetchImages();
     // Trigger the animations when the page is opened
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
@@ -31,6 +39,64 @@ class _ServicesViewState extends State<ServicesView> {
     _startTextAutoScroll();
 
   }
+
+    // List of image paths
+    final List<String> imagePaths = [
+      'images/creative1Logo.png',
+      'images/creative2Logo.png',
+      'images/innovateLogo.png',
+      'images/EXPRESSLogo.png',
+      'images/BRANDNAMELogo.png',
+      'images/NAMELogo.png',
+    ];
+
+  Future<void> _fetchImages() async {    
+
+    for (int i = 0; i < imagePaths.length; i++) {
+    String refPath = imagePaths[i]; // Firebase Storage path
+    String? url = await fetchImageUrl(refPath);
+    imagePaths[i] = url ?? 'default_image_url'; // Store fetched URL or use a default
+  }
+    // List of image paths and their keys
+    final images = {
+      'logo':  'images/le-taff-logo-1.png',
+    };
+// List of image paths and their keys
+    final Simages = {
+      '0': 'images/Sweb.jpg',
+      '1': 'images/SMobile.png',
+      '2': 'images/SDigital.png',
+      '3': 'images/Smaintenance.jpg',
+    };
+    // Fetch URLs for all images
+    final futures = images.entries.map((entry) async {
+      final url = await fetchImageUrl(entry.value);
+      imageUrls[entry.key] = url;
+    });
+    // Fetch URLs for all Simages
+    final Sfutures = Simages.entries.map((entry) async {
+      final url = await fetchImageUrl(entry.value);
+      ServiceImageUrls[entry.key] = url;
+    });
+
+    // Wait for all images to be fetched
+    await Future.wait(futures);
+    await Future.wait(Sfutures);
+    print(imageUrls);
+
+    // Trigger a rebuild to reflect changes
+    setState(() {});
+  }
+  Future<String?> fetchImageUrl(String refPath) async {
+    try {
+      String url = await _storage.ref(refPath).getDownloadURL();
+      return url;
+    } catch (e) {
+      print("Error fetching image: $e");
+      return null;
+    }
+  }
+
 
 Future<void> _launchURL(String url) async {
   final Uri uri = Uri.parse(url);
@@ -99,19 +165,8 @@ void _startTextAutoScroll() {
 }
 
 
-
-
   @override
   Widget build(BuildContext context) {
-    // List of image paths
-    final List<String> imagePaths = [
-      'assets/creative1Logo.png',
-      'assets/creative2Logo.png',
-      'assets/innovateLogo.png',
-      'assets/EXPRESSLogo.png',
-      'assets/BRANDNAMELogo.png',
-      'assets/NAMELogo.png',
-    ];
     
     // Data for services containers
     final List<Map<String, dynamic>> servicesData = [
@@ -126,7 +181,7 @@ void _startTextAutoScroll() {
           );
           print("Details for Service SOLUTIONS WEB");
         },
-        'image': 'assets/Sweb.jpg',
+        'index': '0',
       },
       {
         'title': 'APPLICATIONS MOBILE',
@@ -139,7 +194,7 @@ void _startTextAutoScroll() {
           );
           print("Details for Service DÉVELOPPEMENT MOBILE");
         },
-        'image': 'assets/SMobile.png',
+        'index': '1',
       },
       {
         'title': 'MARKETING DIGITAL',
@@ -152,7 +207,7 @@ void _startTextAutoScroll() {
           );
           print("Details for Service MARKETING DIGITAL");
         },
-        'image': 'assets/SDigital.png',
+        'index': '2',
       },
       {
         'title': 'Maintenance',
@@ -165,7 +220,7 @@ void _startTextAutoScroll() {
           );          
           print("Details for Service Maintenance");
         },
-        'image': 'assets/Smaintenance.jpg',
+        'index': '3',
       },
     ];
 
@@ -248,8 +303,14 @@ Widget buildServiceDescriptions() {
                     height: 100,
                     color: Colors.black,
                     child: Center(
-                      child: Image.asset('assets/le-taff-logo-1.png'),
-                    ),
+                      child: 
+                        imageUrls['logo'] != null
+                          ? CachedNetworkImage(
+                              imageUrl: imageUrls['logo']!,
+                              placeholder: (context, url) => const CircularProgressIndicator(),
+                              errorWidget: (context, url, error) => const Icon(Icons.error),
+                            )
+                          : const CircularProgressIndicator(),                    ),
                   ),
                   const Divider(
                     color: Colors.grey,
@@ -354,14 +415,32 @@ Widget buildServiceDescriptions() {
                                   ),
                                 ),
                                 const SizedBox(height: 20.0),
+                                // Container(
+                                //   width: 340,
+                                //   height: 210,
+                                //   decoration: BoxDecoration(
+                                //     borderRadius: BorderRadius.circular(10.0),
+                                //     image: DecorationImage(
+                                //       image: AssetImage(service['image']),
+                                //       fit: BoxFit.cover,
+                                //     ),
+                                //   ),
+                                // ),
                                 Container(
                                   width: 340,
                                   height: 210,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10.0),
-                                    image: DecorationImage(
-                                      image: AssetImage(service['image']),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10.0), // To apply border radius to the image
+                                    child: CachedNetworkImage(
+                                      imageUrl: ServiceImageUrls[service['index']] ?? '', // Replace 'logo' with the desired key
                                       fit: BoxFit.cover,
+                                      placeholder: (context, url) => Center(
+                                        child: CircularProgressIndicator(), // Display while loading
+                                      ),
+                                      errorWidget: (context, url, error) => Icon(Icons.error), // Display in case of error
                                     ),
                                   ),
                                 ),
@@ -496,7 +575,16 @@ Widget buildServiceDescriptions() {
                             return Card(
                               elevation: 4,
                               color: const Color.fromARGB(255, 16, 16, 16), // card color
-                              child: Image.asset(imagePaths[index], fit: BoxFit.cover),
+                              // child: Image.asset(imagePaths[index], fit: BoxFit.cover),
+                              child: imagePaths[index].isNotEmpty 
+                              ? CachedNetworkImage(
+                                  imageUrl: imagePaths[index],
+                                  fit: BoxFit.cover,
+                                  placeholder: (context, url) => const CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                                )
+                              : const Icon(Icons.broken_image), // Fallback if the image path is empty
+
                             );
                           },
                     ),
@@ -620,26 +708,26 @@ Widget buildServiceDescriptions() {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           IconButton(
-                            icon: Image.asset('assets/linked4.png', width: 45, height: 45),
+                            icon: Image.asset('asset/linked4.png', width: 45, height: 45),
                             onPressed: () => _launchURL('https://www.linkedin.com'),
                           ),
                           const SizedBox(width: 0),
                           IconButton(
-                            icon: Image.asset('assets/beIcon.png', width: 45, height: 45),
+                            icon: Image.asset('asset/beIcon.png', width: 45, height: 45),
                             onPressed: () => _launchURL('https://www.linkedin.com'),
                           ),
                           const SizedBox(width: 0),
                           IconButton(
-                            icon: Image.asset('assets/insta4.png', width: 45, height: 45),
+                            icon: Image.asset('asset/insta4.png', width: 45, height: 45),
                             onPressed: () => _launchURL('https://www.instagram.com'),
                           ),
                           const SizedBox(width: 0),
                           IconButton(
-                            icon: Image.asset('assets/face5.png', width: 45, height: 45),
+                            icon: Image.asset('asset/face5.png', width: 45, height: 45),
                             onPressed: () => _launchURL('https://www.facebook.com'),
                           ),
                           IconButton(
-                            icon: Image.asset('assets/tiktokicon.png', width: 45, height: 45),
+                            icon: Image.asset('asset/tiktokicon.png', width: 45, height: 45),
                             onPressed: () => _launchURL('https://www.instagram.com'),
                           ),
                           

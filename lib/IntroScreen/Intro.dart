@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       ),
         routes: {
         '/home': (context) => const Home(),
-        '/contact': (context) => const ContactView(),  
+        '/contact': (context) => ContactView(),  
         '/solutionweb': (context) => SolutionWebView(),
       },
       home: const ExamplePage(),

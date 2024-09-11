@@ -362,7 +362,7 @@ void _startAutoScroll() {
                           onPressed: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => const ContactView(),
+                                builder: (context) =>  ContactView(),
                               ),
                             );
                           },
@@ -418,26 +418,26 @@ void _startAutoScroll() {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           IconButton(
-                            icon: Image.asset('assets/linked4.png', width: 45, height: 45),
+                            icon: Image.asset('asset/linked4.png', width: 45, height: 45),
                             onPressed: () => _launchURL('https://www.linkedin.com'),
                           ),
                           const SizedBox(width: 0),
                           IconButton(
-                            icon: Image.asset('assets/beIcon.png', width: 45, height: 45),
+                            icon: Image.asset('asset/beIcon.png', width: 45, height: 45),
                             onPressed: () => _launchURL('https://www.linkedin.com'),
                           ),
                           const SizedBox(width: 0),
                           IconButton(
-                            icon: Image.asset('assets/insta4.png', width: 45, height: 45),
+                            icon: Image.asset('asset/insta4.png', width: 45, height: 45),
                             onPressed: () => _launchURL('https://www.instagram.com'),
                           ),
                           const SizedBox(width: 0),
                           IconButton(
-                            icon: Image.asset('assets/face5.png', width: 45, height: 45),
+                            icon: Image.asset('asset/face5.png', width: 45, height: 45),
                             onPressed: () => _launchURL('https://www.facebook.com'),
                           ),
                           IconButton(
-                            icon: Image.asset('assets/tiktokicon.png', width: 45, height: 45),
+                            icon: Image.asset('asset/tiktokicon.png', width: 45, height: 45),
                             onPressed: () => _launchURL('https://www.instagram.com'),
                           ),
                           const SizedBox(width: 0),
