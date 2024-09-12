@@ -28,16 +28,16 @@ class _PortfolioViewState extends State<PortfolioView> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   List<Map<String, dynamic>> projectData = [];
 
+  Map<String, String?> imageUrls = {}; // Map to store URLs
+
   @override
   void initState() {
     super.initState();
-    
+    _fetchImages();
     _fetchProjects(); // Fetch data when the screen is initialized
     print("-------------------------------------------------");
     print(projectData);
     print("-------------------------------------------------");
-
-    _fetchLogoUrl();
     
         // Trigger the animations when the page is opened
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -48,31 +48,74 @@ class _PortfolioViewState extends State<PortfolioView> {
     _startAutoScroll();
   }
 
-  Future<void> _fetchLogoUrl() async {
+  Future<void> _fetchImages() async {
+    // List of image paths and their keys
+    final images = {
+      'logo': 'images/le-taff-logo-1.png',
+      //'log': 'images/abqsj-770x852.jpg',
+      
+    };
+
+    // Fetch URLs for all images
+    final futures = images.entries.map((entry) async {
+      final url = await fetchImageUrl(entry.value);
+      imageUrls[entry.key] = url;
+    });
+
+    // Wait for all images to be fetched
+    await Future.wait(futures);
+    print(imageUrls);
+
+    // Trigger a rebuild to reflect changes
+    setState(() {});
+  }
+  Future<String?> fetchImageUrl(String refPath) async {
     try {
-      // Get the download URL for the logo from Firebase Storage
-      String url = await _storage
-          .ref('images/le-taff-logo-1.png')
-          .getDownloadURL();
-      setState(() {
-        logoUrl = url;
-      });
+      String url = await _storage.ref(refPath).getDownloadURL();
+      return url;
     } catch (e) {
-      print("Error fetching logo: $e");
+      print("Error fetching image: $e");
+      return null;
     }
   }
 
-  Future<void> _fetchProjects() async {
-    try {
-      // Fetch data from Firestore
-      QuerySnapshot snapshot = await _firestore.collection('projects').get();
-      setState(() {
-        projectData = snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
-      });
-    } catch (e) {
-      print("Error fetching projects: $e");
-    }
+  // Future<void> _fetchProjects() async {
+  //   try {
+  //     // Fetch data from Firestore
+  //     QuerySnapshot snapshot = await _firestore.collection('projects').get();
+  //     setState(() {
+  //       projectData = snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+  //     });
+  //   } catch (e) {
+  //     print("Error fetching projects: $e");
+  //   }
+  // }
+Future<void> _fetchProjects() async {
+  try {
+    // Fetch data from Firestore
+    QuerySnapshot snapshot = await _firestore.collection('projects').get();
+
+    // Fetch image URLs for each project
+    List<Map<String, dynamic>> updatedProjectData = await Future.wait(
+      snapshot.docs.map((doc) async {
+        Map<String, dynamic> project = doc.data() as Map<String, dynamic>;
+        
+        // Fetch the image URL using Firebase Storage
+        String? imageUrl = await fetchImageUrl(project['image']); // Assuming 'image' stores the path
+        project['imageUrl'] = imageUrl; // Add the image URL to the project data
+        
+        return project;
+      }).toList(),
+    );
+
+    // Update the state
+    setState(() {
+      projectData = updatedProjectData;
+    });
+  } catch (e) {
+    print("Error fetching projects: $e");
   }
+}
 
   Future<void> _launchURL(String url) async {
     final Uri uri = Uri.parse(url);
@@ -126,14 +169,14 @@ void _startAutoScroll() {
                       height: 100,
                       color: Colors.black,
                       child: Center(
-                        child: logoUrl != null
-                            ? CachedNetworkImage(  // Cached image for the logo
-                                imageUrl: logoUrl!,
-                                placeholder: (context, url) => CircularProgressIndicator(),
-                                errorWidget: (context, url, error) => Icon(Icons.error),
+                        child: 
+                          imageUrls['logo'] != null
+                            ? CachedNetworkImage(
+                                imageUrl: imageUrls['logo']!,
+                                placeholder: (context, url) => const CircularProgressIndicator(),
+                                errorWidget: (context, url, error) => const Icon(Icons.error),
                               )
                             : const CircularProgressIndicator(),
-                        // Image.network(logoUrl!),
                         // Image.asset('assets/le-taff-logo-1.png'),
                       ),
                     ),
@@ -226,6 +269,7 @@ void _startAutoScroll() {
                                     //   height: 340,
                                     //   fit: BoxFit.cover,
                                     // ),
+                                    ///////////////////////////
                                     CachedNetworkImage(
                                       imageUrl: project['image'], // Cached image
                                       width: 380,
@@ -234,6 +278,16 @@ void _startAutoScroll() {
                                       placeholder: (context, url) => CircularProgressIndicator(),
                                       errorWidget: (context, url, error) => Icon(Icons.error),
                                     ),
+                                    /////////////////////////////
+                                    CachedNetworkImage(
+                                      imageUrl: project['imageUrl'] ?? '', // Use the fetched imageUrl
+                                      width: 380,
+                                      height: 340,
+                                      fit: BoxFit.cover,
+                                      placeholder: (context, url) => CircularProgressIndicator(),
+                                      errorWidget: (context, url, error) => Icon(Icons.error),
+                                    ),
+
                                     Container(
                                       width: 380,
                                       height: 340,
