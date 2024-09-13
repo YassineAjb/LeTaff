@@ -1,8 +1,10 @@
 import 'dart:ui' as ui;
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 // import 'package:letaff/Pages/ContactView.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class SolutionMarketingView extends StatefulWidget {
   @override
@@ -10,13 +12,49 @@ class SolutionMarketingView extends StatefulWidget {
 }
 
 class _SolutionMarketingViewState extends State<SolutionMarketingView> {
-  
+
+    final firebase_storage.FirebaseStorage _storage =
+      firebase_storage.FirebaseStorage.instance;
+
+  Map<String, String?> imageUrls = {}; // Map to store URLs
 
   @override
   void initState() {
     super.initState();
+    _fetchImages();
   }
+  Future<void> _fetchImages() async {
+    // List of image paths and their keys
+    final images = {
+      'dev-1': 'images/marketing-digital.jpg',
+      'solM': 'images/S o l u t i o n s Mar.png',
+      'SD': 'images/service-detail.png',
+      
+    };
 
+    // Fetch URLs for all images
+    final futures = images.entries.map((entry) async {
+      final url = await fetchImageUrl(entry.value);
+      imageUrls[entry.key] = url;
+    });
+
+    // Wait for all images to be fetched
+    await Future.wait(futures);
+    print(imageUrls);
+
+    // Trigger a rebuild to reflect changes
+    setState(() {});
+  }
+  Future<String?> fetchImageUrl(String refPath) async {
+    try {
+      String url = await _storage.ref(refPath).getDownloadURL();
+      return url;
+    } catch (e) {
+      print("Error fetching image: $e");
+      return null;
+    }
+  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +92,14 @@ class _SolutionMarketingViewState extends State<SolutionMarketingView> {
                     width: 390,
                     color: const ui.Color.fromARGB(255, 0, 0, 0),
                     child: Center(
-                      child: Image.asset('assets/marketing-digital.jpg'),
+                      child: imageUrls['dev-1'] != null
+                          ? CachedNetworkImage(
+                              imageUrl: imageUrls['dev-1']!,
+                              placeholder: (context, url) => const CircularProgressIndicator(),
+                              errorWidget: (context, url, error) => const Icon(Icons.error),
+                            )
+                          : const CircularProgressIndicator(),
+                          //Image.asset('assets/marketing-digital.jpg'),
                     ),
                   ),
                 ],
@@ -229,7 +274,14 @@ Container(
   width: 390,
   color: const ui.Color.fromARGB(255, 0, 0, 0),
   child: Center(
-    child: Image.asset('assets/service-detail.png'),
+    child: imageUrls['SD'] != null
+      ? CachedNetworkImage(
+          imageUrl: imageUrls['SD']!,
+          placeholder: (context, url) => const CircularProgressIndicator(),
+          errorWidget: (context, url, error) => const Icon(Icons.error),
+        )
+      : const CircularProgressIndicator(),
+      //Image.asset('assets/service-detail.png'),
   ),
 ),
 const SizedBox(height: 10),
@@ -262,7 +314,14 @@ Container(
   width: 390,
   color: const ui.Color.fromARGB(255, 0, 0, 0),
   child: Center(
-    child: Image.asset('assets/S o l u t i o n s Mar.png'),
+    child: imageUrls['solM'] != null
+      ? CachedNetworkImage(
+          imageUrl: imageUrls['solM']!,
+          placeholder: (context, url) => const CircularProgressIndicator(),
+          errorWidget: (context, url, error) => const Icon(Icons.error),
+        )
+      : const CircularProgressIndicator(),
+      //Image.asset('assets/S o l u t i o n s Mar.png'),
   ),
 ),
 const SizedBox(height: 30),
@@ -486,7 +545,7 @@ class _ToggleTextContainerState extends State<ToggleTextContainer> {
             color: const Color.fromARGB(255, 31, 31, 31),
             borderRadius: BorderRadius.circular(10.0),
             image: DecorationImage(
-              image: const AssetImage('assets/ContMark.png'), 
+              image: const AssetImage('asset/ContMark.png'), 
               fit: BoxFit.cover,
               colorFilter: ColorFilter.mode(
                 Colors.black.withOpacity(0.7), 

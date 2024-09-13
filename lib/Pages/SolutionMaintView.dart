@@ -27,9 +27,9 @@ class _SolutionMaintViewState extends State<SolutionMaintView> {
     // List of image paths and their keys
     final images = {
       'dev-1': 'images/dev-1.jpg',
-      'solM': 'images/S o l u t i o n s Main.png',
       'SD': 'images/service-detail.png',
-      
+      'solM': 'images/S o l u t i o n s Main.png',
+
     };
 
     // Fetch URLs for all images
@@ -283,7 +283,8 @@ Container(
         placeholder: (context, url) => const CircularProgressIndicator(),
         errorWidget: (context, url, error) => const Icon(Icons.error),
       )
-    : const CircularProgressIndicator(),//Image.asset('assets/service-detail.png'),
+    : const CircularProgressIndicator(),
+    //Image.asset('assets/service-detail.png'),
   ),
 ),
 const SizedBox(height: 10),

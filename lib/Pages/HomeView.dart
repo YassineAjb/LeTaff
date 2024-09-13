@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:letaff/Pages/AboutUsView.dart';
@@ -10,6 +11,7 @@ import 'package:letaff/Pages/SolutionWebView.dart';
 import 'package:rive_animated_icon/rive_animated_icon.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 
 // class HomeView extends StatelessWidget {
@@ -28,10 +30,74 @@ class _HomeViewState extends State<HomeView> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   List<Map<String, dynamic>> projectData = [];
 
+final firebase_storage.FirebaseStorage _storage = firebase_storage.FirebaseStorage.instance;
+  Map<String, String?> imageUrls = {}; // Map to store URLs
+  Map<String, String?> ServiceImageUrls = {}; // Map to store URLs
+
+    final List<String> partenairesImagePaths = [
+      'images/creative1Logo.png',
+      'images/creative2Logo.png',
+      'images/innovateLogo.png',
+      'images/EXPRESSLogo.png',
+      'images/BRANDNAMELogo.png',
+      'images/NAMELogo.png',
+    ];
+
+  Future<void> _fetchImages() async {    
+
+    for (int i = 0; i < partenairesImagePaths.length; i++) {
+    String refPath = partenairesImagePaths[i]; // Firebase Storage path
+    String? url = await fetchImageUrl(refPath);
+    partenairesImagePaths[i] = url ?? 'default_image_url'; // Store fetched URL or use a default
+  }
+    // List of image paths and their keys
+    final images = {
+      'logo':  'images/le-taff-logo-1.png',
+      'hom11':  'images/hom11.jpg',
+      'counter-3':  'images/counter-3.png',    
+      
+      };
+// List of image paths and their keys
+    final Simages = {
+      '0': 'images/Sweb.jpg',
+      '1': 'images/SMobile.png',
+      '2': 'images/SDigital.png',
+      '3': 'images/Smaintenance.jpg',
+    };
+    // Fetch URLs for all images
+    final futures = images.entries.map((entry) async {
+      final url = await fetchImageUrl(entry.value);
+      imageUrls[entry.key] = url;
+    });
+    // Fetch URLs for all Simages
+    final Sfutures = Simages.entries.map((entry) async {
+      final url = await fetchImageUrl(entry.value);
+      ServiceImageUrls[entry.key] = url;
+    });
+
+    // Wait for all images to be fetched
+    await Future.wait(futures);
+    await Future.wait(Sfutures);
+    print(imageUrls);
+
+    // Trigger a rebuild to reflect changes
+    setState(() {});
+  }
+  Future<String?> fetchImageUrl(String refPath) async {
+    try {
+      String url = await _storage.ref(refPath).getDownloadURL();
+      return url;
+    } catch (e) {
+      print("Error fetching image: $e");
+      return null;
+    }
+  }
+
 
 @override
   void initState() {
-    super.initState();    
+    super.initState();   
+    _fetchImages(); 
     _fetchProjects(); // Fetch data when the screen is initialized
 
   WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -64,17 +130,43 @@ class _HomeViewState extends State<HomeView> {
       }
     });
   }
-  Future<void> _fetchProjects() async {
-    try {
-      // Fetch data from Firestore
-      QuerySnapshot snapshot = await _firestore.collection('projects').get();
-      setState(() {
-        projectData = snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
-      });
-    } catch (e) {
-      print("Error fetching projects: $e");
-    }
+  // Future<void> _fetchProjects() async {
+  //   try {
+  //     // Fetch data from Firestore
+  //     QuerySnapshot snapshot = await _firestore.collection('projects').get();
+  //     setState(() {
+  //       projectData = snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+  //     });
+  //   } catch (e) {
+  //     print("Error fetching projects: $e");
+  //   }
+  // }
+Future<void> _fetchProjects() async {
+  try {
+    // Fetch data from Firestore
+    QuerySnapshot snapshot = await _firestore.collection('projects').get();
+
+    // Fetch image URLs for each project
+    List<Map<String, dynamic>> updatedProjectData = await Future.wait(
+      snapshot.docs.map((doc) async {
+        Map<String, dynamic> project = doc.data() as Map<String, dynamic>;
+        
+        // Fetch the image URL using Firebase Storage
+        String? imageUrl = await fetchImageUrl(project['image']); // Assuming 'image' stores the path
+        project['imageUrl'] = imageUrl; // Add the image URL to the project data
+        
+        return project;
+      }).toList(),
+    );
+
+    // Update the state
+    setState(() {
+      projectData = updatedProjectData;
+    });
+  } catch (e) {
+    print("Error fetching projects: $e");
   }
+}
 
   @override
   void dispose() {
@@ -85,15 +177,6 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    // List of image paths
-    final List<String> imagePaths = [
-      'assets/creative1Logo.png',
-      'assets/creative2Logo.png',
-      'assets/innovateLogo.png',
-      'assets/EXPRESSLogo.png',
-      'assets/BRANDNAMELogo.png',
-      'assets/NAMELogo.png',
-    ];
 
     // Data for services containers
     final List<Map<String, dynamic>> servicesData = [
@@ -109,7 +192,7 @@ class _HomeViewState extends State<HomeView> {
           );
           print("Details for Service DÉVELOPPEMENT MOBILE");
         },
-        'image': 'assets/webdev.png',
+        'image': 'asset/webdev.png',
       },
       {
         'title': 'DÉVELOPPEMENT MOBILE',
@@ -123,7 +206,7 @@ class _HomeViewState extends State<HomeView> {
           );
           print("Details for Service DÉVELOPPEMENT MOBILE");
         },
-        'image': 'assets/mobiledev.png',
+        'image': 'asset/mobiledev.png',
       },
       {
         'title': 'MARKETING DIGITAL',
@@ -137,7 +220,7 @@ class _HomeViewState extends State<HomeView> {
           );
           print("Details for Service DÉVELOPPEMENT MOBILE");
         },
-        'image': 'assets/marketing.png',
+        'image': 'asset/marketing.png',
       },
       {
         'title': 'CONCEPTION GRAPHIQUE',
@@ -151,7 +234,7 @@ class _HomeViewState extends State<HomeView> {
           );
           print("Details for Service DÉVELOPPEMENT MOBILE");
         },
-        'image': 'assets/maintenance.png',
+        'image': 'asset/maintenance.png',
       },
     ];
 
@@ -176,7 +259,13 @@ class _HomeViewState extends State<HomeView> {
                     height: 200,
                     color: const Color.fromARGB(255, 0, 0, 0),
                     child: Center(
-                      child: Image.asset('assets/le-taff-logo-1.png'),
+                      child: imageUrls['logo'] != null
+                        ? CachedNetworkImage(
+                            imageUrl: imageUrls['logo']!,
+                            placeholder: (context, url) => const CircularProgressIndicator(),
+                            errorWidget: (context, url, error) => const Icon(Icons.error),
+                          )
+                        : const CircularProgressIndicator(),                    
                     ),
                   ),
                   const Divider(
@@ -267,8 +356,16 @@ class _HomeViewState extends State<HomeView> {
                           height: 175,
                           color: const Color.fromARGB(255, 0, 0, 0),
                           child: Center(
-                            child: Image.asset('assets/hom11.jpg'),
-                          ),
+                            child: 
+                            imageUrls['hom11'] != null
+                              ? CachedNetworkImage(
+                                  imageUrl: imageUrls['hom11']!,
+                                  placeholder: (context, url) => const CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                                )
+                              : const CircularProgressIndicator(),                    
+                            ),
+                            //Image.asset('assets/hom11.jpg'),
                         ),
                       ],
                     ),
@@ -307,12 +404,29 @@ class _HomeViewState extends State<HomeView> {
                             crossAxisSpacing: 16,
                             mainAxisSpacing: 16,
                           ),
-                          itemCount: imagePaths.length,
+                          //itemCount: imagePaths.length,
+                          // itemBuilder: (context, index) {
+                          //   return Card(
+                          //     elevation: 4,
+                          //     color: const Color.fromARGB(255, 16, 16, 16), // card color
+                          //     child: Image.asset(imagePaths[index], fit: BoxFit.cover),
+                          //   );
+                          // },
+                          itemCount: partenairesImagePaths.length,
                           itemBuilder: (context, index) {
                             return Card(
                               elevation: 4,
                               color: const Color.fromARGB(255, 16, 16, 16), // card color
-                              child: Image.asset(imagePaths[index], fit: BoxFit.cover),
+                              // child: Image.asset(partenairesImagePaths[index], fit: BoxFit.cover),
+                              child: partenairesImagePaths[index].isNotEmpty 
+                              ? CachedNetworkImage(
+                                  imageUrl: partenairesImagePaths[index],
+                                  fit: BoxFit.cover,
+                                  placeholder: (context, url) => const CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                                )
+                              : const Icon(Icons.broken_image), // Fallback if the image path is empty
+
                             );
                           },
                     ),
@@ -585,11 +699,19 @@ class _HomeViewState extends State<HomeView> {
                                 borderRadius: BorderRadius.circular(10.0),
                                 child: Stack(
                                   children: [
-                                    Image.asset(
-                                      project['image'],
-                                      width: 340,
+                                    // Image.asset(
+                                    //   project['image'],
+                                    //   width: 340,
+                                    //   height: 340,
+                                    //   fit: BoxFit.cover,
+                                    // ),
+                                    CachedNetworkImage(
+                                      imageUrl: project['imageUrl'] ?? '', // Use the fetched imageUrl
+                                      width: 380,
                                       height: 340,
                                       fit: BoxFit.cover,
+                                      placeholder: (context, url) => CircularProgressIndicator(),
+                                      errorWidget: (context, url, error) => Icon(Icons.error),
                                     ),
                                     Container(
                                       width: 340,
@@ -942,11 +1064,20 @@ class _HomeViewState extends State<HomeView> {
                                   Positioned(
                                     top: 0.0,
                                     left: 250.0,
-                                    child: Image.asset(
+                                    child: /*Image.asset(
                                       'assets/counter-3.png', 
                                       width: 340,
                                       height: 340,
-                                    ),
+                                    ),*/
+                                    imageUrls['counter-3'] != null
+                                      ? CachedNetworkImage(
+                                          width: 340,
+                                          height: 340,
+                                          imageUrl: imageUrls['counter-3']!,
+                                          placeholder: (context, url) => const CircularProgressIndicator(),
+                                          errorWidget: (context, url, error) => const Icon(Icons.error),
+                                        )
+                                      : const CircularProgressIndicator(),
                                   ),
                                 ],
                               ),

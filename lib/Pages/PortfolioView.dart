@@ -263,22 +263,6 @@ void _startAutoScroll() {
                                 borderRadius: BorderRadius.circular(10.0),
                                 child: Stack(
                                   children: [
-                                    // Image.asset(
-                                    //   project['image'],
-                                    //   width: 380,
-                                    //   height: 340,
-                                    //   fit: BoxFit.cover,
-                                    // ),
-                                    ///////////////////////////
-                                    CachedNetworkImage(
-                                      imageUrl: project['image'], // Cached image
-                                      width: 380,
-                                      height: 340,
-                                      fit: BoxFit.cover,
-                                      placeholder: (context, url) => CircularProgressIndicator(),
-                                      errorWidget: (context, url, error) => Icon(Icons.error),
-                                    ),
-                                    /////////////////////////////
                                     CachedNetworkImage(
                                       imageUrl: project['imageUrl'] ?? '', // Use the fetched imageUrl
                                       width: 380,
@@ -287,7 +271,7 @@ void _startAutoScroll() {
                                       placeholder: (context, url) => CircularProgressIndicator(),
                                       errorWidget: (context, url, error) => Icon(Icons.error),
                                     ),
-
+                                    
                                     Container(
                                       width: 380,
                                       height: 340,

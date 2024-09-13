@@ -34,7 +34,7 @@ final List<SingleIntroScreen> pages = [
   const SingleIntroScreen(
     title: 'Welcome to LETAFF !',
     description: 'Découvrez notre portfolio de réalisations, une collection visuelle de nos sites web et applications exceptionnels.',
-    imageAsset: 'assets/onboard_three.png',
+    imageAsset: 'asset/onboard_three.png',
     sideDotsBgColor : Colors.deepOrange,
     mainCircleBgColor : Colors.deepOrange,
     headerBgColor: Colors.black,
@@ -44,7 +44,7 @@ final List<SingleIntroScreen> pages = [
   const SingleIntroScreen(
     title: 'Welcome to LETAFF !',
     description: 'Découvrez notre portfolio de réalisations, une collection visuelle de nos sites web et applications exceptionnels.',
-    imageAsset: 'assets/onboard_two.png',
+    imageAsset: 'asset/onboard_two.png',
     sideDotsBgColor : Colors.deepOrange,
     mainCircleBgColor : Colors.deepOrange,
     headerBgColor: Colors.black,
@@ -53,7 +53,7 @@ final List<SingleIntroScreen> pages = [
   const SingleIntroScreen(
     title: 'Welcome to LETAFF !',
     description: 'Découvrez notre portfolio de réalisations, une collection visuelle de nos sites web et applications exceptionnels.',
-    imageAsset: 'assets/men33.png',
+    imageAsset: 'asset/men33.png',
     sideDotsBgColor : Colors.deepOrange,
     mainCircleBgColor : Colors.deepOrange,
     headerBgColor: Colors.black,
