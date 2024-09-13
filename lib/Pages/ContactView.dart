@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -314,74 +315,83 @@ Future<void> _launchURL(String url) async {
     String subject = "";
     String message = "";
 
-    void _submit(BuildContext context) {
-      showDialog<void>(
-        context: context,
-        barrierDismissible: true,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Your message has been submitted'),
-            content: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  const Align(
-                      alignment: Alignment.topLeft,
-                      child: Text("Name:",
-                          style: TextStyle(fontWeight: FontWeight.w700))),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(name),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Align(
-                      alignment: Alignment.topLeft,
-                      child: Text("Phone Number:",
-                          style: TextStyle(fontWeight: FontWeight.w700))),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text("$phone"),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Align(
-                      alignment: Alignment.topLeft,
-                      child: Text("Subject:",
-                          style: TextStyle(fontWeight: FontWeight.w700))),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text("$subject"),
-                  )
-                ],
-              ),
-            ),
-            actions: <Widget>[
-              Center(
-                //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                child:
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.blue,
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                    ),
-                    child: const Text('OK'),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      FocusScope.of(context).unfocus();
-                      _formKey.currentState?.reset();
-                    },
-                  )
-              )
-            ],
-          );
-        },
-      );
-    }
+void _submit(BuildContext context) async {
+  if (_formKey.currentState!.validate()) {
+    // Add data to Firebase Firestore
+    await FirebaseFirestore.instance.collection('messages').add({
+      'name': name,
+      'email': email,
+      'phone': phone,
+      'subject': subject,
+      'message': message,
+      'sendTime': Timestamp.now(),
+    });
 
+    showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Your message has been submitted'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                const Align(
+                    alignment: Alignment.topLeft,
+                    child: Text("Name:",
+                        style: TextStyle(fontWeight: FontWeight.w700))),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(name),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                const Align(
+                    alignment: Alignment.topLeft,
+                    child: Text("Phone Number:",
+                        style: TextStyle(fontWeight: FontWeight.w700))),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text("$phone"),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                const Align(
+                    alignment: Alignment.topLeft,
+                    child: Text("Subject:",
+                        style: TextStyle(fontWeight: FontWeight.w700))),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text("$subject"),
+                )
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            Center(
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.blue,
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                ),
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  FocusScope.of(context).unfocus();
+                  _formKey.currentState?.reset();
+                },
+              ),
+            )
+          ],
+        );
+      },
+    );
+  }
+}
     return Form(
       key: _formKey,
       child: Column(
