@@ -5,6 +5,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 // import 'package:letaff/Pages/ContactView.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:letaff/providers/NavBarProvider.dart';
+import 'package:provider/provider.dart';
 
 class SolutionMaintView extends StatefulWidget {
   @override
@@ -425,13 +427,7 @@ Center(
     height: 120, // Must match the width to make it a circle
     child: ElevatedButton(
       onPressed: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => const ContactView()),
-        // );
-
-        Navigator.pushNamed(context, '/contact');
-         print('Navigating to ContactView...');
+        Provider.of<NavBarProvider>(context, listen: false).updateIndex(4); 
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.black,

@@ -3,7 +3,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:letaff/Pages/ContactView.dart';
+import 'package:letaff/providers/NavBarProvider.dart';
+import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -211,8 +212,7 @@ Future<void> _fetchVideoUrl() async {
                             height: 60, 
                             child: ElevatedButton(
                               onPressed: () {
-                                Navigator.pushNamed(context, '/contact');
-                                print('Navigating to ContactView...');
+                                Provider.of<NavBarProvider>(context, listen: false).updateIndex(2); 
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.black,
@@ -600,13 +600,7 @@ Table(
                         height: 120, // Must match the width to make it a circle
                         child: ElevatedButton(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => ContactView()),
-                            );
-                    
-                            // Navigator.pushNamed(context, '/contact');
-                            // print('Navigating to ContactView...');
+                            Provider.of<NavBarProvider>(context, listen: false).updateIndex(4); 
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black,

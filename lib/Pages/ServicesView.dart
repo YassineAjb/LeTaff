@@ -659,15 +659,7 @@ Widget buildServiceDescriptions() {
                         height: 120, // Must match the width to make it a circle
                         child: ElevatedButton(
                           onPressed: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(builder: (context) => AboutUsView()),
-                            // );
-                    
-                            // Navigator.pushNamed(context, '/contact');
-                            // print('Navigating to ContactView...');
                             Provider.of<NavBarProvider>(context, listen: false).updateIndex(4); // Navigate to Portfolio (index 2)
-
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black,

@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:letaff/Pages/AboutUsView.dart';
-import 'package:letaff/Pages/PortfolioView.dart';
 import 'package:letaff/Pages/SolutionMarketingView.dart';
 import 'package:letaff/Pages/SolutionMobileView.dart';
 import 'package:letaff/Pages/SolutionWebView.dart';
+import 'package:letaff/providers/NavBarProvider.dart';
+import 'package:provider/provider.dart';
 import 'package:rive_animated_icon/rive_animated_icon.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -583,7 +583,7 @@ Future<void> _fetchProjects() async {
                                 ),
                               ],
                               image: const DecorationImage(
-                                image: AssetImage('assets/QuiNous.jpg'), 
+                                image: AssetImage('asset/QuiNous.jpg'), 
                                 fit: BoxFit.cover, 
                                 opacity: 0.1, 
                               ),
@@ -621,10 +621,7 @@ Future<void> _fetchProjects() async {
                           const SizedBox(height: 20),        
                           ElevatedButton(
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => AboutUsView()),
-                              );
+                            Provider.of<NavBarProvider>(context, listen: false).updateIndex(5); 
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.deepOrange, // Use `primary` instead of `backgroundColor`
@@ -1136,10 +1133,7 @@ Future<void> _fetchProjects() async {
                               ),
                               ElevatedButton(
                                 onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => const PortfolioView()),
-                                  );
+                            Provider.of<NavBarProvider>(context, listen: false).updateIndex(4);
                                 },
                                   style: ElevatedButton.styleFrom(
                                   backgroundColor: const Color.fromARGB(255, 58, 58, 58),

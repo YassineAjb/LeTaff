@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:letaff/Pages/ContactView.dart';
+import 'package:letaff/providers/NavBarProvider.dart';
+import 'package:provider/provider.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'dart:async';
 import 'package:url_launcher/url_launcher.dart';
@@ -393,17 +394,9 @@ void _startAutoScroll() {
                         width: 120,
                         height: 120,
                         child: ElevatedButton(
-                          // onPressed: () {
-                          //   Navigator.pushNamed(context, '/solutionweb');
-                          //   print('Navigating to ContactView...');
-                          // },
                           onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) =>  ContactView(),
-                              ),
-                            );
-                          },
+                                  Provider.of<NavBarProvider>(context, listen: false).updateIndex(4); 
+                                },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black,
                             shape: RoundedRectangleBorder(
