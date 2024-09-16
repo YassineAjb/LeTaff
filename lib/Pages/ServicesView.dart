@@ -2,10 +2,12 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:letaff/providers/NavBarProvider.dart';
 import 'package:letaff/Pages/SolutionMaintView.dart';
 import 'package:letaff/Pages/SolutionMarketingView.dart';
 import 'package:letaff/Pages/SolutionMobileView.dart';
 import 'package:letaff/Pages/SolutionWebView.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
@@ -662,8 +664,10 @@ Widget buildServiceDescriptions() {
                             //   MaterialPageRoute(builder: (context) => AboutUsView()),
                             // );
                     
-                            Navigator.pushNamed(context, '/contact');
-                            print('Navigating to ContactView...');
+                            // Navigator.pushNamed(context, '/contact');
+                            // print('Navigating to ContactView...');
+                            Provider.of<NavBarProvider>(context, listen: false).updateIndex(4); // Navigate to Portfolio (index 2)
+
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:letaff/NavBar/DestinationView.dart';
+import 'package:letaff/providers/NavBarProvider.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -78,71 +80,74 @@ void initState() {
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return NavigatorPopHandler(
-      onPop: () {
-        final NavigatorState navigator =
-            navigatorKeys[selectedIndex].currentState!;
-        navigator.pop();
-      },
-      child: Scaffold(
-        body: SafeArea(
-          top: false,
-          child: Stack(
-            fit: StackFit.expand,
-            children: allDestinations.map(
-              (Destination destination) {
-                final int index = destination.index;
-                final Widget view = destinationViews[index];
-                if (index == selectedIndex) {
-                  destinationFaders[index].forward();
-                  return Offstage(offstage: false, child: view);
-                } else {
-                  destinationFaders[index].reverse();
-                  if (destinationFaders[index].isAnimating) {
-                    return IgnorePointer(child: view);
+@override
+Widget build(BuildContext context) {
+  return Consumer<NavBarProvider>(
+    builder: (context, navBarProvider, child) {
+      return NavigatorPopHandler(
+        onPop: () {
+          final NavigatorState navigator =
+              navigatorKeys[navBarProvider.selectedIndex].currentState!;
+          navigator.pop();
+        },
+        child: Scaffold(
+          body: SafeArea(
+            top: false,
+            child: Stack(
+              fit: StackFit.expand,
+              children: allDestinations.map(
+                (Destination destination) {
+                  final int index = destination.index;
+                  final Widget view = destinationViews[index];
+                  if (index == navBarProvider.selectedIndex) {
+                    destinationFaders[index].forward();
+                    return Offstage(offstage: false, child: view);
+                  } else {
+                    destinationFaders[index].reverse();
+                    if (destinationFaders[index].isAnimating) {
+                      return IgnorePointer(child: view);
+                    }
+                    return Offstage(child: view);
                   }
-                  return Offstage(child: view);
+                },
+              ).toList(),
+            ),
+          ),
+          bottomNavigationBar: NavigationBarTheme(
+            data: NavigationBarThemeData(
+              labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>((Set<WidgetState> states) {
+                if (states.contains(WidgetState.selected)) {
+                  return const TextStyle(color: Colors.deepOrange, fontSize: 15);
                 }
+                return const TextStyle(color: Color.fromARGB(255, 255, 255, 255));
+              }),
+              iconTheme: WidgetStateProperty.resolveWith<IconThemeData>((Set<WidgetState> states) {
+                if (states.contains(WidgetState.selected)) {
+                  return const IconThemeData(color: Color.fromARGB(255, 255, 0, 0), size: 25);
+                }
+                return const IconThemeData(color: Colors.grey, size: 21);
+              }),
+            ),
+            child: NavigationBar(
+              backgroundColor: const Color.fromARGB(255, 24, 24, 24),
+              selectedIndex: navBarProvider.selectedIndex,
+              onDestinationSelected: (int index) {
+                navBarProvider.updateIndex(index); // Update using provider
               },
-            ).toList(),
+              destinations: allDestinations.map<NavigationDestination>(
+                (Destination destination) {
+                  return NavigationDestination(
+                    icon: Icon(destination.icon),
+                    label: destination.title,
+                  );
+                },
+              ).toList(),
+            ),
           ),
         ),
-        bottomNavigationBar: NavigationBarTheme(
-          data: NavigationBarThemeData(
-            labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>((Set<WidgetState> states) {
-              if (states.contains(WidgetState.selected)) {
-                return const TextStyle(color: Colors.deepOrange, fontSize: 15); // Color for selected label
-              }
-              return const TextStyle(color: Color.fromARGB(255, 255, 255, 255)); // Color for unselected label
-            }),
-            iconTheme: WidgetStateProperty.resolveWith<IconThemeData>((Set<WidgetState> states) {
-              if (states.contains(WidgetState.selected)) {
-                return const IconThemeData(color: Color.fromARGB(255, 255, 0, 0), size: 25); // Customize selected icon
-              }
-              return const IconThemeData(color: Colors.grey, size: 21); // Customize unselected icon
-            }),
-          ),
-          child: NavigationBar(
-            backgroundColor: const Color.fromARGB(255, 24, 24, 24),
-            selectedIndex: selectedIndex,
-            onDestinationSelected: (int index) {
-              setState(() {
-                selectedIndex = index;
-              });
-            },
-            destinations: allDestinations.map<NavigationDestination>(
-              (Destination destination) {
-                return NavigationDestination(
-                  icon: Icon(destination.icon),
-                  label: destination.title,
-                );
-              },
-            ).toList(),
-          ),
-        ),
-      ),
-    );
-  }
+      );
+    },
+  );
+}
+
 }
