@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:letaff/Pages/ServicesView.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
-// import 'dart:ui' as ui;
+//import 'dart:ui' as ui;
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class CareerView extends StatefulWidget {
@@ -15,7 +16,7 @@ class _CareerViewState extends State<CareerView> {
 
   final firebase_storage.FirebaseStorage _storage = firebase_storage.FirebaseStorage.instance;
   Map<String, String?> imageUrls = {}; // Map to store URLs
-  String? _videoUrl;
+  //String? _videoUrl;
 
   late VideoPlayerController _controller;
 
@@ -28,12 +29,6 @@ class _CareerViewState extends State<CareerView> {
     super.initState();
     _fetchImages();
     _fetchPostes(); // Fetch data when the screen is initialized
-    // _controller = VideoPlayerController.asset('assets/REJOIGNEZNOUSvd.mp4')
-    //   ..initialize().then((_) {
-    //     setState(() {});
-    //     _controller.play();
-    //     _controller.setLooping(true);
-    //   });
     _fetchVideoUrl();
   }
 
@@ -70,20 +65,27 @@ Future<void> _fetchImages() async {
     }
   }
 
+bool _isVideoLoaded = false;
 Future<void> _fetchVideoUrl() async {
   try {
     String videoUrl = await _storage.ref('images/REJOIGNEZNOUSvd.mp4').getDownloadURL();
-    setState(() {
-      _videoUrl = videoUrl;
-      _controller = VideoPlayerController.network(_videoUrl!)
+    
+    if (videoUrl.isNotEmpty) {
+      _controller = VideoPlayerController.network(videoUrl)
         ..initialize().then((_) {
-          setState(() {});
-          _controller.play();
-          _controller.setLooping(true);
+          setState(() {
+            _isVideoLoaded = true; // Mark video as loaded
+            _controller.play();
+            _controller.setLooping(true);
+          });
         });
-    });
+    }
+    print("Video URL: $videoUrl");
   } catch (e) {
     print("Error fetching video: $e");
+    setState(() {
+      _isVideoLoaded = false; // Handle the failure by showing an error message
+    });
   }
 }
 
@@ -228,13 +230,34 @@ Widget buildPostesListe() {
             SliverToBoxAdapter(
               child: Column(
                 children: [
-                  _controller.value.isInitialized
-                      ? SizedBox(
-                          height: 200,
-                          child: VideoPlayer(_controller),
-                        )
-                      : const CircularProgressIndicator(),
-                  const SizedBox(height: 30),
+                  _isVideoLoaded
+                    ? AspectRatio(
+                        aspectRatio: _controller.value.aspectRatio,
+                        child: VideoPlayer(_controller),
+                      )
+                    : /*Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min, // Center the content vertically
+                          children: [
+                            const SizedBox(height: 10),
+                            const CircularProgressIndicator(color: Colors.deepOrange),
+                            const SizedBox(height: 10),
+                            Center(
+                              child: const Text(
+                                "Loading video...",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: ui.Color.fromARGB(255, 144, 144, 144),
+                                  fontSize: 18,
+                                ),
+                              )
+                              .animate(onPlay: (controller) => controller.repeat()) // Smooth repeat
+                              ..shimmer(duration: 2000.ms, color: const ui.Color.fromARGB(255, 0, 0, 0)),
+                            ),
+                          ],
+                        ),
+                      ),*/
+                      buildCircularIndicatorWithImage(),
                 ],
               ),
             ),

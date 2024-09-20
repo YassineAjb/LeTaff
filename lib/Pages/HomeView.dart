@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:letaff/Pages/SolutionMarketingView.dart';
 import 'package:letaff/Pages/SolutionMobileView.dart';
 import 'package:letaff/Pages/SolutionWebView.dart';
+import 'package:letaff/Pages/ServicesView.dart';
 import 'package:letaff/providers/NavBarProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:rive_animated_icon/rive_animated_icon.dart';
@@ -52,7 +53,7 @@ final firebase_storage.FirebaseStorage _storage = firebase_storage.FirebaseStora
   }
     // List of image paths and their keys
     final images = {
-      'logo':  'images/le-taff-logo-1.png',
+      //'logo':  'images/le-taff-logo-1.png',
       'hom11':  'images/hom11.jpg',
       'counter-3':  'images/counter-3.png',    
       
@@ -130,17 +131,7 @@ final firebase_storage.FirebaseStorage _storage = firebase_storage.FirebaseStora
       }
     });
   }
-  // Future<void> _fetchProjects() async {
-  //   try {
-  //     // Fetch data from Firestore
-  //     QuerySnapshot snapshot = await _firestore.collection('projects').get();
-  //     setState(() {
-  //       projectData = snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
-  //     });
-  //   } catch (e) {
-  //     print("Error fetching projects: $e");
-  //   }
-  // }
+  
 Future<void> _fetchProjects() async {
   try {
     // Fetch data from Firestore
@@ -262,10 +253,10 @@ Future<void> _fetchProjects() async {
                       child: imageUrls['logo'] != null
                         ? CachedNetworkImage(
                             imageUrl: imageUrls['logo']!,
-                            placeholder: (context, url) => const CircularProgressIndicator(),
+                            placeholder: (context, url) => buildCircularIndicatorWithImage(),
                             errorWidget: (context, url, error) => const Icon(Icons.error),
                           )
-                        : const CircularProgressIndicator(),                    
+                        : buildCircularIndicatorWithImage(),                   
                     ),
                   ),
                   const Divider(
@@ -360,10 +351,10 @@ Future<void> _fetchProjects() async {
                             imageUrls['hom11'] != null
                               ? CachedNetworkImage(
                                   imageUrl: imageUrls['hom11']!,
-                                  placeholder: (context, url) => const CircularProgressIndicator(),
+                                  placeholder: (context, url) => buildCircularIndicatorWithImage(),
                                   errorWidget: (context, url, error) => const Icon(Icons.error),
                                 )
-                              : const CircularProgressIndicator(),                    
+                              : buildCircularIndicatorWithImage(),                    
                             ),
                             //Image.asset('assets/hom11.jpg'),
                         ),
@@ -422,7 +413,7 @@ Future<void> _fetchProjects() async {
                               ? CachedNetworkImage(
                                   imageUrl: partenairesImagePaths[index],
                                   fit: BoxFit.cover,
-                                  placeholder: (context, url) => const CircularProgressIndicator(),
+                                  placeholder: (context, url) => buildCircularIndicatorWithImage(),
                                   errorWidget: (context, url, error) => const Icon(Icons.error),
                                 )
                               : const Icon(Icons.broken_image), // Fallback if the image path is empty
@@ -707,7 +698,7 @@ Future<void> _fetchProjects() async {
                                       width: 380,
                                       height: 340,
                                       fit: BoxFit.cover,
-                                      placeholder: (context, url) => CircularProgressIndicator(),
+                                      placeholder: (context, url) => buildCircularIndicatorWithImage(),
                                       errorWidget: (context, url, error) => Icon(Icons.error),
                                     ),
                                     Container(
@@ -1071,10 +1062,10 @@ Future<void> _fetchProjects() async {
                                           width: 340,
                                           height: 340,
                                           imageUrl: imageUrls['counter-3']!,
-                                          placeholder: (context, url) => const CircularProgressIndicator(),
+                                          placeholder: (context, url) => buildCircularIndicatorWithImage(),
                                           errorWidget: (context, url, error) => const Icon(Icons.error),
                                         )
-                                      : const CircularProgressIndicator(),
+                                      : buildCircularIndicatorWithImage(),
                                   ),
                                 ],
                               ),

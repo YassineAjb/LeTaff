@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:letaff/Pages/ServicesView.dart';
 import 'package:letaff/providers/NavBarProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -80,17 +81,7 @@ class _PortfolioViewState extends State<PortfolioView> {
     }
   }
 
-  // Future<void> _fetchProjects() async {
-  //   try {
-  //     // Fetch data from Firestore
-  //     QuerySnapshot snapshot = await _firestore.collection('projects').get();
-  //     setState(() {
-  //       projectData = snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
-  //     });
-  //   } catch (e) {
-  //     print("Error fetching projects: $e");
-  //   }
-  // }
+  
 Future<void> _fetchProjects() async {
   try {
     // Fetch data from Firestore
@@ -160,9 +151,7 @@ void _startAutoScroll() {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: projectData.isEmpty
-            ? const Center(child: CircularProgressIndicator())
-            : CustomScrollView(
+        body: CustomScrollView(
                 slivers: [
                   const SliverToBoxAdapter(child: SizedBox(height: 20)),
                   SliverToBoxAdapter(
@@ -174,10 +163,10 @@ void _startAutoScroll() {
                           imageUrls['logo'] != null
                             ? CachedNetworkImage(
                                 imageUrl: imageUrls['logo']!,
-                                placeholder: (context, url) => const CircularProgressIndicator(),
+                                placeholder: (context, url) => buildCircularIndicatorWithImage(),
                                 errorWidget: (context, url, error) => const Icon(Icons.error),
                               )
-                            : const CircularProgressIndicator(),
+                            : buildCircularIndicatorWithImage(),
                         // Image.asset('assets/le-taff-logo-1.png'),
                       ),
                     ),
@@ -264,14 +253,16 @@ void _startAutoScroll() {
                                 borderRadius: BorderRadius.circular(10.0),
                                 child: Stack(
                                   children: [
-                                    CachedNetworkImage(
-                                      imageUrl: project['imageUrl'] ?? '', // Use the fetched imageUrl
+                                    projectData[index].isNotEmpty
+                                    ? CachedNetworkImage(
+                                      imageUrl: project['imageUrl'] ?? '',
                                       width: 380,
                                       height: 340,
                                       fit: BoxFit.cover,
-                                      placeholder: (context, url) => CircularProgressIndicator(),
-                                      errorWidget: (context, url, error) => Icon(Icons.error),
-                                    ),
+                                      placeholder: (context, url) => buildCircularIndicatorWithImage(),
+                                      errorWidget: (context, url, error) => const Icon(Icons.error,size: 50 ,color :Colors.deepOrange ),
+                                    )
+                                    : const Icon(Icons.broken_image,size: 100 ,color :Colors.deepOrange),
                                     
                                     Container(
                                       width: 380,

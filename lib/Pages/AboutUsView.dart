@@ -2,6 +2,7 @@ import 'dart:ui' as ui;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:letaff/providers/NavBarProvider.dart';
 import 'package:provider/provider.dart';
@@ -31,24 +32,9 @@ class _AboutUsViewState extends State<AboutUsView> {
     super.initState();
     _fetchImages(); // Fetch all image URLs when the screen is initialized
     _fetchStats(); // Fetch data when the screen is initialized
-    // _controller = VideoPlayerController.asset('assets/video.mp4')
-    //   ..initialize().then((_) {
-    //     setState(() {});
-    //     _controller.play();
-    //     _controller.setLooping(true);
-    //   });
     _fetchVideoUrl(); // Fetch video URL when the screen is initialized
   }
 
-// Future<String?> fetchImageUrl(String refPath) async {
-//   try {
-//     String url = await _storage.ref(refPath).getDownloadURL();
-//     return url;
-//   } catch (e) {
-//     print("Error fetching image: $e");
-//     return null;
-//   }
-// }
   Future<void> _fetchImages() async {
     // List of image paths and their keys
     final images = {
@@ -82,24 +68,30 @@ class _AboutUsViewState extends State<AboutUsView> {
     }
   }
 
+bool _isVideoLoaded = false;
 Future<void> _fetchVideoUrl() async {
   try {
     String videoUrl = await _storage.ref('images/video.mp4').getDownloadURL();
-    setState(() {
-      _videoUrl = videoUrl;
-      _controller = VideoPlayerController.network(_videoUrl!)
+    
+    if (videoUrl.isNotEmpty) {
+      _controller = VideoPlayerController.network(videoUrl)
         ..initialize().then((_) {
-          setState(() {});
-          _controller.play();
-          _controller.setLooping(true);
+          setState(() {
+            _isVideoLoaded = true; // Mark video as loaded
+            _controller.play();
+            _controller.setLooping(true);
+          });
         });
-    });
+    }
+    print("Video URL: $videoUrl");
   } catch (e) {
     print("Error fetching video: $e");
+    setState(() {
+      _isVideoLoaded = false; // Handle the failure by showing an error message
+    });
   }
 }
 
-  
   Future<void> _fetchStats() async {
     try {
       // Fetch data from Firestore
@@ -254,19 +246,34 @@ Future<void> _fetchVideoUrl() async {
                   ),  
                   const SizedBox(height: 50),
 
-                  if (_controller.value.isInitialized)
-                    AspectRatio(
-                      aspectRatio: _controller.value.aspectRatio,
-                      child: VideoPlayer(_controller),
-                    )
-                  else
-                    const Center(child: CircularProgressIndicator()),
+                  
+                  _isVideoLoaded
+                        ? AspectRatio(
+                            aspectRatio: _controller.value.aspectRatio,
+                            child: VideoPlayer(_controller),
+                          )
+                        : Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min, // Center the content vertically
+                              children: [
+                                const CircularProgressIndicator(color: Colors.deepOrange),
+                                const SizedBox(height: 10),
+                                Center(
+                                  child: const Text(
+                                    "Loading video...",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: ui.Color.fromARGB(255, 144, 144, 144),
+                                      fontSize: 18,
+                                    ),
+                                  )
+                                  .animate(onPlay: (controller) => controller.repeat()) // Smooth repeat
+                                  ..shimmer(duration: 2000.ms, color: const ui.Color.fromARGB(255, 0, 0, 0)),
+                                ),
+                              ],
+                            ),
+                          ),
 
-                  /*_controller.value.isInitialized 
-                  //? SizedBox(
-                  //     height: 200,
-                  //     child: VideoPlayer(_controller),
-                  //)*/
 
                   const SizedBox(height: 50),
 
@@ -522,22 +529,6 @@ Table(
   ],
 ),
 
-          // padding: const EdgeInsets.all(8),
-          // child:  Column(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   crossAxisAlignment: CrossAxisAlignment.center,
-          //   children: [
-          //     const Text(
-          //       "2",
-          //       style: TextStyle(fontSize: 30, color: ui.Color.fromARGB(255, 168, 168, 168)),
-          //     ).animate(onPlay: (controller) => controller.repeat())
-          //       .shimmer(duration: 3000.ms, color: Colors.deepOrange),
-          //     const Text(
-          //       "Filiales",
-          //       style: TextStyle(fontSize: 17, color: Colors.white),
-          //     ),
-          //   ],
-          // ),
 
                     const SizedBox(height: 50,),
 

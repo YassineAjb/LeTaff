@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 class ContactView extends StatefulWidget {
   
@@ -272,7 +273,7 @@ Future<void> _launchURL(String url) async {
                     
                     const SizedBox(height: 40),
                     const Text(
-                        '©2023 | Tous droits réservés par Le Taff',
+                        '©2024 | Tous droits réservés par Le Taff',
                         style: TextStyle(
                         color: Color.fromARGB(255, 255, 255, 255),
                           fontSize: 13,
@@ -315,83 +316,134 @@ Future<void> _launchURL(String url) async {
     String subject = "";
     String message = "";
 
-void _submit(BuildContext context) async {
-  if (_formKey.currentState!.validate()) {
-    // Add data to Firebase Firestore
-    await FirebaseFirestore.instance.collection('messages').add({
-      'name': name,
-      'email': email,
-      'phone': phone,
-      'subject': subject,
-      'message': message,
-      'sendTime': Timestamp.now(),
-    });
+void submit(BuildContext context) async {
+  // Check for internet connection first
+  var connectivityResult = await Connectivity().checkConnectivity();
 
+  if (connectivityResult == ConnectivityResult.none) {
+    // No internet connection, show error dialog
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('No Internet Connection'),
+          content: const Text(
+              'Please check your internet connection and try again.'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+    return; // Exit function if no connection
+  }
+
+  // Try submitting the data to Firestore
+  try {
+    if (_formKey.currentState!.validate()) {
+      await FirebaseFirestore.instance.collection('message').add({
+        'name': name,
+        'email': email,
+        'phone': phone,
+        'subject': subject,
+        'message': message,
+        'sendTime': Timestamp.now(),
+      });
+
+      showDialog<void>(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Your message has been submitted'),
+            content: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  const Align(
+                      alignment: Alignment.topLeft,
+                      child: Text("Name:",
+                          style: TextStyle(fontWeight: FontWeight.w700))),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(name),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Align(
+                      alignment: Alignment.topLeft,
+                      child: Text("Phone Number:",
+                          style: TextStyle(fontWeight: FontWeight.w700))),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text("$phone"),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Align(
+                      alignment: Alignment.topLeft,
+                      child: Text("Subject:",
+                          style: TextStyle(fontWeight: FontWeight.w700))),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text("$subject"),
+                  )
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              Center(
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.deepOrange,
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                  ),
+                  child: const Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    FocusScope.of(context).unfocus();
+                    _formKey.currentState?.reset();
+                  },
+                ),
+              )
+            ],
+          );
+        },
+      );
+    }
+  } catch (e) {
+    // Handle any Firestore errors (e.g., server issues, timeouts)
     showDialog<void>(
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Your message has been submitted'),
-          content: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                const Align(
-                    alignment: Alignment.topLeft,
-                    child: Text("Name:",
-                        style: TextStyle(fontWeight: FontWeight.w700))),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(name),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Align(
-                    alignment: Alignment.topLeft,
-                    child: Text("Phone Number:",
-                        style: TextStyle(fontWeight: FontWeight.w700))),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Text("$phone"),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Align(
-                    alignment: Alignment.topLeft,
-                    child: Text("Subject:",
-                        style: TextStyle(fontWeight: FontWeight.w700))),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Text("$subject"),
-                )
-              ],
-            ),
-          ),
+          title: const Text('Error Submitting Message'),
+          content: Text(
+              'An error occurred while submitting your message: $e\nPlease try again later.'),
           actions: <Widget>[
-            Center(
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Colors.blue,
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                ),
-                child: const Text('OK'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  FocusScope.of(context).unfocus();
-                  _formKey.currentState?.reset();
-                },
-              ),
-            )
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
           ],
         );
       },
     );
   }
 }
+
     return Form(
       key: _formKey,
       child: Column(
@@ -555,11 +607,10 @@ void _submit(BuildContext context) async {
                 return 'Message must contain at least 10 characters';
               }
               // Define the regex pattern to allow letters, numbers, spaces, and common punctuation
-              //final messageRegex = RegExp(r'^[\w\s.,!?\'"-]+$');
-              final messageRegex = RegExp(r'^[\w\s]+$');
+              /*final messageRegex = RegExp(r'^[\w\s.,!?]+$');
               if (!messageRegex.hasMatch(value)) {
                 return 'Message can only contain letters, numbers, and basic punctuation';
-              }
+              }*/
               return null;
             },
             onChanged: (value) {
@@ -577,7 +628,7 @@ void _submit(BuildContext context) async {
               
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  _submit(context);
+                  submit(context);
                 }
               },
               style: ElevatedButton.styleFrom(
@@ -611,7 +662,8 @@ void _submit(BuildContext context) async {
                   ],
                 ),
               ),
-            ),
+            ).animate(onPlay: (controller) => controller.repeat(reverse: true))
+            .shimmer(duration: 4000.ms),
           ),
           ),
         ],

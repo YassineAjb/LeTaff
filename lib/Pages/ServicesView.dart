@@ -10,6 +10,7 @@ import 'package:letaff/Pages/SolutionWebView.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'dart:ui' as ui;
 
 class ServicesView extends StatefulWidget {
   @override
@@ -61,7 +62,7 @@ class _ServicesViewState extends State<ServicesView> {
   }
     // List of image paths and their keys
     final images = {
-      'logo':  'images/le-taff-logo-1.png',
+      //'logo':  'images/le-taff-logo-1.png',
     };
 // List of image paths and their keys
     final Simages = {
@@ -312,7 +313,9 @@ Widget buildServiceDescriptions() {
                               placeholder: (context, url) => const CircularProgressIndicator(),
                               errorWidget: (context, url, error) => const Icon(Icons.error),
                             )
-                          : const CircularProgressIndicator(),                    ),
+                          : //const CircularProgressIndicator(),                    ),
+                            buildCircularIndicatorWithImage(),
+                  ),
                   ),
                   const Divider(
                     color: Colors.grey,
@@ -439,10 +442,10 @@ Widget buildServiceDescriptions() {
                                     child: CachedNetworkImage(
                                       imageUrl: ServiceImageUrls[service['index']] ?? '', // Replace 'logo' with the desired key
                                       fit: BoxFit.cover,
-                                      placeholder: (context, url) => Center(
+                                      placeholder: (context, url) => const Center(
                                         child: CircularProgressIndicator(), // Display while loading
                                       ),
-                                      errorWidget: (context, url, error) => Icon(Icons.error), // Display in case of error
+                                      errorWidget: (context, url, error) => Icon(Icons.error,color :Colors.deepOrange), // Display in case of error
                                     ),
                                   ),
                                 ),
@@ -583,9 +586,9 @@ Widget buildServiceDescriptions() {
                                   imageUrl: imagePaths[index],
                                   fit: BoxFit.cover,
                                   placeholder: (context, url) => const CircularProgressIndicator(),
-                                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                                  errorWidget: (context, url, error) => const Icon(Icons.error,color :Colors.deepOrange),
                                 )
-                              : const Icon(Icons.broken_image), // Fallback if the image path is empty
+                              : const Icon(Icons.broken_image,color :Colors.deepOrange), // Fallback if the image path is empty
 
                             );
                           },
@@ -768,4 +771,27 @@ const SizedBox(height: 60),
     color: const Color(0x8080DDFF),
     margin: const EdgeInsets.symmetric(vertical: 16),
   ).animate().scale(duration: 600.ms, alignment: Alignment.centerLeft);
+}
+
+Widget buildCircularIndicatorWithImage() {
+  return Stack(
+    alignment: Alignment.center,
+    children: [
+      const SizedBox(
+        width: 100.0,  // Set the desired size of the CircularProgressIndicator
+        height: 100.0,
+        child: CircularProgressIndicator(
+          strokeWidth: 4.0,
+          color: Colors.deepOrange,
+        ),
+      ),
+      Positioned(
+        child: Image.asset(
+          'asset/logo-blanc.png',  // Replace with your image path
+          width: 70.0,
+          height: 70.0,
+        ),
+      ),
+    ],
+  );
 }
