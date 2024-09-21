@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 // import 'package:letaff/Pages/ContactView.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:letaff/Pages/ServicesView.dart';
 import 'package:letaff/providers/NavBarProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -98,19 +99,13 @@ class _SolutionWebViewState extends State<SolutionWebView> {
                         imageUrls['dev-1'] != null
                           ? CachedNetworkImage(
                               imageUrl: imageUrls['dev-1']!,
-                              placeholder: (context, url) => const CircularProgressIndicator(),
+                              placeholder: (context, url) => buildCircularIndicatorWithImage(),
                               errorWidget: (context, url, error) => const Icon(Icons.error),
                             )
-                          : const CircularProgressIndicator(),
-                          //Image.asset('assets/solutions-webjpg.jpg'),
+                          : buildCircularIndicatorWithImage(),
                     ),
                   ),
-                  // const Divider(
-                  //   color: Colors.grey,
-                  //   thickness: 1,
-                  //   indent: 30,
-                  //   endIndent: 30,
-                  // ),
+                  
                 ],
               ),
             ),
@@ -286,11 +281,10 @@ Container(
       imageUrls['SD'] != null
     ? CachedNetworkImage(
         imageUrl: imageUrls['SD']!,
-        placeholder: (context, url) => const CircularProgressIndicator(),
+        placeholder: (context, url) => buildCircularIndicatorWithImage(),
         errorWidget: (context, url, error) => const Icon(Icons.error),
       )
-    : const CircularProgressIndicator(),
-    //Image.asset('assets/service-detail.png'),
+    : buildCircularIndicatorWithImage(),
   ),
 ),
 const SizedBox(height: 10),
@@ -324,11 +318,10 @@ Container(
       imageUrls['solW'] != null
     ? CachedNetworkImage(
         imageUrl: imageUrls['solW']!,
-        placeholder: (context, url) => const CircularProgressIndicator(),
+        placeholder: (context, url) => buildCircularIndicatorWithImage(),
         errorWidget: (context, url, error) => const Icon(Icons.error),
       )
-    : const CircularProgressIndicator(),
-    //Image.asset('assets/S o l u t i o n s W e b.png'),
+    : buildCircularIndicatorWithImage(),
   ),
 ),
 const SizedBox(height: 30),

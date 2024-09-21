@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 // import 'package:letaff/Pages/ContactView.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:letaff/Pages/ServicesView.dart';
 import 'package:letaff/providers/NavBarProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -97,10 +98,10 @@ class _SolutionMarketingViewState extends State<SolutionMarketingView> {
                       child: imageUrls['dev-1'] != null
                           ? CachedNetworkImage(
                               imageUrl: imageUrls['dev-1']!,
-                              placeholder: (context, url) => const CircularProgressIndicator(),
+                              placeholder: (context, url) => buildCircularIndicatorWithImage(),
                               errorWidget: (context, url, error) => const Icon(Icons.error),
                             )
-                          : const CircularProgressIndicator(),
+                          : buildCircularIndicatorWithImage(),
                           //Image.asset('assets/marketing-digital.jpg'),
                     ),
                   ),
@@ -279,10 +280,10 @@ Container(
     child: imageUrls['SD'] != null
       ? CachedNetworkImage(
           imageUrl: imageUrls['SD']!,
-          placeholder: (context, url) => const CircularProgressIndicator(),
+          placeholder: (context, url) => buildCircularIndicatorWithImage(),
           errorWidget: (context, url, error) => const Icon(Icons.error),
         )
-      : const CircularProgressIndicator(),
+      : buildCircularIndicatorWithImage(),
       //Image.asset('assets/service-detail.png'),
   ),
 ),
@@ -319,10 +320,10 @@ Container(
     child: imageUrls['solM'] != null
       ? CachedNetworkImage(
           imageUrl: imageUrls['solM']!,
-          placeholder: (context, url) => const CircularProgressIndicator(),
+          placeholder: (context, url) => buildCircularIndicatorWithImage(),
           errorWidget: (context, url, error) => const Icon(Icons.error),
         )
-      : const CircularProgressIndicator(),
+      : buildCircularIndicatorWithImage(),
       //Image.asset('assets/S o l u t i o n s Mar.png'),
   ),
 ),

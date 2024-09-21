@@ -10,7 +10,6 @@ import 'package:letaff/Pages/SolutionWebView.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'dart:ui' as ui;
 
 class ServicesView extends StatefulWidget {
   @override
@@ -62,7 +61,7 @@ class _ServicesViewState extends State<ServicesView> {
   }
     // List of image paths and their keys
     final images = {
-      //'logo':  'images/le-taff-logo-1.png',
+      'logo':  'images/le-taff-logo-1.png',
     };
 // List of image paths and their keys
     final Simages = {
@@ -420,17 +419,7 @@ Widget buildServiceDescriptions() {
                                   ),
                                 ),
                                 const SizedBox(height: 20.0),
-                                // Container(
-                                //   width: 340,
-                                //   height: 210,
-                                //   decoration: BoxDecoration(
-                                //     borderRadius: BorderRadius.circular(10.0),
-                                //     image: DecorationImage(
-                                //       image: AssetImage(service['image']),
-                                //       fit: BoxFit.cover,
-                                //     ),
-                                //   ),
-                                // ),
+                                
                                 Container(
                                   width: 340,
                                   height: 210,

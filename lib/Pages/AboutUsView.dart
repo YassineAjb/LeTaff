@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:letaff/Pages/ServicesView.dart';
 import 'package:letaff/providers/NavBarProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
@@ -19,7 +20,7 @@ class AboutUsView extends StatefulWidget {
 class _AboutUsViewState extends State<AboutUsView> {
   late VideoPlayerController _controller;
   final firebase_storage.FirebaseStorage _storage = firebase_storage.FirebaseStorage.instance;
-  String? _videoUrl;
+  //String? _videoUrl;
 
   // Firestore instance
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -130,10 +131,10 @@ Future<void> _fetchVideoUrl() async {
                       imageUrls['logo'] != null
                         ? CachedNetworkImage(
                             imageUrl: imageUrls['logo']!,
-                            placeholder: (context, url) => const CircularProgressIndicator(),
+                            placeholder: (context, url) => buildCircularIndicatorWithImage(),
                             errorWidget: (context, url, error) => const Icon(Icons.error),
                           )
-                        : const CircularProgressIndicator(),
+                        : buildCircularIndicatorWithImage(),
                                 //Image.asset('assets/le-taff-logo-1.png'),
                     ),
                   ),
@@ -344,7 +345,7 @@ Future<void> _fetchVideoUrl() async {
                              child: imageUrls['A-U-1'] != null
                               ? CachedNetworkImage(
                                   imageUrl: imageUrls['A-U-1']!, 
-                                  placeholder: (context, url) => const CircularProgressIndicator(),
+                                  placeholder: (context, url) => buildCircularIndicatorWithImage(),
                                   errorWidget: (context, url, error) => const Icon(Icons.error),
                                   height: 200,     
                                   width: 180,      
@@ -354,15 +355,7 @@ Future<void> _fetchVideoUrl() async {
                               .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
                               //.shimmer(duration: 3000.ms)
                               .boxShadow(duration: 1000.ms,
-                            // Image.asset(
-                            //   "assets/A-U-1.jpg",
-                            //   height: 200,
-                            //   width: 180,
-                            //   fit: BoxFit.cover,
-                            // )
-                            //   .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
-                            //   //.shimmer(duration: 3000.ms)
-                            //   .boxShadow(duration: 1000.ms,
+                        
                                   begin: const BoxShadow(
                                     blurRadius: 4,
                                     color: ui.Color.fromARGB(255, 255, 255, 255),
@@ -392,15 +385,7 @@ Future<void> _fetchVideoUrl() async {
                               .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
                               //.shimmer(duration: 3000.ms)
                               .boxShadow(duration: 1000.ms,
-                            // Image.asset(
-                            //   "assets/A-U-2.jpg",
-                            //   height: 200,
-                            //   width: 180,
-                            //   fit: BoxFit.cover,
-                            // )
-                            //   .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
-                            //   //.shimmer(duration: 7000.ms)
-                            //   .boxShadow(duration: 1100.ms,
+                            
                                   begin: const BoxShadow(
                                     blurRadius: 4,
                                     color: ui.Color.fromARGB(255, 255, 255, 255),
@@ -430,15 +415,7 @@ Future<void> _fetchVideoUrl() async {
                               .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
                               //.shimmer(duration: 3000.ms)
                               .boxShadow(duration: 1000.ms,
-                            // Image.asset(
-                            //   "assets/A-U-3.jpg",
-                            //   height: 200,
-                            //   width: 180,
-                            //   fit: BoxFit.cover,
-                            // )
-                              // .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
-                              // //.shimmer(duration: 7000.ms)
-                              // .boxShadow(duration: 1200.ms,
+                            
                                   begin: const BoxShadow(
                                     blurRadius: 4,
                                     color: ui.Color.fromARGB(255, 255, 255, 255),
@@ -469,15 +446,7 @@ Future<void> _fetchVideoUrl() async {
                               .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
                               //.shimmer(duration: 3000.ms)
                               .boxShadow(duration: 1000.ms,
-                            //   Image.asset(
-                            //   "assets/A-U-4.jpg",
-                            //   height: 200,
-                            //   width: 180,
-                            //   fit: BoxFit.cover,
-                            // )
-                            //   .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
-                            //   //.shimmer(duration: 7000.ms)
-                            //   .boxShadow(duration: 1300.ms,
+                            
                                   begin: const BoxShadow(
                                     blurRadius: 4,
                                     color: ui.Color.fromARGB(255, 255, 255, 255),
@@ -685,8 +654,7 @@ void initState() {
           });
         }
       },
-      // child: TweenAnimationBuilder<int>(
-      //   tween: IntTween(begin: widget.endValue - 10, end: _currentValue),
+      
         child: TweenAnimationBuilder<int>(
         tween: IntTween(
           begin: (widget.endValue - 10).clamp(0, double.infinity).toInt(),

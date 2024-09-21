@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:letaff/Pages/ServicesView.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -85,10 +86,10 @@ Future<void> _launchURL(String url) async {
                         imageUrls['logo'] != null
                           ? CachedNetworkImage(
                               imageUrl: imageUrls['logo']!,
-                              placeholder: (context, url) => const CircularProgressIndicator(),
+                              placeholder: (context, url) => buildCircularIndicatorWithImage(),
                               errorWidget: (context, url, error) => const Icon(Icons.error),
                             )
-                          : const CircularProgressIndicator(),
+                          : buildCircularIndicatorWithImage(),
                       //Image.asset('assets/le-taff-logo-1.png'),
                     ),
                   ),
@@ -237,12 +238,7 @@ Future<void> _launchURL(String url) async {
                             width: 100,
                             height: 100,
                           )
-                        : const CircularProgressIndicator(),
-                          // Image.asset(
-                          //   'asset/logo-blanc.png', // Replace with your image asset path
-                          //   width: 100,
-                          //   height: 100,
-                          // ),
+                        : const CircularProgressIndicator(color: Colors.deepOrange),
                           const SizedBox(height: 10),
                           const Text(
                             'Chez Le Taff, nous nous engageons à fournir des services numériques de haute qualité, de solutions web, des applications mobiles personnalisées et des stratégies marketing efficaces.',

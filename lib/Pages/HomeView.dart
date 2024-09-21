@@ -53,7 +53,7 @@ final firebase_storage.FirebaseStorage _storage = firebase_storage.FirebaseStora
   }
     // List of image paths and their keys
     final images = {
-      //'logo':  'images/le-taff-logo-1.png',
+      'logo':  'images/le-taff-logo-1.png',
       'hom11':  'images/hom11.jpg',
       'counter-3':  'images/counter-3.png',    
       
@@ -395,26 +395,18 @@ Future<void> _fetchProjects() async {
                             crossAxisSpacing: 16,
                             mainAxisSpacing: 16,
                           ),
-                          //itemCount: imagePaths.length,
-                          // itemBuilder: (context, index) {
-                          //   return Card(
-                          //     elevation: 4,
-                          //     color: const Color.fromARGB(255, 16, 16, 16), // card color
-                          //     child: Image.asset(imagePaths[index], fit: BoxFit.cover),
-                          //   );
-                          // },
+                          
                           itemCount: partenairesImagePaths.length,
                           itemBuilder: (context, index) {
                             return Card(
                               elevation: 4,
                               color: const Color.fromARGB(255, 16, 16, 16), // card color
-                              // child: Image.asset(partenairesImagePaths[index], fit: BoxFit.cover),
                               child: partenairesImagePaths[index].isNotEmpty 
                               ? CachedNetworkImage(
                                   imageUrl: partenairesImagePaths[index],
                                   fit: BoxFit.cover,
                                   placeholder: (context, url) => buildCircularIndicatorWithImage(),
-                                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                                  errorWidget: (context, url, error) => const Icon(Icons.error,color :Colors.deepOrange),
                                 )
                               : const Icon(Icons.broken_image), // Fallback if the image path is empty
 
@@ -687,12 +679,6 @@ Future<void> _fetchProjects() async {
                                 borderRadius: BorderRadius.circular(10.0),
                                 child: Stack(
                                   children: [
-                                    // Image.asset(
-                                    //   project['image'],
-                                    //   width: 340,
-                                    //   height: 340,
-                                    //   fit: BoxFit.cover,
-                                    // ),
                                     CachedNetworkImage(
                                       imageUrl: project['imageUrl'] ?? '', // Use the fetched imageUrl
                                       width: 380,
@@ -701,6 +687,7 @@ Future<void> _fetchProjects() async {
                                       placeholder: (context, url) => buildCircularIndicatorWithImage(),
                                       errorWidget: (context, url, error) => Icon(Icons.error),
                                     ),
+
                                     Container(
                                       width: 340,
                                       height: 340,

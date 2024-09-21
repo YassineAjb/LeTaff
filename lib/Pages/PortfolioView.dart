@@ -253,7 +253,7 @@ void _startAutoScroll() {
                                 borderRadius: BorderRadius.circular(10.0),
                                 child: Stack(
                                   children: [
-                                    projectData[index].isNotEmpty
+                                    project['imageUrl'].isNotEmpty
                                     ? CachedNetworkImage(
                                       imageUrl: project['imageUrl'] ?? '',
                                       width: 380,
