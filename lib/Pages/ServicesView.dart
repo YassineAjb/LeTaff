@@ -309,11 +309,10 @@ Widget buildServiceDescriptions() {
                         imageUrls['logo'] != null
                           ? CachedNetworkImage(
                               imageUrl: imageUrls['logo']!,
-                              placeholder: (context, url) => const CircularProgressIndicator(),
+                              placeholder: (context, url) => buildCircularIndicatorWithImage(),
                               errorWidget: (context, url, error) => const Icon(Icons.error),
                             )
-                          : //const CircularProgressIndicator(),                    ),
-                            buildCircularIndicatorWithImage(),
+                          : buildCircularIndicatorWithImage(),
                   ),
                   ),
                   const Divider(
@@ -431,10 +430,10 @@ Widget buildServiceDescriptions() {
                                     child: CachedNetworkImage(
                                       imageUrl: ServiceImageUrls[service['index']] ?? '', // Replace 'logo' with the desired key
                                       fit: BoxFit.cover,
-                                      placeholder: (context, url) => const Center(
-                                        child: CircularProgressIndicator(), // Display while loading
+                                      placeholder: (context, url) => Center(
+                                        child: buildCircularIndicatorWithImage(), // Display while loading
                                       ),
-                                      errorWidget: (context, url, error) => Icon(Icons.error,color :Colors.deepOrange), // Display in case of error
+                                      errorWidget: (context, url, error) => const Icon(Icons.error,color :Colors.deepOrange), // Display in case of error
                                     ),
                                   ),
                                 ),
@@ -574,7 +573,7 @@ Widget buildServiceDescriptions() {
                               ? CachedNetworkImage(
                                   imageUrl: imagePaths[index],
                                   fit: BoxFit.cover,
-                                  placeholder: (context, url) => const CircularProgressIndicator(),
+                                  placeholder: (context, url) => buildCircularIndicatorWithImage(),
                                   errorWidget: (context, url, error) => const Icon(Icons.error,color :Colors.deepOrange),
                                 )
                               : const Icon(Icons.broken_image,color :Colors.deepOrange), // Fallback if the image path is empty
