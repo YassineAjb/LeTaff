@@ -198,7 +198,7 @@ void _startAutoScroll() {
                             "Réalisations",
                             style: TextStyle(
                               color: Color.fromARGB(255, 120, 120, 120),
-                              fontSize: 69.0,
+                              fontSize: 60.0,
                               height: 0.9,
                             ),
                           ),

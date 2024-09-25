@@ -12,12 +12,12 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with TickerProviderStateMixin<Home> {
   static const List<Destination> allDestinations = <Destination>[
-  Destination(0, 'Home', Icons.home, Colors.teal),
-  Destination(1, 'Services', Icons.assistant, Colors.cyan),
-  Destination(2, 'Portfolio', Icons.batch_prediction, Colors.orange),
-  Destination(3, 'Career', Icons.info, Colors.blue),
-  Destination(4, 'Contact', Icons.contact_mail, Colors.green),  
-  Destination(5, 'About Us', Icons.work, Colors.purple),          
+  Destination(0, 'Home', Icons.home),
+  Destination(1, 'Services', Icons.clear_all_rounded),
+  Destination(2, 'Portfolio', Icons.cases_outlined),
+  Destination(3, 'Career', Icons.stairs_rounded),
+  Destination(4, 'Contact', Icons.chat),  
+  Destination(5, 'About Us', Icons.supervised_user_circle),          
 ];
 
 
@@ -117,7 +117,7 @@ Widget build(BuildContext context) {
             data: NavigationBarThemeData(
               labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>((Set<WidgetState> states) {
                 if (states.contains(WidgetState.selected)) {
-                  return const TextStyle(color: Colors.deepOrange, fontSize: 15);
+                  return const TextStyle(color: Colors.deepOrange);
                 }
                 return const TextStyle(color: Color.fromARGB(255, 255, 255, 255));
               }),

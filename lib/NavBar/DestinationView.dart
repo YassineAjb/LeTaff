@@ -7,11 +7,10 @@ import 'package:letaff/Pages/CareerView.dart';
 import 'package:letaff/Pages/ContactView.dart';
 
 class Destination {
-  const Destination(this.index, this.title, this.icon, this.color);
+  const Destination(this.index, this.title, this.icon);
   final int index;
   final String title;
   final IconData icon;
-  final MaterialColor color;
 }
 
 

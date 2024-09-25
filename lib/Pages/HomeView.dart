@@ -79,7 +79,7 @@ final firebase_storage.FirebaseStorage _storage = firebase_storage.FirebaseStora
     // Wait for all images to be fetched
     await Future.wait(futures);
     await Future.wait(Sfutures);
-    print(imageUrls);
+    
 
     // Trigger a rebuild to reflect changes
     setState(() {});
@@ -89,7 +89,6 @@ final firebase_storage.FirebaseStorage _storage = firebase_storage.FirebaseStora
       String url = await _storage.ref(refPath).getDownloadURL();
       return url;
     } catch (e) {
-      print("Error fetching image: $e");
       return null;
     }
   }
@@ -155,7 +154,7 @@ Future<void> _fetchProjects() async {
       projectData = updatedProjectData;
     });
   } catch (e) {
-    print("Error fetching projects: $e");
+
   }
 }
 
@@ -181,7 +180,6 @@ Future<void> _fetchProjects() async {
             context,
             MaterialPageRoute(builder: (context) => SolutionWebView()),
           );
-          print("Details for Service DÉVELOPPEMENT MOBILE");
         },
         'image': 'asset/webdev.png',
       },
@@ -195,7 +193,6 @@ Future<void> _fetchProjects() async {
             context,
             MaterialPageRoute(builder: (context) => SolutionMobileView()),
           );
-          print("Details for Service DÉVELOPPEMENT MOBILE");
         },
         'image': 'asset/mobiledev.png',
       },
@@ -209,7 +206,6 @@ Future<void> _fetchProjects() async {
             context,
             MaterialPageRoute(builder: (context) => SolutionMarketingView()),
           );
-          print("Details for Service DÉVELOPPEMENT MOBILE");
         },
         'image': 'asset/marketing.png',
       },
@@ -223,7 +219,6 @@ Future<void> _fetchProjects() async {
             context,
             MaterialPageRoute(builder: (context) => SolutionMarketingView()),
           );
-          print("Details for Service DÉVELOPPEMENT MOBILE");
         },
         'image': 'asset/maintenance.png',
       },
@@ -470,7 +465,7 @@ Future<void> _fetchProjects() async {
                         children: servicesData.map((service) {
                           return Container(
                             width: 340,
-                            height: 340,
+                            height: 380,
                             padding: const EdgeInsets.all(16.0),
                             margin: const EdgeInsets.symmetric(horizontal: 10.0),
                             decoration: BoxDecoration(
@@ -551,7 +546,7 @@ Future<void> _fetchProjects() async {
                     
                     Container(
                             width: 400,
-                            height: 650,
+                            height: 850,
                             padding: const EdgeInsets.all(16.0),
                             margin: const EdgeInsets.symmetric(horizontal: 10.0),
                             decoration: BoxDecoration(
@@ -651,11 +646,9 @@ Future<void> _fetchProjects() async {
                           return VisibilityDetector(
                             key: Key(project['title']),
                             onVisibilityChanged: (info) {
-                              print('Visibility changed for ${project['title']}: ${info.visibleFraction}');
                       if (info.visibleFraction > 0) {
                         setState(() {
                           project['isVisible'] = true;
-                          print('${project['isVisible']}');
                         });
                       }
                             },
@@ -685,7 +678,7 @@ Future<void> _fetchProjects() async {
                                       height: 340,
                                       fit: BoxFit.cover,
                                       placeholder: (context, url) => buildCircularIndicatorWithImage(),
-                                      errorWidget: (context, url, error) => Icon(Icons.error),
+                                      errorWidget: (context, url, error) => const Icon(Icons.error),
                                     ),
 
                                     Container(
@@ -779,7 +772,7 @@ Future<void> _fetchProjects() async {
                                           fontWeight: FontWeight.bold, // This makes the text bold
                                         ),
                                       ).animate(onPlay: (controller) => controller.repeat())
-                                          .shimmer(duration: 1200.ms, color: Color.fromARGB(255, 255, 255, 255))
+                                          .shimmer(duration: 1200.ms, color: const Color.fromARGB(255, 255, 255, 255))
                                           .animate()
                                           .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
                                           .slide(),
@@ -932,7 +925,7 @@ Future<void> _fetchProjects() async {
                                       ),
                                     ),
                                   ).animate(onPlay: (controller) => controller.repeat())
-                                      .shimmer(duration: 1200.ms, color: Color.fromARGB(255, 255, 255, 255))
+                                      .shimmer(duration: 1200.ms, color: const Color.fromARGB(255, 255, 255, 255))
                                       .animate()
                                       .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
                                       .slide(),
@@ -1058,34 +1051,12 @@ Future<void> _fetchProjects() async {
                               ),
                             ),
                             const SizedBox(width: 20), // Space between label and description
-                            // const Column(
-                            //   children: [
-                            //     Text(
-                            //           "Avez-vous un projet ?",
-                            //           style: TextStyle(
-                            //             color: Colors.deepOrange, // Text color
-                            //             fontSize: 15.0, // Text size
-                            //             letterSpacing: 2.0,
-                            //             fontWeight: FontWeight.bold, // Text weight
-                            //           ),
-                            //         ),
-                            //     Text(
-                            //           "Réalisons un projet\nexceptionnel\nensemble !",
-                            //           style: TextStyle(
-                            //             color: Color.fromARGB(255, 187, 187, 187), // Text color
-                            //             fontSize: 15.0, // Text size
-                            //             letterSpacing: 2.0,
-                            //             fontWeight: FontWeight.bold, // Text weight
-                            //           ),
-                            //         ),
-                            //   ],
-
-                            // ),
+                            
                             Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const Padding(
-                                padding: const EdgeInsets.only(bottom: 10.0), // Adding bottom margin
+                                padding:  EdgeInsets.only(bottom: 10.0), // Adding bottom margin
                                 child: Text(
                                   "Avez-vous un projet ?",
                                   style: TextStyle(
@@ -1097,7 +1068,7 @@ Future<void> _fetchProjects() async {
                                 ),
                               ),
                               const Padding(
-                                padding: const EdgeInsets.only(bottom: 20.0), // Adding bottom margin
+                                padding: EdgeInsets.only(bottom: 20.0), // Adding bottom margin
                                 child: Text(
                                   "Réalisons un projet\nexceptionnel\nensemble !",
                                   textAlign: TextAlign.center, // Center-align all lines
