@@ -480,61 +480,66 @@ Future<void> _fetchProjects() async {
                                 ),
                               ],
                             ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            child: Stack( // Wrap the entire column with Stack
                               children: [
-                                Text(
-                                  service['title'],
-                                  style: const TextStyle(
-                                    color: Color.fromARGB(255, 216, 216, 216),
-                                    fontSize: 24.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 10.0),
-                                Text(
-                                  service['description'],
-                                  style: TextStyle(
-                                    color: Colors.grey[400],
-                                    fontSize: 16.0,
-                                  ),
-                                ),
-                                const SizedBox(height: 20.0),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    ElevatedButton(
-                                      onPressed: service['buttonAction'],
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.deepOrange,
-                                      ),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text(
-                                            service['buttonText'],
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                          const Icon(
-                                            Icons.moving,
-                                            color: Colors.black,
-                                            size: 30,
-                                          ),
-                                        ],
+                                    Text(
+                                      service['title'],
+                                      style: const TextStyle(
+                                        color: Color.fromARGB(255, 216, 216, 216),
+                                        fontSize: 24.0,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    Positioned(
-                                      top: 0,
-                                      right: 0,
-                                      child: Image.asset(
-                                        service['image'],
-                                        width: 80,
-                                        height: 80,
+                                    const SizedBox(height: 10.0),
+                                    Text(
+                                      service['description'],
+                                      style: TextStyle(
+                                        color: Colors.grey[400],
+                                        fontSize: 16.0,
                                       ),
+                                    ),
+                                    const SizedBox(height: 20.0),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        ElevatedButton(
+                                          onPressed: service['buttonAction'],
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.deepOrange,
+                                          ),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text(
+                                                service['buttonText'],
+                                                style: const TextStyle(
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              const Icon(
+                                                Icons.moving,
+                                                color: Colors.black,
+                                                size: 30,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ],
+                                ),
+                                // Move the Positioned widget here
+                                Positioned(
+                                  top: 50,
+                                  right: 0,
+                                  child: Image.asset(
+                                    service['image'],
+                                    width: 80,
+                                    height: 80,
+                                  ),
                                 ),
                               ],
                             ),
@@ -542,8 +547,9 @@ Future<void> _fetchProjects() async {
                         }).toList(),
                       ),
                     ),
+
                     const SizedBox(height: 40),        
-                    
+
                     Container(
                             width: 400,
                             height: 850,
@@ -731,384 +737,326 @@ Future<void> _fetchProjects() async {
 
                     const SizedBox(height: 40), 
 
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                      color: const Color.fromARGB(255, 24, 24, 24),),
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 350,
-                              height: 340,
-                              margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0),
-                                    spreadRadius: 2,
-                                    blurRadius: 5,
-                                    offset: const Offset(0, 3),
-                                  ),
-                                ],
-                              ),
-                              child: Stack(
-                                children: [
-                                  Positioned(
-                                    left: 0,
-                                    right: 0,
-                                    top: 0,
-                                    bottom: 0,
-                                    child: Center(
-                                      child: const Text(
-                                        "POURQUOI NOUS\nCHOISIR !",
-                                        textAlign: TextAlign.center, // Center-align all lines
-                                        style: TextStyle(
-                                          color: Colors.deepOrange,
-                                          fontSize: 62.0,
-                                          letterSpacing: 2.0,
-                                          fontWeight: FontWeight.bold, // This makes the text bold
-                                        ),
-                                      ).animate(onPlay: (controller) => controller.repeat())
-                                          .shimmer(duration: 1200.ms, color: const Color.fromARGB(255, 255, 255, 255))
-                                          .animate()
-                                          .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
-                                          .slide(),
-                                    ),
-                                  ),
-                                  Positioned(
-                                          bottom: -5, // Adjust this value as needed
-                                          right: -10,  // Adjust this value as needed
-                                          child: Transform.rotate(
-                                            angle: -90 * 3.14159 / 180, // Rotate 45 degrees
-                                            child: RiveAnimatedIcon(
-                                              riveIcon: RiveIcon.arrowDown,
-                                              width: 48,
-                                              height: 60,
-                                              color: const Color.fromARGB(255, 255, 255, 255),
-                                              strokeWidth: 3,
-                                              loopAnimation: true,
-                                              onTap: (){},
-                                              onHover: (value){}                          
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-
-
-                            const SizedBox(width: 16.0), // Optional: Add spacing between containers
-                            Container(
-                              width: 250,
-                              height: 340,
-                              margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0),
-                                    spreadRadius: 2,
-                                    blurRadius: 5,
-                                    offset: const Offset(0, 3),
-                                  ),
-                                ],
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  "INNOVATION,\nFIABILITÉ\nFLEXIBILITÉ, EXPERTISE, ENGAGEMENT",
-                                  //textAlign: TextAlign.center, // Center-align all lines
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 205, 205, 205),
-                                    fontSize: 30.0,
-                                    letterSpacing: 2.0,
-                                    fontWeight: FontWeight.bold, // This makes the text bold
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start, // Adjusted to start to align items properly
-                              children: items.map((item) {
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10.0), // Padding between items
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        item['label']!,
-                                        style: const TextStyle(
-                                          color: Color.fromARGB(255, 205, 205, 205),
-                                          fontSize: 30.0,
-                                          letterSpacing: 2.0,
-                                          fontWeight: FontWeight.bold, // This makes the text bold
-                                        ),
-                                      ),
-                                      const SizedBox(height: 10.0), // Space between percentage and label
-                                      Container(
-                                        width: 100,
-                                        height: 100,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(360.0),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: const Color.fromARGB(255, 129, 129, 129).withOpacity(0.4),
-                                              spreadRadius: 2,
-                                              blurRadius: 5,
-                                              offset: const Offset(0, 3),
-                                            ),
-                                          ],
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            item['percentage']!,
-                                            style: const TextStyle(
-                                              color: Color.fromARGB(255, 205, 205, 205),
-                                              fontSize: 30.0,
-                                              letterSpacing: 2.0,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ),          
-                                      const SizedBox(height: 20), // Space between label and description
-                                      Container(
-                                        width: 300,
-                                        child: Text(
-                                          item['description']!,
-                                          textAlign: TextAlign.center,
-                                          style: const TextStyle(
-                                            color: Color.fromARGB(255, 150, 150, 150),
-                                            fontSize: 16.0,
-                                            letterSpacing: 1.0,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-
-                            Container(
-                              width: 600, 
-                              height: 340, // Set the height of the container
-                              padding: const EdgeInsets.all(16.0), // Adding padding inside the container
-                              decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 27, 27, 27), // Background color for the container
-                                //borderRadius: BorderRadius.circular(10.0), // Rounded corners
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.1), // Shadow color with opacity
-                                    spreadRadius: 2,
-                                    blurRadius: 5,
-                                    offset: const Offset(0, 3), // Shadow position
-                                  ),
-                                ],
-                              ),
-                              child: Stack(
-                                children: [
-                                  const Positioned(
-                                    top: 2.0,
-                                    left: 2.0,
-                                    child: Text(
-                                      "POURQUOI\nNOUS CHOISIR",
-                                      style: TextStyle(
-                                        color: Colors.deepOrange, // Text color
-                                        fontSize: 15.0, // Text size
-                                        letterSpacing: 2.0,
-                                        fontWeight: FontWeight.bold, // Text weight
-                                      ),
-                                    ),
-                                  ).animate(onPlay: (controller) => controller.repeat())
-                                      .shimmer(duration: 1200.ms, color: const Color.fromARGB(255, 255, 255, 255))
-                                      .animate()
-                                      .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
-                                      .slide(),
-                                
-                                  const Positioned(
-                                    top: 130.0,
-                                    left: 16.0,
-                                    child: Text(
-                                      "Projets",
-                                      style: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 18.0, // Text size
-                                      ),
-                                    ),
-                                  ),
-                                  const Positioned(
-                                    top: 130.0,
-                                    left: 200.0,
-                                    child: Text(
-                                      "Clients \net partenaires",
-                                      style: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 18.0, // Text size
-                                      ),
-                                    ),
-                                  ),
-                                  const Positioned(
-                                    top: 250.0,
-                                    left: 16.0,
-                                    child: Text(
-                                      "Années",
-                                      style: TextStyle(
-                                        color: Colors.grey, // Text color
-                                        fontSize: 18.0, // Text size
-                                      ),
-                                    ),
-                                  ),
-                                  const Positioned(
-                                    top: 250.0,
-                                    left: 200.0,
-                                    child: Text(
-                                      "Filiales",
-                                      style: TextStyle(
-                                        color: Colors.grey, // Text color
-                                        fontSize: 18.0, // Text size
-                                      ),
-                                    ),
-                                  ),
-                                  const Positioned(
-                                    top: 80.0,
-                                    left: 16.0,
-                                    child: Text(
-                                      "50+",
-                                      style: TextStyle(
-                                        color: Color.fromARGB(255, 255, 255, 255), // Text color
-                                        fontSize: 40.0, // Text size
-                                      ),
-                                    ),
-                                  ),
-                                  const Positioned(
-                                    top: 80.0,
-                                    left: 200.0,
-                                    child: Text(
-                                      "30+",
-                                      style: TextStyle(
-                                        color: Color.fromARGB(255, 255, 255, 255), // Text color
-                                        fontSize: 40.0, // Text size
-                                      ),
-                                    ),
-                                  ),
-                                  const Positioned(
-                                    top: 200.0,
-                                    left: 16.0,
-                                    child: Text(
-                                      "6",
-                                      style: TextStyle(
-                                        color: Color.fromARGB(255, 255, 255, 255), // Text color
-                                        fontSize: 40.0, // Text size
-                                      ),
-                                    ),
-                                  ),
-                                  const Positioned(
-                                    top: 200.0,
-                                    left: 200.0,
-                                    child: Text(
-                                      "2",
-                                      style: TextStyle(
-                                        color: Color.fromARGB(255, 255, 255, 255), // Text color
-                                        fontSize: 40.0, // Text size
-                                      ),
-                                    ),
-                                  ),
-                                  const Positioned(
-                                    top: 200.0,
-                                    left: 200.0,
-                                    child: Text(
-                                      "2",
-                                      style: TextStyle(
-                                        color: Color.fromARGB(255, 255, 255, 255), // Text color
-                                        fontSize: 40.0, // Text size
-                                      ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: 0.0,
-                                    left: 250.0,
-                                    child: /*Image.asset(
-                                      'assets/counter-3.png', 
-                                      width: 340,
-                                      height: 340,
-                                    ),*/
-                                    imageUrls['counter-3'] != null
-                                      ? CachedNetworkImage(
-                                          width: 340,
-                                          height: 340,
-                                          imageUrl: imageUrls['counter-3']!,
-                                          placeholder: (context, url) => buildCircularIndicatorWithImage(),
-                                          errorWidget: (context, url, error) => const Icon(Icons.error),
-                                        )
-                                      : buildCircularIndicatorWithImage(),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(width: 20), // Space between label and description
-                            
-                            Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Padding(
-                                padding:  EdgeInsets.only(bottom: 10.0), // Adding bottom margin
-                                child: Text(
-                                  "Avez-vous un projet ?",
-                                  style: TextStyle(
-                                    color: Colors.deepOrange, // Text color
-                                    fontSize: 30.0, // Text size
-                                    letterSpacing: 2.0,
-                                    fontWeight: FontWeight.bold, // Text weight
-                                  ),
-                                ),
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.only(bottom: 20.0), // Adding bottom margin
-                                child: Text(
-                                  "Réalisons un projet\nexceptionnel\nensemble !",
-                                  textAlign: TextAlign.center, // Center-align all lines
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 187, 187, 187), // Text color
-                                    fontSize: 22.0, // Text size
-                                    letterSpacing: 2.0,
-                                    fontWeight: FontWeight.bold, // Text weight
-                                  ),
-                                ),
-                              ),
-                              ElevatedButton(
-                                onPressed: () {
-                            Provider.of<NavBarProvider>(context, listen: false).updateIndex(4);
-                                },
-                                  style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color.fromARGB(255, 58, 58, 58),
-                                  ),
-                                  child: const Text('Contacter Nous',
-                                    style: TextStyle(
-                                    color: Colors.deepOrange, // Text color
-                                    fontSize: 15.0, // Text size
-                                    letterSpacing: 2.0,
-                                    fontWeight: FontWeight.bold, // Text weight
-                                  ),),
-                              ),
-                            ],
-                          ),
-
-                          const SizedBox(width: 20), 
-                          
-                          ],    
+Container(
+  decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(10.0),
+    color: const Color.fromARGB(255, 24, 24, 24),
+  ),
+  child: SingleChildScrollView(
+    scrollDirection: Axis.horizontal,
+    child: Row(
+      children: [
+        Container(
+          width: 350,
+          height: 340,
+          margin: const EdgeInsets.symmetric(horizontal: 10.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0),
+                spreadRadius: 2,
+                blurRadius: 5,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Stack(
+            children: [
+              Positioned(
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0,
+                child: Center(
+                  child: const Text(
+                    "POURQUOI NOUS\nCHOISIR !",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.deepOrange,
+                      fontSize: 62.0,
+                      letterSpacing: 2.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ).animate(onPlay: (controller) => controller.repeat())
+                    .shimmer(duration: 1200.ms, color: const Color.fromARGB(255, 255, 255, 255))
+                    .animate()
+                    .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
+                    .slide(),
+                ),
+              ),
+              Positioned(
+                bottom: -5, 
+                right: -10,
+                child: Transform.rotate(
+                  angle: -90 * 3.14159 / 180,
+                  child: RiveAnimatedIcon(
+                    riveIcon: RiveIcon.arrowDown,
+                    width: 48,
+                    height: 60,
+                    color: const Color.fromARGB(255, 255, 255, 255),
+                    strokeWidth: 3,
+                    loopAnimation: true,
+                    onTap: () {},
+                    onHover: (value) {},
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        
+        const SizedBox(width: 16.0),
+        
+        Container(
+          width: 250,
+          height: 340,
+          margin: const EdgeInsets.symmetric(horizontal: 10.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0),
+                spreadRadius: 2,
+                blurRadius: 5,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: const Center(
+            child: Text(
+              "INNOVATION,\nFIABILITÉ\nFLEXIBILITÉ, EXPERTISE, ENGAGEMENT",
+              style: TextStyle(
+                color: Color.fromARGB(255, 205, 205, 205),
+                fontSize: 30.0,
+                letterSpacing: 2.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+        
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: items.map((item) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Column(
+                children: [
+                  Text(
+                    item['label']!,
+                    style: const TextStyle(
+                      color: Color.fromARGB(255, 205, 205, 205),
+                      fontSize: 30.0,
+                      letterSpacing: 2.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 10.0),
+                  Container(
+                    width: 100,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(360.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color.fromARGB(255, 129, 129, 129).withOpacity(0.4),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                      child: Text(
+                        item['percentage']!,
+                        style: const TextStyle(
+                          color: Color.fromARGB(255, 205, 205, 205),
+                          fontSize: 30.0,
+                          letterSpacing: 2.0,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    )
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Container(
+                    width: 300,
+                    child: Text(
+                      item['description']!,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Color.fromARGB(255, 150, 150, 150),
+                        fontSize: 16.0,
+                        letterSpacing: 1.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }).toList(),
+        ),
+        
+        Container(
+          width: 600,
+          height: 340,
+          padding: const EdgeInsets.all(16.0),
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 27, 27, 27),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                spreadRadius: 2,
+                blurRadius: 5,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Stack(
+            children: [
+              Positioned(
+                top: 2.0,
+                left: 2.0,
+                child: const Text(
+                  "POURQUOI\nNOUS CHOISIR",
+                  style: TextStyle(
+                    color: Colors.deepOrange,
+                    fontSize: 15.0,
+                    letterSpacing: 2.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ).animate(onPlay: (controller) => controller.repeat())
+                  .shimmer(duration: 1200.ms, color: const Color.fromARGB(255, 255, 255, 255))
+                  .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
+                  .slide(),
+              ),
+              
+              Positioned(
+                top: 130.0,
+                left: 16.0,
+                child: const Text(
+                  "Projets",
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 18.0,
+                  ),
+                ),
+              ),
+              
+              Positioned(
+                top: 130.0,
+                left: 200.0,
+                child: const Text(
+                  "Clients \net partenaires",
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 18.0,
+                  ),
+                ),
+              ),
+              
+              Positioned(
+                top: 250.0,
+                left: 16.0,
+                child: const Text(
+                  "Années",
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 18.0,
+                  ),
+                ),
+              ),
+              
+              Positioned(
+                top: 250.0,
+                left: 200.0,
+                child: const Text(
+                  "Filiales",
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 18.0,
+                  ),
+                ),
+              ),
+              
+              Positioned(
+                top: 80.0,
+                left: 16.0,
+                child: const Text(
+                  "50+",
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    fontSize: 40.0,
+                  ),
+                ),
+              ),
+              
+              Positioned(
+                top: 80.0,
+                left: 200.0,
+                child: const Text(
+                  "30+",
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    fontSize: 40.0,
+                  ),
+                ),
+              ),
+              
+              Positioned(
+                top: 200.0,
+                left: 16.0,
+                child: const Text(
+                  "6",
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    fontSize: 40.0,
+                  ),
+                ),
+              ),
+              
+              Positioned(
+                top: 200.0,
+                left: 200.0,
+                child: const Text(
+                  "2",
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    fontSize: 40.0,
+                  ),
+                ),
+              ),
+              
+              Positioned(
+                top: 0.0,
+                left: 250.0,
+                child: imageUrls['counter-3'] != null
+                    ? CachedNetworkImage(
+                        width: 340,
+                        height: 340,
+                        imageUrl: imageUrls['counter-3']!,
+                          placeholder: (context, url) => buildCircularIndicatorWithImage(),
+                          errorWidget: (context, url, error) => const Icon(Icons.error),
+                      )
+                    : const Text(''),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  ),
+),
+
                   ],
                 ),
               ),
             ),
             
+
             const SliverToBoxAdapter(child: SizedBox(height: 50)),
                     
           ],
