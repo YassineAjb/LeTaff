@@ -1,4 +1,5 @@
 import 'dart:ui' as ui;
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -338,27 +339,29 @@ Center(
 ),
 const SizedBox(height: 15),
 
-Wrap(
-  spacing: 15.0,
-  runSpacing: 10.0,
-  children: [
-    ToggleTextContainer(
-      initialText: "L’innovation",
-      toggledText: "Nous apportons constamment de nouvelles idées et des approches novatrices pour rendre vos projets uniques et en avance sur la concurrence.",
-    ),
-    ToggleTextContainer(
-      initialText: "L’efficacité",
-      toggledText: "Notre équipe expérimentée assure une qualité de développement exceptionnelle et une stabilité dans la durée, offrant ainsi une base solide à vos projets.",
-    ),
-    ToggleTextContainer(
-      initialText: "L’adaptabilité ",
-      toggledText: "Nous sommes flexibles et capables de nous adapter à vos besoins changeants, assurant ainsi que vos solutions web évoluent en même temps que votre entreprise.",
-    ),
-    ToggleTextContainer(
-      initialText: "La fiabilité",
-      toggledText: "Notre équipe expérimentée assure une qualité de développement exceptionnelle et une stabilité dans la durée.",
-    ),
-    ]
+Center(
+  child: Wrap(
+    spacing: 15.0,
+    runSpacing: 10.0,
+    children: [
+      ToggleTextContainer(
+        initialText: "L’innovation",
+        toggledText: "Nous apportons constamment de nouvelles idées et des approches novatrices pour rendre vos projets uniques et en avance sur la concurrence.",
+      ),
+      ToggleTextContainer(
+        initialText: "L’efficacité",
+        toggledText: "Notre équipe expérimentée assure une qualité de développement exceptionnelle et une stabilité dans la durée, offrant ainsi une base solide à vos projets.",
+      ),
+      ToggleTextContainer(
+        initialText: "L’adaptabilité ",
+        toggledText: "Nous sommes flexibles et capables de nous adapter à vos besoins changeants, assurant ainsi que vos solutions web évoluent en même temps que votre entreprise.",
+      ),
+      ToggleTextContainer(
+        initialText: "La fiabilité",
+        toggledText: "Notre équipe expérimentée assure une qualité de développement exceptionnelle et une stabilité dans la durée.",
+      ),
+      ]
+  ),
 ),
 const SizedBox(height: 30),
 
@@ -463,22 +466,6 @@ Center(
 ),
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                   ],
                 ),
               ),
@@ -497,8 +484,6 @@ Center(
   ).animate().scale(duration: 600.ms, alignment: Alignment.centerLeft);
 
 }
-
-
 
 class ToggleTextContainer extends StatefulWidget {
   final String initialText;
@@ -521,6 +506,12 @@ class _ToggleTextContainerState extends State<ToggleTextContainer> {
 
   @override
   Widget build(BuildContext context) {
+    // Get the screen width using MediaQuery
+    final screenWidth = MediaQuery.of(context).size.width;
+    
+    // Adjust the width as a percentage of screen width
+    final containerWidth = screenWidth * 0.40; // Example: 45% of screen width
+
     return GestureDetector(
       onTap: _toggleText,
       child: AnimatedSwitcher(
@@ -534,15 +525,15 @@ class _ToggleTextContainerState extends State<ToggleTextContainer> {
         child: Container(
           key: ValueKey<bool>(_isFirstTextVisible),
           height: 315,
-          width: 180,
+          width: containerWidth, // Use the responsive width
           decoration: BoxDecoration(
             color: const Color.fromARGB(255, 31, 31, 31),
             borderRadius: BorderRadius.circular(10.0),
             image: DecorationImage(
-              image: const AssetImage('asset/ContWeb.png'), 
+              image: const AssetImage('asset/ContWeb.png'),
               fit: BoxFit.cover,
               colorFilter: ColorFilter.mode(
-                Colors.black.withOpacity(0.7), 
+                Colors.black.withOpacity(0.7),
                 BlendMode.darken,
               ),
             ),
@@ -550,14 +541,15 @@ class _ToggleTextContainerState extends State<ToggleTextContainer> {
           child: Center(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Text(
+              child: AutoSizeText(
                 _isFirstTextVisible ? widget.initialText : widget.toggledText,
                 style: const TextStyle(
-                  fontSize: 18,
+                  fontSize: 17,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
+                minFontSize: 10,
               ),
             ),
           ),

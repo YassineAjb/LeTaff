@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -5,6 +6,7 @@ import 'package:letaff/Pages/ServicesView.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
 //import 'dart:ui' as ui;
+//import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class CareerView extends StatefulWidget {
@@ -343,28 +345,30 @@ Widget buildPostesListe() {
                             ),
                           ),
                           const SizedBox(height: 20),
-                         Wrap(
-                            spacing: 7.0,
-                            runSpacing: 10.0,
-                            children: [
-                              ToggleTextContainer(
-                                initialText: "Savoir-être\nSavoir-faire",
-                                toggledText: "Le professionnalisme et la qualité du travail effectué par les équipes LETAFF sur le terrain font partie de nos caractéristiques maîtresses",
-                              ),
-                              ToggleTextContainer(
-                                initialText: "Ouverture\nd'esprit",
-                                toggledText: "Notre diversité est notre force. Que cela soit culturel ou professionnel, nos équipes bénéficient d’une grande variété de background",
-                              ),
-                              ToggleTextContainer(
-                                initialText: "Esprit\nd'équipe",
-                                toggledText: "Chez LETAFF, vous pourrez toujours compter sur l’expertise et la disponibilité de chacun de nos experts",
-                              ),
-                              ToggleTextContainer(
-                                initialText: "Adaptabilité",
-                                toggledText: "Il n’est jamais simple de séparer vie professionnelle et vie privée. Notre adaptabilité vous permettra de vous offrir un cadre de travail adéquat",
-                              ),
-                              ]
-                              ),
+                         Center(
+                           child: Wrap(
+                              spacing: 7.0,
+                              runSpacing: 10.0,
+                              children: [
+                                ToggleTextContainer(
+                                  initialText: "Savoir-être\nSavoir-faire",
+                                  toggledText: "Le professionnalisme et la qualité du travail effectué par les équipes LETAFF sur le terrain font partie de nos caractéristiques maîtresses.",
+                                ),
+                                ToggleTextContainer(
+                                  initialText: "Ouverture\nd'esprit",
+                                  toggledText: "Notre diversité est notre force. Que cela soit culturel ou professionnel, nos équipes bénéficient d’une grande variété de background.",
+                                ),
+                                ToggleTextContainer(
+                                  initialText: "Esprit\nd'équipe",
+                                  toggledText: "Chez LETAFF, vous pourrez toujours compter sur l’expertise et la disponibilité de chacun de nos experts.",
+                                ),
+                                ToggleTextContainer(
+                                  initialText: "Adaptabilité",
+                                  toggledText: "Il n’est jamais simple de séparer vie professionnelle et vie privée. Notre adaptabilité vous permettra de vous offrir un cadre de travail adéquat.",
+                                ),
+                                ]
+                                ),
+                         ),
                               const SizedBox(height: 30),
                               
                               hr,
@@ -452,27 +456,27 @@ Widget buildPostesListe() {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   IconButton(
-                                    icon: Image.asset('asset/linked4.png', width: 45, height: 45),
-                                    onPressed: () => _launchURL('https://www.linkedin.com'),
+                                    icon: Image.asset('asset/linked4.png', width: 43, height: 43),
+                                    onPressed: () => _launchURL('https://www.linkedin.com/company/letaff/posts/?feedView=all'),
                                   ),
                                   const SizedBox(width: 0),
                                   IconButton(
-                                    icon: Image.asset('asset/beIcon.png', width: 45, height: 45),
-                                    onPressed: () => _launchURL('https://www.linkedin.com'),
+                                    icon: Image.asset('asset/beIcon.png', width: 43, height: 43),
+                                    onPressed: () => _launchURL('https://www.behance.net/letaffINC'),
                                   ),
                                   const SizedBox(width: 0),
                                   IconButton(
-                                    icon: Image.asset('asset/insta4.png', width: 45, height: 45),
-                                    onPressed: () => _launchURL('https://www.instagram.com'),
+                                    icon: Image.asset('asset/insta4.png', width: 43, height: 43),
+                                    onPressed: () => _launchURL('https://www.instagram.com/letaff_/'),
                                   ),
                                   const SizedBox(width: 0),
                                   IconButton(
-                                    icon: Image.asset('asset/face5.png', width: 45, height: 45),
-                                    onPressed: () => _launchURL('https://www.facebook.com'),
+                                    icon: Image.asset('asset/face5.png', width: 43, height: 43),
+                                    onPressed: () => _launchURL('https://www.facebook.com/LeTaff.ca'),
                                   ),
                                   IconButton(
-                                    icon: Image.asset('asset/tiktokicon.png', width: 45, height: 45),
-                                    onPressed: () => _launchURL('https://www.instagram.com'),
+                                    icon: Image.asset('asset/tiktokicon.png', width: 43, height: 43),
+                                    onPressed: () => _launchURL('https://www.tiktok.com/@letaffdev'),
                                   ),
                                 ],
                               ),
@@ -503,7 +507,7 @@ Widget buildPostesListe() {
   ).animate().scale(duration: 600.ms, alignment: Alignment.centerLeft);
 
 }
-
+               
 class ToggleTextContainer extends StatefulWidget {
   final String initialText;
   final String toggledText;
@@ -525,6 +529,12 @@ class _ToggleTextContainerState extends State<ToggleTextContainer> {
 
   @override
   Widget build(BuildContext context) {
+    // Get the screen width using MediaQuery
+    final screenWidth = MediaQuery.of(context).size.width;
+    
+    // Adjust the width as a percentage of screen width
+    final containerWidth = screenWidth * 0.40; // Example: 45% of screen width
+
     return GestureDetector(
       onTap: _toggleText,
       child: AnimatedSwitcher(
@@ -537,16 +547,16 @@ class _ToggleTextContainerState extends State<ToggleTextContainer> {
         },
         child: Container(
           key: ValueKey<bool>(_isFirstTextVisible),
-          height: 290,
-          width: 170,
+          height: 315,
+          width: containerWidth, // Use the responsive width
           decoration: BoxDecoration(
             color: const Color.fromARGB(255, 31, 31, 31),
             borderRadius: BorderRadius.circular(10.0),
             image: DecorationImage(
-              image: const AssetImage('asset/ContCareer.png'), 
+              image: const AssetImage('asset/ContCareer.png'),
               fit: BoxFit.cover,
               colorFilter: ColorFilter.mode(
-                Colors.black.withOpacity(0.7), 
+                Colors.black.withOpacity(0.7),
                 BlendMode.darken,
               ),
             ),
@@ -554,14 +564,15 @@ class _ToggleTextContainerState extends State<ToggleTextContainer> {
           child: Center(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Text(
+              child: AutoSizeText(
                 _isFirstTextVisible ? widget.initialText : widget.toggledText,
                 style: const TextStyle(
-                  fontSize: 18,
+                  fontSize: 17,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
+                minFontSize: 10,
               ),
             ),
           ),

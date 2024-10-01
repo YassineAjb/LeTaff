@@ -281,39 +281,18 @@ Future<void> _fetchProjects() async {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    const Text(
-                      "NUMÉR",
+                    Text(
+                      "NUMÉRIQUES",
                       style: TextStyle(
                         color: Color.fromARGB(255, 193, 193, 193),
-                        fontSize: 70.0,
+                        fontSize: MediaQuery.of(context).size.width * 0.14, // Adjust percentage as needed
                         height: 0.9,
                       ),
                     ),
-      
-                    const Row(
-                      crossAxisAlignment: CrossAxisAlignment.start, // Aligns children to start vertically
-                      children: [
-                        Expanded(
-                          child: Text(
-                            " ",
-                            style: TextStyle(
-                              color: Color.fromARGB(255, 151, 151, 151),
-                              fontSize: 19.0,
-                              height: 1.5,
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          "IQUES",
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 193, 193, 193),
-                            fontSize: 70.0,
-                            height: 0.9,
-                          ),
-                        ),
-                      ],
-                    ),
+                    
+
+
+                    
                     const SizedBox(height: 10),
       
                     const Text(
@@ -338,20 +317,22 @@ Future<void> _fetchProjects() async {
                         onHover: (value){}                          
                     ),
                         const SizedBox(width: 10),
-                        Container(
-                          height: 175,
-                          color: const Color.fromARGB(255, 0, 0, 0),
-                          child: Center(
-                            child: 
-                            imageUrls['hom11'] != null
-                              ? CachedNetworkImage(
-                                  imageUrl: imageUrls['hom11']!,
-                                  placeholder: (context, url) => buildCircularIndicatorWithImage(),
-                                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                                )
-                              : buildCircularIndicatorWithImage(),                    
-                            ),
-                            //Image.asset('assets/hom11.jpg'),
+                        Expanded(
+                          child: Container(
+                            height: 175,
+                            width: MediaQuery.of(context).size.width * 0.80, 
+                            color: const Color.fromARGB(255, 0, 0, 0),
+                            child: Center(
+                              child: 
+                              imageUrls['hom11'] != null
+                                ? CachedNetworkImage(
+                                    imageUrl: imageUrls['hom11']!,
+                                    placeholder: (context, url) => buildCircularIndicatorWithImage(),
+                                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                                  )
+                                : buildCircularIndicatorWithImage(),                    
+                              ),
+                          ),
                         ),
                       ],
                     ),
@@ -429,7 +410,6 @@ Future<void> _fetchProjects() async {
                     const Center(
                       child: Text(
                         "NOTRE GAMME DE SERVICES NUMÉRIQUE DE VALEUR",
-                        textAlign: TextAlign.center, // Center-align all lines
                         style: TextStyle(
                           color: Colors.grey,
                           fontSize: 33.0,
@@ -465,7 +445,7 @@ Future<void> _fetchProjects() async {
                         children: servicesData.map((service) {
                           return Container(
                             width: 340,
-                            height: 380,
+                            height: 340,
                             padding: const EdgeInsets.all(16.0),
                             margin: const EdgeInsets.symmetric(horizontal: 10.0),
                             decoration: BoxDecoration(
@@ -533,7 +513,7 @@ Future<void> _fetchProjects() async {
                                 ),
                                 // Move the Positioned widget here
                                 Positioned(
-                                  top: 50,
+                                  top: 210,
                                   right: 0,
                                   child: Image.asset(
                                     service['image'],
@@ -550,85 +530,88 @@ Future<void> _fetchProjects() async {
 
                     const SizedBox(height: 40),        
 
-                    Container(
-                            width: 400,
-                            height: 850,
-                            padding: const EdgeInsets.all(16.0),
-                            margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                            decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 24, 24, 24),
-                              borderRadius: BorderRadius.circular(10.0),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.5),
-                                  spreadRadius: 2,
-                                  blurRadius: 5,
-                                  offset: const Offset(0, 3),
+                    Center(
+                      child: Container(
+                              width: MediaQuery.of(context).size.width * 0.9,
+                              //height: 800,
+                              padding: const EdgeInsets.all(16.0),
+                              margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 24, 24, 24),
+                                borderRadius: BorderRadius.circular(10.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.5),
+                                    spreadRadius: 2,
+                                    blurRadius: 5,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                                image: const DecorationImage(
+                                  image: AssetImage('asset/QuiNous.jpg'), 
+                                  fit: BoxFit.cover, 
+                                  opacity: 0.1, 
                                 ),
-                              ],
-                              image: const DecorationImage(
-                                image: AssetImage('asset/QuiNous.jpg'), 
-                                fit: BoxFit.cover, 
-                                opacity: 0.1, 
+                              ),
+                            child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start, // Align children to the start
+                            children: [
+                            const Text(
+                              "QUI SOMMES-NOUS ?",
+                              style: TextStyle(
+                                color: Colors.deepOrange,
+                                fontSize: 28.0,
+                                letterSpacing: 2.0,
+                                fontWeight: FontWeight.bold, 
                               ),
                             ),
-                          child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start, // Align children to the start
-                          children: [
-                          const Text(
-                            "QUI SOMMES-NOUS ?",
-                            style: TextStyle(
-                              color: Colors.deepOrange,
-                              fontSize: 28.0,
-                              letterSpacing: 2.0,
+                            const SizedBox(height: 10.0), // Add space between the texts
+                            const Text(
+                              "LE TAFF - AGENCE DE SERVICES NUMÉRIQUES ET DIGITAL",
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 216, 216, 216),
+                                fontSize: 25.0,
+                                letterSpacing: 2.0,
+                                fontWeight: FontWeight.bold, 
+                              ),
+                            ),
+                            const Text(
+                              "Notre équipe est composée de développeurs passionnés par les dernières avancées technologiques, et nous proposons une vaste gamme de services pour répondre à vos besoins. De plus, notre expertise englobe la création de sites web vitrines élégants, le développement d'applications mobiles sophistiquées, la mise en place de plateformes e-commerce performantes, ainsi que des solutions d'hébergement et d'infogérance de pointe. En outre, nous excellons dans le domaine du référencement (SEO), des audits techniques, de la formation, et bien d'autres prestations. Faites nous confiance pour concrétiser vos projets digitaux et atteindre vos objectifs en ligne.",
+                              style: TextStyle(
+                              color: Color.fromARGB(255, 190, 190, 190),
+                              fontSize: 16.0,
                               fontWeight: FontWeight.bold, 
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 10.0), // Add space between the texts
-                          const Text(
-                            "LE TAFF - AGENCE DE SERVICES NUMÉRIQUES ET DIGITAL",
-                            style: TextStyle(
-                              color: Color.fromARGB(255, 216, 216, 216),
-                              fontSize: 25.0,
-                              letterSpacing: 2.0,
-                              fontWeight: FontWeight.bold, 
-                            ),
-                          ),
-                          const Text(
-                            "Notre équipe est composée de développeurs passionnés par les dernières avancées technologiques, et nous proposons une vaste gamme de services pour répondre à vos besoins. De plus, notre expertise englobe la création de sites web vitrines élégants, le développement d'applications mobiles sophistiquées, la mise en place de plateformes e-commerce performantes, ainsi que des solutions d'hébergement et d'infogérance de pointe. En outre, nous excellons dans le domaine du référencement (SEO), des audits techniques, de la formation, et bien d'autres prestations. Faites nous confiance pour concrétiser vos projets digitaux et atteindre vos objectifs en ligne.",
-                            style: TextStyle(
-                            color: Color.fromARGB(255, 190, 190, 190),
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold, 
-                            ),
-                          ),
-                          const SizedBox(height: 20),        
-                          ElevatedButton(
-                            onPressed: () {
-                            Provider.of<NavBarProvider>(context, listen: false).updateIndex(5); 
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.deepOrange, // Use `primary` instead of `backgroundColor`
-                            ),
-                            child: const Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  "Savoir Plus",
-                                  style: TextStyle(
-                                    color: Colors.black,
+                            const SizedBox(height: 20),        
+                            ElevatedButton(
+                              onPressed: () {
+                              Provider.of<NavBarProvider>(context, listen: false).updateIndex(5); 
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.deepOrange, // Use `primary` instead of `backgroundColor`
+                              ),
+                              child: const Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    "Savoir Plus",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(width: 8.0), // Add some space between text and icon
-                                Icon(
-                                  Icons.arrow_forward, // Use a different icon to avoid invalid constant
-                                  color: Colors.black,
-                                  size: 30,
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
+                                  SizedBox(width: 8.0), // Add some space between text and icon
+                                  Icon(
+                                    Icons.arrow_forward, // Use a different icon to avoid invalid constant
+                                    color: Colors.black,
+                                    size: 30,
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
 
@@ -764,7 +747,7 @@ Container(
           child: Stack(
             children: [
               Positioned(
-                left: 0,
+                left: -40,
                 right: 0,
                 top: 0,
                 bottom: 0,
@@ -774,7 +757,7 @@ Container(
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.deepOrange,
-                      fontSize: 62.0,
+                      fontSize: 60.0,
                       letterSpacing: 2.0,
                       fontWeight: FontWeight.bold,
                     ),
@@ -787,7 +770,7 @@ Container(
               ),
               Positioned(
                 bottom: -5, 
-                right: -10,
+                right: 40,
                 child: Transform.rotate(
                   angle: -90 * 3.14159 / 180,
                   child: RiveAnimatedIcon(
@@ -1046,10 +1029,64 @@ Container(
             ],
           ),
         ),
+         const SizedBox(width: 20), // Space between label and description
+                            
+                            Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Padding(
+                                padding:  EdgeInsets.only(bottom: 10.0), // Adding bottom margin
+                                child: Text(
+                                  "Avez-vous un projet ?",
+                                  style: TextStyle(
+                                    color: Colors.deepOrange, // Text color
+                                    fontSize: 30.0, // Text size
+                                    letterSpacing: 2.0,
+                                    fontWeight: FontWeight.bold, // Text weight
+                                  ),
+                                ),
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.only(bottom: 20.0), // Adding bottom margin
+                                child: Text(
+                                  "Réalisons un projet\nexceptionnel\nensemble !",
+                                  textAlign: TextAlign.center, // Center-align all lines
+                                  style: TextStyle(
+                                    color: Color.fromARGB(255, 187, 187, 187), // Text color
+                                    fontSize: 22.0, // Text size
+                                    letterSpacing: 2.0,
+                                    fontWeight: FontWeight.bold, // Text weight
+                                  ),
+                                ),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                            Provider.of<NavBarProvider>(context, listen: false).updateIndex(4);
+                                },
+                                  style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color.fromARGB(255, 58, 58, 58),
+                                  ),
+                                  child: const Text('Contacter Nous',
+                                    style: TextStyle(
+                                    color: Colors.deepOrange, // Text color
+                                    fontSize: 15.0, // Text size
+                                    letterSpacing: 2.0,
+                                    fontWeight: FontWeight.bold, // Text weight
+                                  ),),
+                              ),
+                            ],
+                          ),
+
+                          const SizedBox(width: 20), 
+                         
       ],
     ),
   ),
 ),
+
+
+
+
 
                   ],
                 ),

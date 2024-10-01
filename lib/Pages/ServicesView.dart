@@ -696,26 +696,26 @@ Widget buildServiceDescriptions() {
                         children: [
                           IconButton(
                             icon: Image.asset('asset/linked4.png', width: 45, height: 45),
-                            onPressed: () => _launchURL('https://www.linkedin.com'),
+                            onPressed: () => _launchURL('https://www.linkedin.com/company/letaff/posts/?feedView=all'),
                           ),
                           const SizedBox(width: 0),
                           IconButton(
                             icon: Image.asset('asset/beIcon.png', width: 45, height: 45),
-                            onPressed: () => _launchURL('https://www.linkedin.com'),
+                            onPressed: () => _launchURL('https://www.behance.net/letaffINC'),
                           ),
                           const SizedBox(width: 0),
                           IconButton(
                             icon: Image.asset('asset/insta4.png', width: 45, height: 45),
-                            onPressed: () => _launchURL('https://www.instagram.com'),
+                            onPressed: () => _launchURL('https://www.instagram.com/letaff_/'),
                           ),
                           const SizedBox(width: 0),
                           IconButton(
                             icon: Image.asset('asset/face5.png', width: 45, height: 45),
-                            onPressed: () => _launchURL('https://www.facebook.com'),
+                            onPressed: () => _launchURL('https://www.facebook.com/LeTaff.ca'),
                           ),
                           IconButton(
                             icon: Image.asset('asset/tiktokicon.png', width: 45, height: 45),
-                            onPressed: () => _launchURL('https://www.instagram.com'),
+                            onPressed: () => _launchURL('https://www.tiktok.com/@letaffdev'),
                           ),
                           
                           // PACKAGE PROBLEM !!!!!!!!!!

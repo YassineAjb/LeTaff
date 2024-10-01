@@ -333,134 +333,136 @@ Future<void> _fetchVideoUrl() async {
                       ),
                     ),
 
-                    SizedBox(
-                      height: 450,
-                      width: 400,
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            top: 0,
-                            left: 0,
-                             child: imageUrls['A-U-1'] != null
-                              ? CachedNetworkImage(
-                                  imageUrl: imageUrls['A-U-1']!, 
-                                  placeholder: (context, url) => buildCircularIndicatorWithImage(),
-                                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                                  height: 200,     
-                                  width: 180,      
-                                  fit: BoxFit.cover,
-                                )
-                              : const CircularProgressIndicator()
-                              .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
-                              //.shimmer(duration: 3000.ms)
-                              .boxShadow(duration: 1000.ms,
-                        
-                                  begin: const BoxShadow(
-                                    blurRadius: 4,
-                                    color: ui.Color.fromARGB(255, 255, 255, 255),
-                                    spreadRadius: 1,
+                    Center(
+                      child: SizedBox(
+                        height: 450,
+                        width: MediaQuery.of(context).size.width ,
+                        child: Stack(
+                          children: [
+                            Positioned(
+                              top: 0,
+                              left: 0,
+                               child: imageUrls['A-U-1'] != null
+                                ? CachedNetworkImage(
+                                    imageUrl: imageUrls['A-U-1']!, 
+                                    placeholder: (context, url) => buildCircularIndicatorWithImage(),
+                                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                                    height: 200,     
+                                    width: MediaQuery.of(context).size.width * 0.48,   
+                                    fit: BoxFit.cover,
+                                  )
+                                : const CircularProgressIndicator()
+                                .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
+                                //.shimmer(duration: 3000.ms)
+                                .boxShadow(duration: 1000.ms,
+                          
+                                    begin: const BoxShadow(
+                                      blurRadius: 4,
+                                      color: ui.Color.fromARGB(255, 255, 255, 255),
+                                      spreadRadius: 1,
+                                    ),
+                                    end: const BoxShadow(
+                                      blurRadius: 4,
+                                      color: ui.Color.fromARGB(255, 255, 255, 255),
+                                      spreadRadius: 3,
+                                    ),
+                                    curve: Curves.easeInOut,
+                                  ), 
+                            ),
+                            Positioned(
+                              top: 0,
+                              left: 190,
+                              child: imageUrls['A-U-2'] != null
+                                ? CachedNetworkImage(
+                                    imageUrl: imageUrls['A-U-2']!, 
+                                    placeholder: (context, url) => const CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                                    height: 200,     
+                                    width: MediaQuery.of(context).size.width * 0.48, 
+                                    fit: BoxFit.cover,
+                                  )
+                                : const CircularProgressIndicator()
+                                .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
+                                //.shimmer(duration: 3000.ms)
+                                .boxShadow(duration: 1000.ms,
+                              
+                                    begin: const BoxShadow(
+                                      blurRadius: 4,
+                                      color: ui.Color.fromARGB(255, 255, 255, 255),
+                                      spreadRadius: 1,
+                                    ),
+                                    end: const BoxShadow(
+                                      blurRadius: 4,
+                                      color: ui.Color.fromARGB(255, 255, 255, 255),
+                                      spreadRadius: 3,
+                                    ),
+                                    curve: Curves.easeInOut,
                                   ),
-                                  end: const BoxShadow(
-                                    blurRadius: 4,
-                                    color: ui.Color.fromARGB(255, 255, 255, 255),
-                                    spreadRadius: 3,
+                            ),
+                            Positioned(
+                              top: 220,
+                              left: 0,
+                              child: imageUrls['A-U-3'] != null
+                                ? CachedNetworkImage(
+                                    imageUrl: imageUrls['A-U-3']!, 
+                                    placeholder: (context, url) => const CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                                    height: 200,     
+                                    width: MediaQuery.of(context).size.width * 0.48, 
+                                    fit: BoxFit.cover,
+                                  )
+                                : const CircularProgressIndicator()
+                                .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
+                                //.shimmer(duration: 3000.ms)
+                                .boxShadow(duration: 1000.ms,
+                              
+                                    begin: const BoxShadow(
+                                      blurRadius: 4,
+                                      color: ui.Color.fromARGB(255, 255, 255, 255),
+                                      spreadRadius: 1,
+                                    ),
+                                    end: const BoxShadow(
+                                      blurRadius: 4,
+                                      color: ui.Color.fromARGB(255, 255, 255, 255),
+                                      spreadRadius: 3,
+                                    ),
+                                    curve: Curves.easeInOut,
                                   ),
-                                  curve: Curves.easeInOut,
-                                ), 
-                          ),
-                          Positioned(
-                            top: 0,
-                            left: 190,
-                            child: imageUrls['A-U-2'] != null
-                              ? CachedNetworkImage(
-                                  imageUrl: imageUrls['A-U-2']!, 
-                                  placeholder: (context, url) => const CircularProgressIndicator(),
-                                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                                  height: 200,     
-                                  width: 180,      
-                                  fit: BoxFit.cover,
-                                )
-                              : const CircularProgressIndicator()
-                              .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
-                              //.shimmer(duration: 3000.ms)
-                              .boxShadow(duration: 1000.ms,
-                            
-                                  begin: const BoxShadow(
-                                    blurRadius: 4,
-                                    color: ui.Color.fromARGB(255, 255, 255, 255),
-                                    spreadRadius: 1,
+                            ),
+                            Positioned(
+                              top: 220,
+                              left: 190,
+                              child: 
+                              imageUrls['A-U-4'] != null
+                                ? CachedNetworkImage(
+                                    imageUrl: imageUrls['A-U-4']!, 
+                                    placeholder: (context, url) => const CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                                    height: 200,     
+                                    width: 180,      
+                                    fit: BoxFit.cover,
+                                  )
+                                : const CircularProgressIndicator()
+                                .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
+                                //.shimmer(duration: 3000.ms)
+                                .boxShadow(duration: 1000.ms,
+                              
+                                    begin: const BoxShadow(
+                                      blurRadius: 4,
+                                      color: ui.Color.fromARGB(255, 255, 255, 255),
+                                      spreadRadius: 1,
+                                    ),
+                                    end: const BoxShadow(
+                                      blurRadius: 4,
+                                      color: ui.Color.fromARGB(255, 255, 255, 255),
+                                      spreadRadius: 3,
+                                    ),
+                                    curve: Curves.easeInOut,
                                   ),
-                                  end: const BoxShadow(
-                                    blurRadius: 4,
-                                    color: ui.Color.fromARGB(255, 255, 255, 255),
-                                    spreadRadius: 3,
-                                  ),
-                                  curve: Curves.easeInOut,
-                                ),
-                          ),
-                          Positioned(
-                            top: 220,
-                            left: 0,
-                            child: imageUrls['A-U-3'] != null
-                              ? CachedNetworkImage(
-                                  imageUrl: imageUrls['A-U-3']!, 
-                                  placeholder: (context, url) => const CircularProgressIndicator(),
-                                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                                  height: 200,     
-                                  width: 180,      
-                                  fit: BoxFit.cover,
-                                )
-                              : const CircularProgressIndicator()
-                              .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
-                              //.shimmer(duration: 3000.ms)
-                              .boxShadow(duration: 1000.ms,
-                            
-                                  begin: const BoxShadow(
-                                    blurRadius: 4,
-                                    color: ui.Color.fromARGB(255, 255, 255, 255),
-                                    spreadRadius: 1,
-                                  ),
-                                  end: const BoxShadow(
-                                    blurRadius: 4,
-                                    color: ui.Color.fromARGB(255, 255, 255, 255),
-                                    spreadRadius: 3,
-                                  ),
-                                  curve: Curves.easeInOut,
-                                ),
-                          ),
-                          Positioned(
-                            top: 220,
-                            left: 190,
-                            child: 
-                            imageUrls['A-U-4'] != null
-                              ? CachedNetworkImage(
-                                  imageUrl: imageUrls['A-U-4']!, 
-                                  placeholder: (context, url) => const CircularProgressIndicator(),
-                                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                                  height: 200,     
-                                  width: 180,      
-                                  fit: BoxFit.cover,
-                                )
-                              : const CircularProgressIndicator()
-                              .animate(onPlay: (controller) => controller.repeat(reverse: true)) // Smooth repeat
-                              //.shimmer(duration: 3000.ms)
-                              .boxShadow(duration: 1000.ms,
-                            
-                                  begin: const BoxShadow(
-                                    blurRadius: 4,
-                                    color: ui.Color.fromARGB(255, 255, 255, 255),
-                                    spreadRadius: 1,
-                                  ),
-                                  end: const BoxShadow(
-                                    blurRadius: 4,
-                                    color: ui.Color.fromARGB(255, 255, 255, 255),
-                                    spreadRadius: 3,
-                                  ),
-                                  curve: Curves.easeInOut,
-                                ),
-                                    //.scaleXY(end: 1.001, curve: Curves.easeOutCirc),
-                          ),
-                        ],
+                                      //.scaleXY(end: 1.001, curve: Curves.easeOutCirc),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
 
@@ -664,19 +666,25 @@ void initState() {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
+            
             children: [
               Text(
                 "$value+",
-                style: const TextStyle(
-                  fontSize: 30,
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width * 0.08, // Responsive font size
+                  //fontSize: 30,
                   color: Color.fromARGB(255, 168, 168, 168),
                 ),
               ).animate(onPlay: (controller) => controller.repeat())
                 .shimmer(duration: 3000.ms, color: Colors.deepOrange),
+              
+              const SizedBox(height: 5.0), 
+              
               Text(
                 widget.label,
-                style: const TextStyle(
-                  fontSize: 17,
+                style: TextStyle(
+                  //fontSize: 17,                    
+                  fontSize: MediaQuery.of(context).size.width * 0.04, // Responsive font size
                   color: Colors.white,
                 ),
               ),

@@ -183,7 +183,7 @@ void _startAutoScroll() {
                   SliverToBoxAdapter(
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: const Column(
+                      child:  Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
@@ -198,7 +198,8 @@ void _startAutoScroll() {
                             "Réalisations",
                             style: TextStyle(
                               color: Color.fromARGB(255, 120, 120, 120),
-                              fontSize: 60.0,
+                              //fontSize: 60.0,
+                              fontSize: MediaQuery.of(context).size.width * 0.14, // Adjust percentage as needed
                               height: 0.9,
                             ),
                           ),
@@ -441,26 +442,26 @@ void _startAutoScroll() {
                         children: [
                           IconButton(
                             icon: Image.asset('asset/linked4.png', width: 45, height: 45),
-                            onPressed: () => _launchURL('https://www.linkedin.com'),
+                            onPressed: () => _launchURL('https://www.linkedin.com/company/letaff/posts/?feedView=all'),
                           ),
                           const SizedBox(width: 0),
                           IconButton(
                             icon: Image.asset('asset/beIcon.png', width: 45, height: 45),
-                            onPressed: () => _launchURL('https://www.linkedin.com'),
+                            onPressed: () => _launchURL('https://www.behance.net/letaffINC'),
                           ),
                           const SizedBox(width: 0),
                           IconButton(
                             icon: Image.asset('asset/insta4.png', width: 45, height: 45),
-                            onPressed: () => _launchURL('https://www.instagram.com'),
+                            onPressed: () => _launchURL('https://www.instagram.com/letaff_/'),
                           ),
                           const SizedBox(width: 0),
                           IconButton(
                             icon: Image.asset('asset/face5.png', width: 45, height: 45),
-                            onPressed: () => _launchURL('https://www.facebook.com'),
+                            onPressed: () => _launchURL('https://www.facebook.com/LeTaff.ca'),
                           ),
                           IconButton(
                             icon: Image.asset('asset/tiktokicon.png', width: 45, height: 45),
-                            onPressed: () => _launchURL('https://www.instagram.com'),
+                            onPressed: () => _launchURL('https://www.tiktok.com/@letaffdev'),
                           ),
                           const SizedBox(width: 0),
                         ],
