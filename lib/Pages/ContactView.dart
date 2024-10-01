@@ -555,10 +555,10 @@ void submit(BuildContext context) async {
               }
               // Allow letters, numbers, and basic punctuation
               //final subjectRegex = RegExp(r'^[a-zA-Z0-9\s.,!?\'"-]+$');
-              final subjectRegex = RegExp(r'^[\w\s]+$');
-              if (!subjectRegex.hasMatch(value)) {
-                return 'Subject can only contain letters, numbers, and basic punctuation';
-              }
+              // final subjectRegex = RegExp(r'^[\w\s]+$');
+              // if (!subjectRegex.hasMatch(value)) {
+              //   return 'Subject can only contain letters, numbers, and basic punctuation';
+              // }
               if (value.length < 3) {
                 return 'Subject must contain at least 3 characters';
               }
