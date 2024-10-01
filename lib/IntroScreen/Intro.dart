@@ -1,5 +1,8 @@
 import 'package:animated_introduction/animated_introduction.dart';
 import 'package:flutter/material.dart';
+import 'package:letaff/NavBar/NavBar.dart';
+import 'package:letaff/Pages/ContactView.dart';
+import 'package:letaff/Pages/SolutionWebView.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -15,7 +18,11 @@ class MyApp extends StatelessWidget {
 
         useMaterial3: true,
       ),
-  
+        routes: {
+        '/home': (context) => const Home(),
+        '/contact': (context) => ContactView(),  
+        '/solutionweb': (context) => SolutionWebView(),
+      },
       home: const ExamplePage(),
     );
   }
@@ -25,9 +32,9 @@ class MyApp extends StatelessWidget {
 ///
 final List<SingleIntroScreen> pages = [
   const SingleIntroScreen(
-    title: 'Welcome to the Event Management App !',
-    description: 'You plans your Events, We\'ll do the rest and will be the best! Guaranteed!  ',
-    imageAsset: 'assets/onboard_one.png',
+    title: 'Welcome to LETAFF !',
+    description: 'Découvrez notre portfolio de réalisations, une collection visuelle de nos sites web et applications exceptionnels.',
+    imageAsset: 'asset/onboard_three.png',
     sideDotsBgColor : Colors.deepOrange,
     mainCircleBgColor : Colors.deepOrange,
     headerBgColor: Colors.black,
@@ -35,18 +42,18 @@ final List<SingleIntroScreen> pages = [
 
   ),
   const SingleIntroScreen(
-    title: 'Book tickets to cricket matches and events',
-    description: 'Tickets to the latest movies, crickets matches, concerts, comedy shows, plus lots more !',
-    imageAsset: 'assets/onboard_two.png',
+    title: 'Welcome to LETAFF !',
+    description: 'Découvrez notre portfolio de réalisations, une collection visuelle de nos sites web et applications exceptionnels.',
+    imageAsset: 'asset/onboard_two.png',
     sideDotsBgColor : Colors.deepOrange,
     mainCircleBgColor : Colors.deepOrange,
     headerBgColor: Colors.black,
 
   ),
   const SingleIntroScreen(
-    title: 'Grabs all events now only in your hands',
-    description: 'All events are now in your hands, just a click away ! ',
-    imageAsset: 'assets/onboard_three.png',
+    title: 'Welcome to LETAFF !',
+    description: 'Découvrez notre portfolio de réalisations, une collection visuelle de nos sites web et applications exceptionnels.',
+    imageAsset: 'asset/men33.png',
     sideDotsBgColor : Colors.deepOrange,
     mainCircleBgColor : Colors.deepOrange,
     headerBgColor: Colors.black,
@@ -62,13 +69,22 @@ class ExamplePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedIntroduction(
       footerBgColor : const Color.fromARGB(255, 24, 24, 24),
+      doneText : 'Start Now',
       textColor : Colors.deepOrange,
       slides: pages,
       indicatorType: IndicatorType.circle,
       containerBg: Colors.black,  //the black transition ****
 
       onDone: () {
-        /// TODO: Go to desire page like login or home
+        // Navigate to your desired page here, for example:
+        Navigator.of(context).pushReplacementNamed('/home');
+
+        /*Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const Home(), 
+          ),
+        );*/
+
       },
     );
   }
